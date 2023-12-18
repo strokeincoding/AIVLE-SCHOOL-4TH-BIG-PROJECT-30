@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.contrib.auth.hashers import make_password
+import datetime
 
 class UserTBManager(BaseUserManager):
     def create_user(self, userId, password=None, **extra_fields):
@@ -14,7 +15,7 @@ class UserTBManager(BaseUserManager):
     def create_superuser(self, userId, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-
+        extra_fields.setdefault('userDate', datetime.date.today())
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
@@ -29,7 +30,7 @@ class UserTB(AbstractBaseUser, PermissionsMixin):
     userAddress = models.CharField(max_length=200)
     userPhone = models.CharField(max_length=20)
     userEmail = models.EmailField(max_length=100)
-    userDate = models.DateField()
+    userDate = models.DateField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 

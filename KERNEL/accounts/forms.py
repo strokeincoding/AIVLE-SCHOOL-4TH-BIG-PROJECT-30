@@ -5,4 +5,5 @@ from .models import UserTB
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = UserTB
-        fields = ['userId', 'userPw', 'userName', 'userAddress', 'userPhone', 'userEmail', 'userDate']
+        fields = ['userId', 'userPw', 'userName', 'userAddress', 'userPhone', 'userEmail']
+        # 'userDate'는 제거됨
