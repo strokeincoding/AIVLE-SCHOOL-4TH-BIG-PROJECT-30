@@ -5,7 +5,7 @@ DATABASES = {
         'USER': 'aivle', # 접속할 Database 계정 아이디 ex) root
         'PASSWORD': 'aivle',  # 접속할 Database 계정 비밀번호 ex) 1234
         'HOST': 'localhost',   # host는 로컬 환경에서 동작한다면 ex) localhost 192.168.56.1
-        'PORT': '3306', # 설치시 설정한 port 번호를 입력한다. ex) 3306
+        'PORT': '3306', # 설치시 설정한 port 번호를 입력한다. ex) 3306ㅇㅇ
     }
 }
 
