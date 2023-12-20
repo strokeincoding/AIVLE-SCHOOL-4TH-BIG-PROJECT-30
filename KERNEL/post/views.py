@@ -5,11 +5,12 @@ from .models import post, Comment
 from .serializer import PostSerializer,CommentSerializer
 from rest_framework import viewsets
 # from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-# from rest_framework.permissions import IsAuthenticatedOrReadOnly
-# from .permissions import IsOwnerOrReadOnly
+#from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .permissions import IsOwnerOrReadOnly
 
 # Post의 목록, detail 보여주기, 수정하기, 삭제하기 모두 가능
 class PostViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = post.objects.all()
     serializer_class = PostSerializer
    
@@ -20,7 +21,7 @@ class PostViewSet(viewsets.ModelViewSet):
 # (댓글) Comment 보여주기, 수정하기, 삭제하기 모두 가능
 class CommentViewSet(viewsets.ModelViewSet):
     # authentication_classes = [BasicAuthentication, SessionAuthentication]
-    # permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
