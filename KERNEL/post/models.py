@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 from django.db import models
 from django.conf import settings
+from user.models import UserModel
 
 class post(models.Model):
     # 1. 게시글의 id 값
@@ -12,7 +13,7 @@ class post(models.Model):
     # 3. 작성일
     created_at = models.DateTimeField(auto_now_add=True)
     # 4. 작성자
-    #user = models.ForeignKey(UserTB, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserModel, null=True, blank=True, on_delete=models.CASCADE)
     # 5. 본문
     body = models.TextField()
 
@@ -22,7 +23,7 @@ class post(models.Model):
 class Comment(models.Model):
     id = models.AutoField(primary_key=True, null=False, blank=False)
     post = models.ForeignKey(post, null=False, blank=False, on_delete=models.CASCADE)
-    #user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserModel, null=True, blank=False, on_delete=models.CASCADE)
     created_at = models.DateField(auto_now_add=True, null=False, blank=False)
     comment = models.TextField()
 
