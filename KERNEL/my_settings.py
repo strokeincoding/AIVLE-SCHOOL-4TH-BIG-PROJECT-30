@@ -1,7 +1,7 @@
 DATABASES = { 
 	'default': { 
     	'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'aivlebigproject', 
+        'NAME': 'new', 
         'USER': 'root', 
         'PASSWORD': '990813', 
         'HOST': '127.0.0.1', 
