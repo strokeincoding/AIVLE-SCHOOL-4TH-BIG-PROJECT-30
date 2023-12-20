@@ -3,7 +3,6 @@ from django.db import models
 # Create your models here.
 from django.db import models
 from django.conf import settings
-from accounts.models import UserTB
 
 class post(models.Model):
     # 1. 게시글의 id 값

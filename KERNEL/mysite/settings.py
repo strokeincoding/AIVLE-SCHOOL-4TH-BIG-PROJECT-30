@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'accounts',
     'post',
 ]
 
@@ -98,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 # Custom user model
-AUTH_USER_MODEL = 'accounts.UserTB'  # 여기에 사용자 정의 사용자 모델을 설정했습니다.
+#AUTH_USER_MODEL = 'accounts.UserTB'  # 여기에 사용자 정의 사용자 모델을 설정했습니다.
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
