@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>회원가입</title>
+</head>
+<body>
+    <h2>회원가입</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">사용자 이름:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">비밀번호:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <label for="password2">비밀번호 확인:</label>
+        <input type="password" id="password2" name="password2" required><br><br>
+        <label for="bio">성별:</label>
+        <textarea id="bio" name="bio"></textarea><br><br>
+        <input type="submit" value="회원가입">
+    </form>
+</body>
+</html>
