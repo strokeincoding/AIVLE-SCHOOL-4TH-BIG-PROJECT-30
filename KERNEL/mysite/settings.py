@@ -125,11 +125,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# 이 설정을 추가하여 정적 파일을 찾을 경로를 지정합니다.
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
-# 이 설정을 추가하여 정적 파일을 모으는 디렉토리를 지정합니다.
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
