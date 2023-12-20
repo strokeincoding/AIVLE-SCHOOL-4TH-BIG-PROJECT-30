@@ -20,12 +20,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import render
 
-def index(request):
-    return render(request,'index.html')
+from django.urls import path, include
+
 
 urlpatterns = [
-    path('',index, name='home'),
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),  # 'accounts' 앱의 URL을 포함시킵니다.
-    # 여기에 추가적인 앱 URL 설정을 추가할 수 있습니다.
-]
+    path('post/', include('post.urls')),
+ ]
