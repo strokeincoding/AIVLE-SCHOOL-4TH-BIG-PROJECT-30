@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+SECRET_KEY = my_settings.SECRET_KEY
 # Application definition
 
 INSTALLED_APPS = [
