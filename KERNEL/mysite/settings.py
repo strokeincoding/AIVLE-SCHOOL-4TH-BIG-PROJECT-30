@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -101,7 +102,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Custom user model
 AUTH_USER_MODEL = 'user.UserModel'  # 여기에 사용자 정의 사용자 모델을 설정했습니다.
 
-
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
+}
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 

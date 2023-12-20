@@ -3,6 +3,10 @@ from .models import UserModel
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from rest_framework import viewsets
+from .models import UserModel
+from .serializers import UserModelSerializer
+from django.contrib.auth import logout
 
 def sign_up_view(request):
     if request.method == 'GET':
@@ -44,3 +48,12 @@ def sign_in_view(request):
             return render(request, 'user/signin.html', {'error': 'Invalid username or password'})
     else:
         return render(request, 'user/signin.html')
+
+def logout_view(request):
+    logout(request)
+    # 로그아웃 후 리다이렉트할 페이지 지정
+    return redirect('home')    
+    
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = UserModel.objects.all()
+    serializer_class = UserModelSerializer
