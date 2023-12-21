@@ -1,59 +1,53 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Group, Permission
-from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
-# Custom manager for UserModel
-class CustomUserManager(BaseUserManager):
-    def create_user(self, username, password=None, **extra_fields):
-        if not username:
-            raise ValueError('The given username must be set')
-        user = self.model(username=username, **extra_fields)
+class UserManager(BaseUserManager):
+    # 일반 user 생성
+    def create_user(self, email, nickname, name, password=None):
+        if not email:
+            raise ValueError('must have user email')
+        if not nickname:
+            raise ValueError('must have user nickname')
+        if not name:
+            raise ValueError('must have user name')
+        user = self.model(
+            email = self.normalize_email(email),
+            nickname = nickname,
+            name = name
+        )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, password, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
+    # 관리자 user 생성
+    def create_superuser(self, email, nickname, name, password=None):
+        user = self.create_user(
+            email,
+            password = password,
+            nickname = nickname,
+            name = name
+        )
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
 
-        return self.create_user(username, password, **extra_fields)
+class User(AbstractBaseUser):
+    id = models.AutoField(primary_key=True)
+    email = models.EmailField(default='', max_length=100, null=False, blank=False, unique=True)
+    nickname = models.CharField(default='', max_length=100, null=False, blank=False, unique=True)
+    name = models.CharField(default='', max_length=100, null=False, blank=False)
+    
+    # User 모델의 필수 field
+    is_active = models.BooleanField(default=True)    
+    is_admin = models.BooleanField(default=False)
+    
+    # 헬퍼 클래스 사용
+    objects = UserManager()
 
-    def get_by_natural_key(self, username):
-        return self.get(**{self.model.USERNAME_FIELD: username})
-
-# Your custom user model
-class UserModel(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=20, unique=True)
-    bio = models.CharField(max_length=256, default='')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-
-    # Redefined groups and user_permissions fields with unique related_name
-    groups = models.ManyToManyField(
-        Group,
-        verbose_name='groups',
-        blank=True,
-        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
-        related_name='usermodel_groups',
-        related_query_name='usermodel',
-    )
-
-    user_permissions = models.ManyToManyField(
-        Permission,
-        verbose_name='user permissions',
-        blank=True,
-        help_text='Specific permissions for this user.',
-        related_name='usermodel_user_permissions',
-        related_query_name='usermodel',
-    )
-
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['bio']
-
-    objects = CustomUserManager()
+    # 사용자의 username field는 nickname으로 설정
+    USERNAME_FIELD = 'nickname'
+    # 필수로 작성해야하는 field
+    REQUIRED_FIELDS = ['email', 'name']
 
     def __str__(self):
-        return self.username
+        return self.nickname

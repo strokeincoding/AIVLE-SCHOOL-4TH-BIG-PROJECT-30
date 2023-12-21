@@ -7,5 +7,5 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         
-        # 요청자(request.user)가 객체(post)의 user와 동일한지 확인
+        # 요청자(request.user)가 객체(Post)의 user와 동일한지 확인
         return obj.user == request.user

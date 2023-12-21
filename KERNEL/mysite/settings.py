@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'post',
     'user',
+    'post',
 ]
 
 MIDDLEWARE = [
@@ -96,20 +96,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 # Custom user model
-AUTH_USER_MODEL = 'user.UserModel'  # 여기에 사용자 정의 사용자 모델을 설정했습니다.
+AUTH_USER_MODEL = 'user.User'  # 여기에 사용자 정의 사용자 모델을 설정했습니다.
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ],
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    )
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.BasicAuthentication',
+    #     'rest_framework.authentication.SessionAuthentication',
+    # ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    # ],
+    # 'DEFAULT_RENDERER_CLASSES': (
+    #     'rest_framework.renderers.JSONRenderer',
+    #     'rest_framework.renderers.BrowsableAPIRenderer',
+    # )
 }
 
 # Internationalization
