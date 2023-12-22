@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import my_settings
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,11 +40,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'user',
     'post',
-    "corsheaders",
+    'corsheaders',  # CORS 추가
+    'rest_framework_simplejwt.token_blacklist',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',  # CORS 추가
+    'django.middleware.common.CommonMiddleware',  # CORS 추가
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,6 +56,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# CORS 추가
+CORS_ORIGIN_WHITELIST = (
+    'http://127.0.0.1:8000', 'http://localhost:3000')
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -70,9 +79,6 @@ TEMPLATES = [
         },
     },
 ]
-
-CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000', 'http://localhost:3000')
-CORS_ALLOW_CREDENTIALS = True
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
@@ -104,10 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'user.User'  # 여기에 사용자 정의 사용자 모델을 설정했습니다.
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'rest_framework.authentication.BasicAuthentication',
-    #     'rest_framework.authentication.SessionAuthentication',
-    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     # ],
@@ -139,3 +146,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': True,
+}

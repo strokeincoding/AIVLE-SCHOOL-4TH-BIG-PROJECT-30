@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // useNavigate 훅을 임포트합니다.
-
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 const CreatePost = () => {
   const [newPost, setNewPost] = useState({ title: '', body: '' });
-  const navigate = useNavigate(); // useNavigate 훅을 사용합니다.
+  const navigate = useNavigate();
+
+  // 이 부분은 인증 토큰을 어디서 가져오는지에 따라 달라집니다.
+  // 예를 들어, localStorage에서 토큰을 가져오는 경우:
+  const yourAuthToken = localStorage.getItem('token');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -13,9 +16,14 @@ const CreatePost = () => {
 
   const addPost = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/post/post/', newPost);
+      const response = await axios.post('http://localhost:8000/post/post/', newPost, {
+        headers: {
+          'Authorization': `Bearer ${yourAuthToken}`  // 헤더에 토큰 추가
+          
+        }
+      });
+
       if (response.status === 201) {
-        // Post가 성공적으로 추가된 후 PostList 페이지로 리다이렉트합니다.
         navigate('/post');
       } else {
         console.error('Failed to add post');

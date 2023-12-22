@@ -21,11 +21,19 @@ from django.conf.urls.static import static
 from django.shortcuts import render
 
 from django.urls import path, include
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView,
+    TokenBlacklistView
+)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('post/', include('post.urls')),
     path('user/', include('user.urls')),
-    # path('api/', include('user.urls')),
+    path('user/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('user/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('user/token/logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
  ]
