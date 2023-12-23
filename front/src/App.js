@@ -24,7 +24,6 @@ const AuthRoutes = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
       {isLoggedIn ? (
         <>
           <Route path="/post" element={<Post />} />
@@ -32,6 +31,7 @@ const AuthRoutes = () => {
         </>
       ) : (
         <>
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
         </>

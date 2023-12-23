@@ -45,16 +45,15 @@ const Categories = () => {
     <div>
       <header>
         <CategoriesBlock>
-          <Category to="/">홈</Category>
           {!isLoggedIn && (
             <>
+              <Category to="/">홈</Category>
               <Category to="/login">로그인</Category>
               <Category to="/join">회원가입</Category>
             </>
           )}
           {isLoggedIn && (
             <>
-              <Category to="/post">게시물</Category>
               {/* 로그아웃 기능을 수행하는 Category 컴포넌트 */}
               <Category as="div" onClick={handleLogout}>로그아웃</Category>
             </>

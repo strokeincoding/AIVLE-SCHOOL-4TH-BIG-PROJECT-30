@@ -1,0 +1,54 @@
+.card {
+  display: flex;
+  height: 400px; 
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.163);
+  overflow: hidden;
+  max-width: 700px; /* Adjust the width of the card */
+  margin: auto;
+}
+
+.card-image-wrapper {
+  flex-basis: 50%; /* Adjust the width of the image area */
+}
+
+.card-image {
+  width: 100%;
+  object-fit: cover; /* Ensures that the image covers the div completely */
+  height: auto; /* Adjust the height as needed, or use object-fit */
+}
+
+.card-content {
+  flex-basis: 50%; /* Adjust the width of the text area */
+  padding: 20px;
+  text-align: left; /* Aligns the text to the left */
+}
+
+.card-title {
+  color: #000000f1;
+  margin-bottom: 16px;
+  font-size: 18px; /* Adjust the font size as needed */
+}
+
+.card-text {
+  color: #000000f1;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.card-button {
+  background-color: #000000f1;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.card-button:hover {
+  background-color: darken(#000000f1, 10%);
+}

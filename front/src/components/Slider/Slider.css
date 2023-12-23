@@ -1,0 +1,76 @@
+.slider-container {
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #F5F5F5 0%, #F5F5F5 100%);
+    padding: 50px; /* Increased padding */
+
+   
+  }
+  
+  .slider {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .slide {
+    min-width: 100%;
+    box-sizing: border-box;
+    transform: skewX(10deg);
+    position: relative;
+    background: #fff;
+    border-radius: 50px; /* Increased border radius */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* Increased shadow for depth */
+    padding: 90px; /* Increased padding inside each slide for larger content */
+  }
+  
+  /* Increase the size and visibility of the navigation buttons */
+  .leftBtn, .rightBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 0; /* Padding removed because width and height are specified */
+    cursor: pointer;
+    font-size: 2rem; /* Increased font size */
+    border-radius: 50%;
+    width: 60px; /* Increased width */
+    height: 60px; /* Increased height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .leftBtn:hover, .rightBtn:hover {
+    background-color: #dddddd;
+    transform: scale(1.2) translateY(-50%); /* Larger scale on hover */
+  }
+  
+  .leftBtn {
+    left: 30px; /* Increased distance from the edge */
+  }
+  
+  .rightBtn {
+    right: 30px; /* Increased distance from the edge */
+  }
+  
+  /* Adjustments for navigation dots */
+  .dots {
+    bottom: 30px; /* Increased distance from the bottom */
+  }
+  
+  .dot {
+    height: 15px; /* Increased dot size */
+    width: 15px; /* Increased dot size */
+    margin: 0 6px; /* Adjust spacing between dots */
+  }
+  
+  /* Adjust text size and positioning for readability */
+  .text-wrap h5, .text-wrap h1, .text-wrap h4 {
+    font-size: larger; /* Increased font size */
+    /* You may need to adjust line-height, margins, etc. */
+  }
