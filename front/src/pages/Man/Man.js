@@ -9,25 +9,40 @@ const Man = () => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   const apiUrl = 'http://127.0.0.1:8000/chat-gpt/';
+  //   const fetchData = async () => {
+  //     setIsLoading(true); // 로딩 시작
+  //     try {
+  //       const response = await fetch(apiUrl);
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       const data = await response.json();
+  //       setData(data);
+  //     } catch (error) {
+  //       console.error('Error fetching data: ', error);
+  //     }
+  //     setIsLoading(false); // 로딩 완료
+  //   };
+  //   fetchData();
+  // }, []);
+  const fetchData = async () => {
     const apiUrl = 'http://127.0.0.1:8000/chat-gpt/';
-    const fetchData = async () => {
-      setIsLoading(true); // 로딩 시작
-      try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setData(data);
-      } catch (error) {
-        console.error('Error fetching data: ', error);
+    setIsLoading(true);
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-      setIsLoading(false); // 로딩 완료
-    };
-    fetchData();
-  }, []);
-
+      const data = await response.json();
+      setData(data);
+      console.log(data);
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
+    setIsLoading(false);
+  };
   // 데이터가 있을 경우에만 키 추출
   let dataKeys = data ? Object.keys(data) : [];
 
@@ -61,9 +76,41 @@ const Man = () => {
         "5,0": data[dataKeys[0]]?.[5] ?? '',
         "5,1": data[dataKeys[0]]?.[6] ?? '',
         "5,2": data[dataKeys[0]]?.[7] ?? '',
+        // 두번째
+        "0,3": data[dataKeys[3]]?.[0] ?? '',
+        "0,4": data[dataKeys[3]]?.[1] ?? '',
+        "0,5": data[dataKeys[3]]?.[2] ?? '',
+        "1,3": data[dataKeys[3]]?.[3] ?? '',
+        "1,5": data[dataKeys[3]]?.[4] ?? '',
+        "2,3": data[dataKeys[3]]?.[5] ?? '',
+        "2,4": data[dataKeys[3]]?.[6] ?? '',
+        "2,5": data[dataKeys[3]]?.[7] ?? '',
+        // 세번째
+        "3,6": data[dataKeys[2]]?.[0] ?? '',
+        "3,7": data[dataKeys[2]]?.[1] ?? '',
+        "3,8": data[dataKeys[2]]?.[2] ?? '',
+        "4,6": data[dataKeys[2]]?.[3] ?? '',
+        "4,8": data[dataKeys[2]]?.[4] ?? '',
+        "5,6": data[dataKeys[2]]?.[5] ?? '',
+        "5,7": data[dataKeys[2]]?.[6] ?? '',
+        "5,8": data[dataKeys[2]]?.[7] ?? '',
+        // 네번째
+        "6,3": data[dataKeys[1]]?.[0] ?? '',
+        "6,4": data[dataKeys[1]]?.[1] ?? '',
+        "6,5": data[dataKeys[1]]?.[2] ?? '',
+        "7,3": data[dataKeys[1]]?.[3] ?? '',
+        "7,5": data[dataKeys[1]]?.[4] ?? '',
+        "8,3": data[dataKeys[1]]?.[5] ?? '',
+        "8,4": data[dataKeys[1]]?.[6] ?? '',
+        "8,5": data[dataKeys[1]]?.[7] ?? '',
+
       });
     }
   }, [data]);
+
+  const handleButtonClick = () => {
+    fetchData();
+  };
 
   const handleInputChange1 = (value) => setSharedValue1(value);
   const handleInputChange2 = (value) => setSharedValue2(value);
@@ -143,7 +190,9 @@ const Man = () => {
 
   return (
     <div>
-      <h1 className="mandalart-guide-title">만다라트 가이드</h1> {/* 만다라트 가이드 제목 */}
+      <h1 className="mandalart-guide-title">만다라트 가이드</h1>
+      <button onClick={handleButtonClick}>만다라트 생성</button>
+      {isLoading && <p>Loading...</p>}
       <div className="table-container">
         <table className="square-table">
           <tbody>
