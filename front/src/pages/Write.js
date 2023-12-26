@@ -1,6 +1,31 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import Button from './ui/Button';
+
+
+
+
+const Wrapper = styled.div`
+    padding: 16px;
+    width: calc(100% - 32px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+const Container = styled.div`
+    width: 100%;
+    max-width: 720px;
+
+    :not(:last-child) {
+        margin-bottom: 16px;
+    }
+`;
+
+
 const CreatePost = () => {
   const [newPost, setNewPost] = useState({ title: '', body: '' });
   const navigate = useNavigate();
@@ -34,34 +59,38 @@ const CreatePost = () => {
   };
 
   return (
-    <div>
-      <h1>Add a New Post</h1>
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        addPost();
-      }}>
-        <label>
-          Title:
-          <input
-            type="text"
-            name="title"
-            value={newPost.title}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <label>
-          Body:
-          <textarea
-            name="body"
-            value={newPost.body}
-            onChange={handleInputChange}
-          />
-        </label>
-        <br />
-        <button type="submit">Add Post</button>
-      </form>
-    </div>
+    <Wrapper>
+      <Container>
+        <h1>Add a New Post</h1>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          addPost();
+        }}>
+          <label>
+            Title:
+            <input
+              type="text"
+              name="title"
+              height={20}
+              value={newPost.title}
+              onChange={handleInputChange}
+            />
+          </label>
+          <br />
+          <label>
+            Body:
+            <textarea
+              name="body"
+              height={480}
+              value={newPost.body}
+              onChange={handleInputChange}
+            />
+          </label>
+          <br />
+          <Button title='Add Post' type="submit"/>
+        </form>
+      </Container>
+    </Wrapper>
   );
 };
 
