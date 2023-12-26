@@ -6,6 +6,7 @@ import CommonTableRow from '../components/table/CommonTableRow';
 import CommonTable from '../components/table/CommonTable';
 import '../components/table/CommonTable.css';
 
+
 const Post = () => {
   // State to store the list of posts
   const [posts, setPosts] = useState([]);
@@ -30,22 +31,25 @@ const Post = () => {
   const navigateToCreatePost = () => {
     navigate('/create-post');
   };
-
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0]; // Formats the date to 'YYYY-MM-DD'
+  };
   return (
     <>
-      <button onClick={navigateToCreatePost}>Create New Post</button>
-      <CommonTable headersName={['글번호', '제목', '등록일', '조회수']}>
+      <CommonTable headersName={['글번호', '제목', '등록일','작성자']}>
         {posts.map((post, index) => (
-          <CommonTableRow key={post.no}>
-            <CommonTableColumn>{post.no}</CommonTableColumn>
+          <CommonTableRow key={post.id}>
+            <CommonTableColumn>{post.id}</CommonTableColumn>
             <CommonTableColumn>
-              <Link to={`/postView/${post.no}`}>{post.title}</Link>
+              <Link to={`/post/post/${post.id}`}>{post.title}</Link>
             </CommonTableColumn>
-            <CommonTableColumn>{post.createDate}</CommonTableColumn>
-            <CommonTableColumn>{post.readCount}</CommonTableColumn>
+            <CommonTableColumn>{formatDate(post.created_at)}</CommonTableColumn>
+            <CommonTableColumn>{post.user}</CommonTableColumn>
           </CommonTableRow>
         ))}
       </CommonTable>
+      <button onClick={navigateToCreatePost}>Create New Post</button>
     </>
   );
 };

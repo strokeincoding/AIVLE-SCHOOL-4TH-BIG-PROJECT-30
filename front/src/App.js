@@ -9,6 +9,7 @@ import Write from './pages/Write';
 import Categories from './components/Categories';
 import Sidebar from './components/Sidebar';
 import styled from 'styled-components';
+import PostView from './pages/PostView';
 
 const Layout = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ const AuthRoutes = () => {
       {isLoggedIn ? (
         <>
           <Route path="/post" element={<Post />} />
+          <Route path="/post/post/:no" element={<PostView />} />
           <Route path="/create-post" element={<Write />} />
         </>
       ) : (
