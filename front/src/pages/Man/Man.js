@@ -1,25 +1,69 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Man.css';
 
 let sagazi = ['Softskill', '기술스택', '문제해결능력', '트렌드'];
-let soft = ['스트레스 관리','갈등 관리','협업','머시기']
-const Man = () => {
-  const [sharedValue1, setSharedValue1] = useState(sagazi[0]);
-  const [sharedValue2, setSharedValue2] = useState(sagazi[1]);
-  const [sharedValue3, setSharedValue3] = useState(sagazi[2]);
-  const [sharedValue4, setSharedValue4] = useState(sagazi[3]);
+let soft = ['Softskill', '기술스택', '문제해결능력', '트렌드'];
 
+
+const Man = () => {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+
+  useEffect(() => {
+    const apiUrl = 'http://127.0.0.1:8000/chat-gpt/';
+    const fetchData = async () => {
+      setIsLoading(true); // 로딩 시작
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      }
+      setIsLoading(false); // 로딩 완료
+    };
+    fetchData();
+  }, []);
+
+  // 데이터가 있을 경우에만 키 추출
+  let dataKeys = data ? Object.keys(data) : [];
+
+  // 상태 초기값을 관리하면서 dataKeys의 값에 따라 업데이트
+  const [sharedValue1, setSharedValue1] = useState('');
+  const [sharedValue2, setSharedValue2] = useState('');
+  const [sharedValue3, setSharedValue3] = useState('');
+  const [sharedValue4, setSharedValue4] = useState('');
+
+  // 데이터가 로드된 후에 sharedValues를 설정
+  useEffect(() => {
+    if (dataKeys.length > 0) {
+      setSharedValue1(dataKeys[0] ?? '');
+      setSharedValue2(dataKeys[1] ?? '');
+      setSharedValue3(dataKeys[2] ?? '');
+      setSharedValue4(dataKeys[3] ?? '');
+    }
+  }, [dataKeys]);
+
+
+  const [predefinedValues, setPredefinedValues] = useState({});
   // predefinedValues를 상태로 관리
-  const [predefinedValues, setPredefinedValues] = useState({
-    "3,1": soft[0],
-    "3,0":soft[0],
-    "3,2":soft[0],
-    "4,0": soft[2],
-    "4,2": soft[3],
-    "5,0": soft[1],
-    "5,1": soft[1],
-    "5,2": soft[1],
-  });
+  useEffect(() => {
+    if (data) {
+      setPredefinedValues({
+        "3,0": data[dataKeys[0]]?.[0] ?? '',
+        "3,1": data[dataKeys[0]]?.[1] ?? '',
+        "3,2": data[dataKeys[0]]?.[2] ?? '',
+        "4,0": data[dataKeys[0]]?.[3] ?? '',
+        "4,2": data[dataKeys[0]]?.[4] ?? '',
+        "5,0": data[dataKeys[0]]?.[5] ?? '',
+        "5,1": data[dataKeys[0]]?.[6] ?? '',
+        "5,2": data[dataKeys[0]]?.[7] ?? '',
+      });
+    }
+  }, [data]);
 
   const handleInputChange1 = (value) => setSharedValue1(value);
   const handleInputChange2 = (value) => setSharedValue2(value);
@@ -50,8 +94,7 @@ const Man = () => {
           placeholder=" "
         />
       );
-    }
-
+    } 
     // 공유 값에 따라 입력란을 렌더링
     if ((rowIndex === 4 && colIndex === 1) || (rowIndex === 4 && colIndex === 3)) {
       return (

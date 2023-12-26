@@ -1,7 +1,7 @@
 DATABASES = { 
 	'default': { 
     	'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'test2', 
+        'NAME': 'bigproject', 
         'USER': 'root', 
         'PASSWORD': 'aivle', 
         'HOST': '127.0.0.1', 
@@ -10,3 +10,5 @@ DATABASES = {
 }
 
 SECRET_KEY = 'django-insecure-rgjvrok3^!pfx8jh+g5e%p10@@+s&^73^+a!^f@&-p619di(4t'
+
+OPEN_API_KEY = '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'
