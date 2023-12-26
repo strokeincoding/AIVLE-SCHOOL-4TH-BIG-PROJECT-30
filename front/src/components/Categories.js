@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 
 const CategoriesBlock = styled.div`
   display: flex;
+  justify-content: flex-end; /* Align items to the right */
   padding: 1rem;
   width: 768px;
   margin: 0 auto;

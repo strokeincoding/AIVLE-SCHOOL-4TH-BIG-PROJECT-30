@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Join from './pages/Join';
 import Post from './pages/Post';
 import Write from './pages/Write';
+import Man from './pages/Man/Man';
 import Categories from './components/Categories';
 import Sidebar from './components/Sidebar';
 import styled from 'styled-components';
@@ -28,6 +29,8 @@ const AuthRoutes = () => {
         <>
           <Route path="/post" element={<Post />} />
           <Route path="/create-post" element={<Write />} />
+          <Route path="/man" element={<Man />} />
+
         </>
       ) : (
         <>
