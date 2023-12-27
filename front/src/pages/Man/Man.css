@@ -1,8 +1,18 @@
+.container {
+  text-align: center; /* 모든 내용을 중앙 정렬 */
+}
+
+.button-container {
+  margin: 20px 0; /* 버튼과 로딩 메시지 주변 공간 추가 */
+}
+
 .table-container {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  margin-top: 20px; /* 버튼 아래에 공간 추가 */
+  animation: fadeIn 1s ease-out; /* 'fade in' 애니메이션 추가 */
 }
 
 .mandalart-guide-title {
@@ -37,4 +47,14 @@
 /* 입력란에 값이 있을 때의 스타일 */
 .mandalart-input:not(:placeholder-shown) {
   background-color: white; /* 밝은 배경색 */
+}
+
+/* 'fade in' 애니메이션 정의 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

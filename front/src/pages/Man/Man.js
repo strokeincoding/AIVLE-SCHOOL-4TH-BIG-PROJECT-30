@@ -1,31 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import './Man.css';
 
-let sagazi = ['Softskill', '기술스택', '문제해결능력', '트렌드'];
-
 const Man = () => {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+  // 초기 상태 설정 시 로컬 스토리지에서 데이터 로드
+  const [data, setData] = useState(() => {
+    const savedData = localStorage.getItem('mandalartData');
+    return savedData ? JSON.parse(savedData) : null;
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [showMandalart, setShowMandalart] = useState(localStorage.getItem('mandalartData') ? true : false);
 
-  // useEffect(() => {
-  //   const apiUrl = 'http://127.0.0.1:8000/chat-gpt/';
-  //   const fetchData = async () => {
-  //     setIsLoading(true); // 로딩 시작
-  //     try {
-  //       const response = await fetch(apiUrl);
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       const data = await response.json();
-  //       setData(data);
-  //     } catch (error) {
-  //       console.error('Error fetching data: ', error);
-  //     }
-  //     setIsLoading(false); // 로딩 완료
-  //   };
-  //   fetchData();
-  // }, []);
+  // API 호출 함수
   const fetchData = async () => {
     const apiUrl = 'http://127.0.0.1:8000/chat-gpt/';
     setIsLoading(true);
@@ -36,16 +21,20 @@ const Man = () => {
       }
       const data = await response.json();
       setData(data);
-      console.log(data);
+      setShowMandalart(true); // 데이터 로드 후 만다라트 표시
+      localStorage.setItem('mandalartData', JSON.stringify(data)); // 로컬 스토리지에 데이터 저장
     } catch (error) {
       console.error('Error fetching data: ', error);
+      setShowMandalart(false); // 에러 발생시 만다라트 표시 안 함
     }
     setIsLoading(false);
   };
-  // 데이터가 있을 경우에만 키 추출
-  let dataKeys = data ? Object.keys(data) : [];
 
-  // 상태 초기값을 관리하면서 dataKeys의 값에 따라 업데이트
+  // 데이터가 있을 경우에만 키 추출
+  const dataKeys = useMemo(() => {
+    return data ? Object.keys(data) : [];
+  }, [data]); // useMemo를 사용하여 dataKeys를 메모이제이션
+
   const [sharedValue1, setSharedValue1] = useState('');
   const [sharedValue2, setSharedValue2] = useState('');
   const [sharedValue3, setSharedValue3] = useState('');
@@ -60,65 +49,6 @@ const Man = () => {
       setSharedValue4(dataKeys[3] ?? '');
     }
   }, [dataKeys]);
-
-
-  const [predefinedValues, setPredefinedValues] = useState({});
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
-
-  // useEffect(() => {
-  //   const apiUrl = 'http://127.0.0.1:8000/chat-gpt/';
-  //   const fetchData = async () => {
-  //     setIsLoading(true); // 로딩 시작
-  //     try {
-  //       const response = await fetch(apiUrl);
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       const data = await response.json();
-  //       setData(data);
-  //     } catch (error) {
-  //       console.error('Error fetching data: ', error);
-  //     }
-  //     setIsLoading(false); // 로딩 완료
-  //   };
-  //   fetchData();
-  // }, []);
-  const fetchData = async () => {
-    const apiUrl = 'http://127.0.0.1:8000/chat-gpt/';
-    setIsLoading(true);
-    try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      setData(data);
-      console.log(data);
-    } catch (error) {
-      console.error('Error fetching data: ', error);
-    }
-    setIsLoading(false);
-  };
-  // 데이터가 있을 경우에만 키 추출
-  let dataKeys = data ? Object.keys(data) : [];
-
-  // 상태 초기값을 관리하면서 dataKeys의 값에 따라 업데이트
-  const [sharedValue1, setSharedValue1] = useState('');
-  const [sharedValue2, setSharedValue2] = useState('');
-  const [sharedValue3, setSharedValue3] = useState('');
-  const [sharedValue4, setSharedValue4] = useState('');
-
-  // 데이터가 로드된 후에 sharedValues를 설정
-  useEffect(() => {
-    if (dataKeys.length > 0) {
-      setSharedValue1(dataKeys[0] ?? '');
-      setSharedValue2(dataKeys[1] ?? '');
-      setSharedValue3(dataKeys[2] ?? '');
-      setSharedValue4(dataKeys[3] ?? '');
-    }
-  }, [dataKeys]);
-
 
   const [predefinedValues, setPredefinedValues] = useState({});
   // predefinedValues를 상태로 관리
@@ -163,7 +93,7 @@ const Man = () => {
 
       });
     }
-  }, [data]);
+  }, [data,dataKeys]);
 
   const handleButtonClick = () => {
     fetchData();
@@ -251,23 +181,27 @@ const Man = () => {
   };
 
   return (
-    <div>
-      <h1 className="mandalart-guide-title">만다라트 가이드</h1>
-      <button onClick={handleButtonClick}>만다라트 생성</button>
-      {isLoading && <p>Loading...</p>}
-      <div className="table-container">
-        <table className="square-table">
-          <tbody>
-            {[...Array(9)].map((_, rowIndex) => (
-              <tr key={rowIndex}>
-                {[...Array(9)].map((_, colIndex) => (
-                  <td key={colIndex}>{renderCell(rowIndex, colIndex)}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <div className="container">
+        <h1 className="mandalart-guide-title">만다라트 가이드</h1>
+        <div className="button-container">
+          <button onClick={handleButtonClick}>만다라트 생성</button>
+          {isLoading && <p>Loading...</p>}
+        </div>
+        {showMandalart && (
+          <div className="table-container fadeIn">
+            <table className="square-table">
+            <tbody>
+              {[...Array(9)].map((_, rowIndex) => (
+                <tr key={rowIndex}>
+                  {[...Array(9)].map((_, colIndex) => (
+                    <td key={colIndex}>{renderCell(rowIndex, colIndex)}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

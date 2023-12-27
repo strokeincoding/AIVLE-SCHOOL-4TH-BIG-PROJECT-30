@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }) => {
   // 애플리케이션 로드 시 로그인 상태 확인
   useEffect(() => {
     const token = localStorage.getItem('token');
+    localStorage.removeItem('mandalartData');
     setLoggedIn(!!token);
   }, []);
 
