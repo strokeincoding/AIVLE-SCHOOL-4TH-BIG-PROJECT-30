@@ -17,12 +17,13 @@ const Man = () => {
   // API 호출 함수
   const fetchData = async () => {
     const nickname = getCookieValue('nickname'); // 쿠키에서 userId 가져오기
+    console.log(nickname);
     if (!nickname || nickname === 'undefined') {
       console.error('User ID is not found or undefined');
       return; // userId가 없거나 'undefined'인 경우 함수를 종료합니다.
     }
 
-    const apiUrl = `http://127.0.0.1:8000/chat-gpt/?user_id=${nickname}`;
+    const apiUrl = `http://127.0.0.1:8000/chat-gpt/?nickname=${nickname}`;
     setIsLoading(true);
     try {
       const response = await fetch(apiUrl);
