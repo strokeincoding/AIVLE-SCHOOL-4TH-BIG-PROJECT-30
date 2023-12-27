@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './Man.css';
 
 let sagazi = ['Softskill', '기술스택', '문제해결능력', '트렌드'];
-let soft = ['Softskill', '기술스택', '문제해결능력', '트렌드'];
-
 
 const Man = () => {
   const [data, setData] = useState(null);
@@ -125,7 +123,7 @@ const Man = () => {
   const renderCell = (rowIndex, colIndex) => {
     const cellKey = `${rowIndex},${colIndex}`;
     const specialStyle = (
-      (rowIndex === 4 && colIndex === 1 && sharedValue1) || 
+      (rowIndex === 4 && colIndex === 1 && sharedValue1) ||
       (rowIndex === 7 && colIndex === 4 && sharedValue2) ||
       (rowIndex === 4 && colIndex === 7 && sharedValue3) ||
       (rowIndex === 1 && colIndex === 4 && sharedValue4)
@@ -134,6 +132,7 @@ const Man = () => {
     if (predefinedValues.hasOwnProperty(cellKey)) {
       return (
         <input
+          className="mandalart-input"
           type="text"
           value={predefinedValues[cellKey]}
           onChange={(e) => handlePredefinedValueChange(cellKey, e.target.value)}
@@ -146,6 +145,7 @@ const Man = () => {
     if ((rowIndex === 4 && colIndex === 1) || (rowIndex === 4 && colIndex === 3)) {
       return (
         <input
+          className="mandalart-input"
           type="text"
           value={sharedValue1}
           onChange={(e) => handleInputChange1(e.target.value)}
@@ -156,6 +156,7 @@ const Man = () => {
     } else if ((rowIndex === 5 && colIndex === 4) || (rowIndex === 7 && colIndex === 4)) {
       return (
         <input
+          className="mandalart-input"
           type="text"
           value={sharedValue2}
           onChange={(e) => handleInputChange2(e.target.value)}
@@ -166,6 +167,7 @@ const Man = () => {
     } else if ((rowIndex === 4 && colIndex === 5) || (rowIndex === 4 && colIndex === 7)) {
       return (
         <input
+          className="mandalart-input"
           type="text"
           value={sharedValue3}
           onChange={(e) => handleInputChange3(e.target.value)}
@@ -176,6 +178,7 @@ const Man = () => {
     } else if ((rowIndex === 1 && colIndex === 4) || (rowIndex === 3 && colIndex === 4)) {
       return (
         <input
+          className="mandalart-input"
           type="text"
           value={sharedValue4}
           onChange={(e) => handleInputChange4(e.target.value)}
@@ -184,7 +187,7 @@ const Man = () => {
         />
       );
     } else {
-      return <input type="text" placeholder=" " />;
+      return <input className="mandalart-input" type="text" placeholder=" " />;
     }
   };
 

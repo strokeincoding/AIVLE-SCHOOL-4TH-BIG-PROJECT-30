@@ -1,12 +1,13 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useAuth } from './context/AuthContext'; // AuthProvider 임포트 제거
+import { useAuth } from './context/AuthContext';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Join from './pages/Join';
 import Post from './pages/Post';
 import Write from './pages/Write';
 import Man from './pages/Man/Man';
+import Chatbot from './components/ChatbotPopup/Chatbot'
 import Categories from './components/Categories';
 import Sidebar from './components/Sidebar';
 import styled from 'styled-components';
@@ -32,7 +33,6 @@ const AuthRoutes = () => {
           <Route path="/post/post/:no" element={<PostView />} />
           <Route path="/create-post" element={<Write />} />
           <Route path="/man" element={<Man />} />
-
         </>
       ) : (
         <>
@@ -58,6 +58,7 @@ const App = () => {
           <AuthRoutes />
         </Content>
       </Layout>
+      <Chatbot /> {/* 챗봇 컴포넌트를 Layout 컴포넌트 밖에 배치 */}
     </>
   );
 };
