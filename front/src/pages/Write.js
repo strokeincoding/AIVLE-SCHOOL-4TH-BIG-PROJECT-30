@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from './ui/Button';
+import ImageUploadExample from './ImageUploadExample';
 
 
 
@@ -87,6 +88,7 @@ const CreatePost = () => {
             />
           </label>
           <br />
+          <ImageUploadExample />
           <Button title='Add Post' type="submit"/>
         </form>
       </Container>

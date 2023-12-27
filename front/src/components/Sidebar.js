@@ -9,7 +9,6 @@ const Side = styled.div`
   border-right: 1px solid #e0e0e0;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 20%;
 `
 const Profile = styled.img`
