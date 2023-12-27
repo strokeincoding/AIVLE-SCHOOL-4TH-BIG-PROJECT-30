@@ -5,10 +5,9 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  // localStorage에서 토큰을 확인하여 초기 로그인 상태 설정
   const [isLoggedIn, setLoggedIn] = useState(() => {
     const token = localStorage.getItem('token');
-    return !!token; // token이 있으면 true, 없으면 false 반환
+    return !!token; // 토큰이 있으면 true, 없으면 false 반환
   });
 
   const login = async (nickname, password, onSuccess, onError) => {
@@ -25,6 +24,8 @@ export const AuthProvider = ({ children }) => {
         const data = await response.json();
         localStorage.setItem('token', data.access);
         setLoggedIn(true);
+        // 쿠키에 userId 설정
+        document.cookie = `nickname=${nickname}; path=/`;
         if (onSuccess) onSuccess();
       } else {
         if (onError) onError('Invalid username or password');
@@ -36,13 +37,15 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('mandalartData');
     setLoggedIn(false);
+    // 쿠키에서 userId 제거
+    document.cookie = 'userId=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
   };
 
   // 애플리케이션 로드 시 로그인 상태 확인
   useEffect(() => {
     const token = localStorage.getItem('token');
-    localStorage.removeItem('mandalartData');
     setLoggedIn(!!token);
   }, []);
 

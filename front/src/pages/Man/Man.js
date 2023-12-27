@@ -2,7 +2,6 @@ import React, { useEffect, useState, useMemo } from 'react';
 import './Man.css';
 
 const Man = () => {
-  // 초기 상태 설정 시 로컬 스토리지에서 데이터 로드
   const [data, setData] = useState(() => {
     const savedData = localStorage.getItem('mandalartData');
     return savedData ? JSON.parse(savedData) : null;
@@ -10,9 +9,20 @@ const Man = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showMandalart, setShowMandalart] = useState(localStorage.getItem('mandalartData') ? true : false);
 
+  const getCookieValue = (name) => (
+    document.cookie.split('; ').find(row => row.startsWith(name + '='))
+    ?.split('=')[1]
+  );
+
   // API 호출 함수
   const fetchData = async () => {
-    const apiUrl = 'http://127.0.0.1:8000/chat-gpt/';
+    const nickname = getCookieValue('nickname'); // 쿠키에서 userId 가져오기
+    if (!nickname || nickname === 'undefined') {
+      console.error('User ID is not found or undefined');
+      return; // userId가 없거나 'undefined'인 경우 함수를 종료합니다.
+    }
+
+    const apiUrl = `http://127.0.0.1:8000/chat-gpt/?user_id=${nickname}`;
     setIsLoading(true);
     try {
       const response = await fetch(apiUrl);
