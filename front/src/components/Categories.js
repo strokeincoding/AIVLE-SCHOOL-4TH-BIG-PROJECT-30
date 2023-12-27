@@ -6,10 +6,11 @@ import { useAuth } from '../context/AuthContext';
 
 const CategoriesBlock = styled.div`
   display: flex;
-  justify-content: flex-end; /* Align items to the right */
+  justify-content: flex-end; /* 항목들을 오른쪽으로 정렬 */
   padding: 1rem;
-  width: 768px;
+  margin-right: 100px; /* 오른쪽에서 20px 떨어진 위치 */
   margin: 0 auto;
+
   @media screen and (max-width: 768px) {
     width: 100%;
     overflow-x: auto;
