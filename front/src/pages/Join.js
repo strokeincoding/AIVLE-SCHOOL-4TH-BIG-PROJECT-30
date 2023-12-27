@@ -9,9 +9,10 @@ function Register() {
         name: '',
         password: '',
         cover_letter: '',
-        occupation: '',
+        occupation: [], // 선호 직종을 배열로 초기화
         technology_stacks: []  // 기술 스택을 배열로 초기화
     });
+    const [occupation, setOccupation] = useState([]);  // 선호 직종 상태
     const [techStacks, setTechStacks] = useState([]);  // 기술 스택 상태
     const navigate = useNavigate();
     // 기술 스택 데이터 불러오기
@@ -25,7 +26,16 @@ function Register() {
             });
     }, []);  // 빈 의존성 배열로 마운트 시에만 호출
 
-    
+    // 선호 직종 데이터 불러오기
+    useEffect(() => {
+        fetch('http://localhost:8000/user/Occupation/')
+            .then(response => response.json())
+            .then(data => setOccupation(data))
+            .catch(error => {
+            // 에러 처리
+                console.error('Error fetching tech stacks:', error);
+            });
+    }, []);  // 빈 의존성 배열로 마운트 시에만 호출
 
     // CSRF 토큰을 가져오는 함수
     const getCsrfToken = () => {
@@ -64,6 +74,19 @@ function Register() {
             console.error('Error handling tech stack change:', error);
         }
     };
+    const handleOccupationChange = (e) => {
+        try {
+            // 선택된 선호 직종의 ID를 배열로 변환
+            const selectedocupp = Array.from(e.target.selectedOptions, option => parseInt(option.value));
+            setFormData({
+                ...formData,
+                occupation: selectedocupp,
+            });
+        } catch (error) {
+            // 에러 처리
+            console.error('Error handling tech stack change:', error);
+        }
+    };
     const handleSubmit = (e) => {
       e.preventDefault();
       const csrftoken = getCsrfToken();
@@ -90,7 +113,11 @@ function Register() {
             <input type="text" name="name" onChange={handleChange} placeholder="Name" />
             <input type="password" name="password" onChange={handleChange} placeholder="Password" />
             <textarea name="cover_letter" onChange={handleChange} placeholder="Cover Letter"></textarea>
-            <input type="text" name="occupation" onChange={handleChange} placeholder="Occupation" />
+            <select multiple name="occupation" onChange={handleOccupationChange}>
+                {occupation.map(occup => (
+                    <option key={occup.id} value={occup.id}>{occup.occupation_name}</option>
+                ))}
+            </select>
             <select multiple name="technology_stacks" onChange={handleTechStackChange}>
                 {techStacks.map(stack => (
                     <option key={stack.id} value={stack.id}>{stack.stack_name}</option>

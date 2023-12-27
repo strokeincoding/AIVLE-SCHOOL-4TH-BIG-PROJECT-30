@@ -15,13 +15,16 @@ class UserManager(BaseUserManager):
             nickname = nickname,
             name = name,
             cover_letter = cover_letter,  # 자기소개서 추가
-            occupation = occupation       # 선호 직업 추가
         )
         user.set_password(password)
         user.save(using=self._db)
-        
+        # 기술스택
         if technology_stacks:
             user.technology_stacks.set(technology_stacks)
+            user.save(using=self._db)
+        # 선호 직종
+        if occupation:
+            user.occupation.set(occupation)
             user.save(using=self._db)
             
         return user
@@ -34,13 +37,16 @@ class UserManager(BaseUserManager):
             nickname = nickname,
             name = name,
             cover_letter=cover_letter,  # 자기소개서 추가
-            occupation=occupation       # 직업 추가
         )
         user.is_staff = True  # 관리자 사이트 접근 권한
         user.is_superuser = True  # 모든 권한 부여
         # 기술 스택 설정
         if technology_stacks:
             user.technology_stacks.set(technology_stacks)
+        user.save(using=self._db)
+        # 선호 직종
+        if occupation:
+            user.occupation.set(occupation)
         user.save(using=self._db)
         return user
 
@@ -50,7 +56,7 @@ class User(AbstractBaseUser):
     nickname = models.CharField(default='', max_length=100, null=False, blank=False, unique=True)
     name = models.CharField(default='', max_length=100, null=False, blank=False)
     cover_letter = models.TextField(default='', blank=True, null=True)  # 자기소개서 추가
-    occupation = models.CharField(default='', max_length=100, blank=True, null=True)  # 선호 직업 추가
+    occupation = models.ManyToManyField('Occupation', blank=True)  # 선호 직종 추가(다대다 필드)
     technology_stacks = models.ManyToManyField('TechnologyStack', blank=True) # 기술 스택 추가(다대다 필드)
     # User 모델의 필수 field
     is_active = models.BooleanField(default=True)    
@@ -79,3 +85,9 @@ class TechnologyStack(models.Model):
 
     def __str__(self):
         return self.stack_name
+    
+class Occupation(models.Model):
+    occupation_name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.occupation_name
