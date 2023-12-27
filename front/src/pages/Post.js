@@ -5,29 +5,26 @@ import CommonTableColumn from '../components/table/CommonTableColumn';
 import CommonTableRow from '../components/table/CommonTableRow';
 import CommonTable from '../components/table/CommonTable';
 import '../components/table/CommonTable.css';
+import Button from './ui/Button';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 
 const Post = () => {
-  // State to store the list of posts
   const [posts, setPosts] = useState([]);
 
-  // Hook to access the navigation function
   const navigate = useNavigate();
-
-  // useEffect hook to fetch posts from the server when the component mounts
+  
   useEffect(() => {
     axios.get('http://localhost:8000/post/post/')
       .then(response => {
-        // Update the state with the fetched posts
         setPosts(response.data);
       })
       .catch(error => {
-        // Log an error if the request fails
         console.error(error);
       });
-  }, []); // The empty dependency array ensures this effect runs once after the initial render
+  }, []); 
 
-  // Function to navigate to the post creation page
   const navigateToCreatePost = () => {
     navigate('/create-post');
   };
@@ -49,7 +46,10 @@ const Post = () => {
           </CommonTableRow>
         ))}
       </CommonTable>
-      <button onClick={navigateToCreatePost}>Create New Post</button>
+      <Button title='Create New Post' onClick={navigateToCreatePost}/>
+      <Stack spacing={2} alignItems="center" justifyContent="center">
+        <Pagination count={10} variant="outlined" shape="rounded" />
+      </Stack>
     </>
   );
 };
