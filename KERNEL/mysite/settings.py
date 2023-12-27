@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'user',
     'post',
+    'chatbot',
     'mandalart',
     'corsheaders',  # CORS 추가
     'rest_framework_simplejwt.token_blacklist',

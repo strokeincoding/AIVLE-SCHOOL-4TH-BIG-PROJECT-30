@@ -1,3 +1,5 @@
+from openai import OpenAI
+
 DATABASES = { 
 	'default': { 
     	'ENGINE': 'django.db.backends.mysql', 

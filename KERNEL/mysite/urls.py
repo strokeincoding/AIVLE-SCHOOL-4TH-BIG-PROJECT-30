@@ -37,4 +37,5 @@ urlpatterns = [
     path('user/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('user/token/logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
     path('chat-gpt/', include('mandalart.urls')),
+    path('chatbot/', include('chatbot.urls'))
  ]

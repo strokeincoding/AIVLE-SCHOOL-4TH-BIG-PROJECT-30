@@ -11,11 +11,28 @@ function ChatbotPopup() {
         setIsOpen(!isOpen);
     };
 
-    const sendMessage = () => {
+    const sendMessage = async () => {
         if (userInput.trim() === '') return;
         const newMessages = [...messages, { text: userInput, sender: 'user' }];
         setMessages(newMessages);
-        // TODO: 서버에 메시지 전송 및 응답 처리
+
+        try {
+            const response = await fetch('http://localhost:8000/chatbot/', {  // API 엔드포인트 URL에 맞게 조정
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userInput })
+            });
+
+            if (!response.ok) {
+                throw new Error('서버 응답 오류');
+            }
+
+            const data = await response.json();
+            setMessages(prevMessages => [...prevMessages, { text: data.reply, sender: 'bot' }]);
+        } catch (error) {
+            console.error('챗봇 통신 오류:', error);
+        }
+
         setUserInput('');
     };
 
