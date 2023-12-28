@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class UserManager(BaseUserManager):
     # 일반 user 생성
-    def create_user(self, email, nickname, name, cover_letter=None, occupation=None, technology_stacks=None,password=None):
+    def create_user(self, email, nickname, name, occupation=None, technology_stacks=None,password=None):
         if not email:
             raise ValueError('must have user email')
         if not nickname:
@@ -14,7 +14,6 @@ class UserManager(BaseUserManager):
             email = self.normalize_email(email),
             nickname = nickname,
             name = name,
-            cover_letter = cover_letter,  # 자기소개서 추가
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -30,13 +29,12 @@ class UserManager(BaseUserManager):
         return user
 
     # 관리자 user 생성
-    def create_superuser(self, email, nickname, name, cover_letter=None, occupation=None, technology_stacks=None,password=None):
+    def create_superuser(self, email, nickname, name, occupation=None, technology_stacks=None,password=None):
         user = self.create_user(
             email,
             password = password,
             nickname = nickname,
             name = name,
-            cover_letter=cover_letter,  # 자기소개서 추가
         )
         user.is_staff = True  # 관리자 사이트 접근 권한
         user.is_superuser = True  # 모든 권한 부여
@@ -55,9 +53,9 @@ class User(AbstractBaseUser):
     email = models.EmailField(default='', max_length=100, null=False, blank=False, unique=True)
     nickname = models.CharField(default='', max_length=100, null=False, blank=False, unique=True)
     name = models.CharField(default='', max_length=100, null=False, blank=False)
-    cover_letter = models.TextField(default='', blank=True, null=True)  # 자기소개서 추가
     occupation = models.ManyToManyField('Occupation', blank=True)  # 선호 직종 추가(다대다 필드)
     technology_stacks = models.ManyToManyField('TechnologyStack', blank=True) # 기술 스택 추가(다대다 필드)
+    env = models.ManyToManyField('Env', blank=True) # 작업환경 추가(다대다 필드)
     # User 모델의 필수 field
     is_active = models.BooleanField(default=True)    
     is_staff = models.BooleanField(default=False)
@@ -91,3 +89,9 @@ class Occupation(models.Model):
 
     def __str__(self):
         return self.occupation_name
+    
+class Env(models.Model):
+    env_name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.env_name

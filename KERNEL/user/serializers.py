@@ -1,4 +1,4 @@
-from .models import User, TechnologyStack, Occupation
+from .models import User, TechnologyStack, Occupation, Env
 from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
@@ -14,22 +14,29 @@ class UserSerializer(serializers.ModelSerializer):
         queryset=Occupation.objects.all(), # 선호 직종을 가져오기 위한 쿼리셋
         required=False
     )
+    # env 필드를 다대다 관계로 정의
+    env = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Env.objects.all(), # 작업 환경을 가져오기 위한 쿼리셋
+        required=False
+    )
     def create(self, validated_data):
         technology_stacks_data = validated_data.pop('technology_stacks', [])
         occupation_data = validated_data.pop('occupation', [])
+        env_data = validated_data.pop('env', [])
         user = User.objects.create_user(
             email = validated_data['email'],
             nickname = validated_data['nickname'],
             name = validated_data['name'],
             password = validated_data['password'],
-            cover_letter=validated_data.get('cover_letter', None),  # 자기소개서 추가
         )
         user.technology_stacks.set(technology_stacks_data)
         user.occupation.set(occupation_data)
+        user.env.set(env_data)
         return user
     class Meta:
         model = User
-        fields = ['nickname', 'email', 'name', 'password','cover_letter', 'occupation','technology_stacks']# 필드에 추가
+        fields = ['nickname', 'email', 'name', 'password', 'occupation','technology_stacks', 'env']# 필드에 추가
         
 class TechnologyStackSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,5 +47,10 @@ class OccupationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Occupation
         fields = ['id', 'occupation_name']
+        
+class EnvSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Env
+        fields = ['id', 'env_name']
      
         

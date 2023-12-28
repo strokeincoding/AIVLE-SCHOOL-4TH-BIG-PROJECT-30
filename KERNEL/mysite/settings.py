@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'user',
     'post',
     'mandalart',
+    'Recommend',
     'corsheaders',  # CORS 추가
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework_simplejwt',

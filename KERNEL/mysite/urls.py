@@ -34,6 +34,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('post/', include('post.urls')),
     path('user/', include('user.urls')),
+    path('recommend/', include('Recommend.urls')),
     path('user/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('user/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('user/token/logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
