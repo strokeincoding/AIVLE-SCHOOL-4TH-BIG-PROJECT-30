@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class UserManager(BaseUserManager):
     # 일반 user 생성
-    def create_user(self, email, nickname, name, occupation=None, technology_stacks=None,password=None):
+    def create_user(self, email, nickname, name, occupation=None, technology_stacks=None,password=None, env=None):
         if not email:
             raise ValueError('must have user email')
         if not nickname:
@@ -25,11 +25,15 @@ class UserManager(BaseUserManager):
         if occupation:
             user.occupation.set(occupation)
             user.save(using=self._db)
+        # 선호 직종
+        if env:
+            user.env.set(env)
+            user.save(using=self._db)
             
         return user
 
     # 관리자 user 생성
-    def create_superuser(self, email, nickname, name, occupation=None, technology_stacks=None,password=None):
+    def create_superuser(self, email, nickname, name, occupation=None, technology_stacks=None,password=None, env=None):
         user = self.create_user(
             email,
             password = password,
@@ -45,6 +49,9 @@ class UserManager(BaseUserManager):
         # 선호 직종
         if occupation:
             user.occupation.set(occupation)
+        user.save(using=self._db)
+        if env:
+            user.env.set(env)
         user.save(using=self._db)
         return user
 

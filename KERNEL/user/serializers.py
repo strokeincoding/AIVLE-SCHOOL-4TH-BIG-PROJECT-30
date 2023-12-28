@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     )
     # occupation 필드를 다대다 관계로 정의
     occupation = serializers.PrimaryKeyRelatedField(
-        allow_null=True,
+        many=True,
         queryset=Occupation.objects.all(), # 선호 직종을 가져오기 위한 쿼리셋
         required=False
     )
