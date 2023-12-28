@@ -8,12 +8,13 @@ function Register() {
         email: '',
         name: '',
         password: '',
-        cover_letter: '',
+        env:[], // 작업 환경을 배열로 초기화
         occupation: [], // 선호 직종을 배열로 초기화
         technology_stacks: []  // 기술 스택을 배열로 초기화
     });
     const [occupation, setOccupation] = useState([]);  // 선호 직종 상태
     const [techStacks, setTechStacks] = useState([]);  // 기술 스택 상태
+    const [env, setEnv] = useState([]);  // 작업 환경 상태
     const navigate = useNavigate();
     // 기술 스택 데이터 불러오기
     useEffect(() => {
@@ -31,6 +32,17 @@ function Register() {
         fetch('http://localhost:8000/user/Occupation/')
             .then(response => response.json())
             .then(data => setOccupation(data))
+            .catch(error => {
+            // 에러 처리
+                console.error('Error fetching tech stacks:', error);
+            });
+    }, []);  // 빈 의존성 배열로 마운트 시에만 호출
+
+    // 작업 환경 데이터 불러오기
+    useEffect(() => {
+        fetch('http://localhost:8000/user/Env/')
+            .then(response => response.json())
+            .then(data => setEnv(data))
             .catch(error => {
             // 에러 처리
                 console.error('Error fetching tech stacks:', error);
@@ -87,6 +99,19 @@ function Register() {
             console.error('Error handling tech stack change:', error);
         }
     };
+    const handleEnvChange = (e) => {
+        try {
+            // 선택된 작업 환경의 ID를 배열로 변환
+            const selectedEnv = Array.from(e.target.selectedOptions, option => parseInt(option.value));
+            setFormData({
+                ...formData,
+                env: selectedEnv,
+            });
+        } catch (error) {
+            // 에러 처리
+            console.error('Error handling tech stack change:', error);
+        }
+    };
     const handleSubmit = (e) => {
       e.preventDefault();
       const csrftoken = getCsrfToken();
@@ -112,7 +137,6 @@ function Register() {
             <input type="email" name="email" onChange={handleChange} placeholder="Email" />
             <input type="text" name="name" onChange={handleChange} placeholder="Name" />
             <input type="password" name="password" onChange={handleChange} placeholder="Password" />
-            <textarea name="cover_letter" onChange={handleChange} placeholder="Cover Letter"></textarea>
             <select multiple name="occupation" onChange={handleOccupationChange}>
                 {occupation.map(occup => (
                     <option key={occup.id} value={occup.id}>{occup.occupation_name}</option>
@@ -121,6 +145,11 @@ function Register() {
             <select multiple name="technology_stacks" onChange={handleTechStackChange}>
                 {techStacks.map(stack => (
                     <option key={stack.id} value={stack.id}>{stack.stack_name}</option>
+                ))}
+            </select>
+            <select multiple name="env" onChange={handleEnvChange}>
+                {env.map(env => (
+                    <option key={env.id} value={env.id}>{env.env_name}</option>
                 ))}
             </select>
             <button type="submit">Register</button>
