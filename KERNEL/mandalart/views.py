@@ -16,11 +16,12 @@ def chatGPT(ask, user_occupations):
     for a in ask:
         occupation_names_str = ", ".join(matching_occupation_names)
         
-        mandal = f'{occupation_names_str}로/으로 취업하기 준비해야 할 {a} 8가지를 설명과 예시를 생략하고 간략하게 짧은 키워드로 예시처럼 알려줘 출력 형태 1.키워드1 / 2. 키워드2'
-        completion = client.chat.completions.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": mandal}])
+        mandal = f'{occupation_names_str}로/으로 취업하기 준비해야 할 {a} 8가지를 설명과 예시를 생략하고 간략하게 짧은 키워드로 예시처럼 알려줘 출력 형태 1.키워드1 2. 키워드2 3.키워드3 4. 키워드4 5.키워드5 6. 키워드6 7.키워드7 8. 키워드8'
+        completion = client.chat.completions.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": mandal}], temperature=0)
         content = completion.choices[0].message.content
         lines = content.split('\n')
         keywords[a] = [line.split('.', 1)[-1].strip() for line in lines if line]
+    keywords['job'] = occupation_names_str
     return keywords
 
 class OpenAIView(APIView):

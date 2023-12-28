@@ -3,9 +3,9 @@ from openai import OpenAI
 DATABASES = { 
 	'default': { 
     	'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'test13', 
+        'NAME': 'bigproject2', 
         'USER': 'root', 
-        'PASSWORD': '1234', 
+        'PASSWORD': 'aivle', 
         'HOST': '127.0.0.1', 
         'PORT': '3306', 
      }

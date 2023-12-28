@@ -31,6 +31,7 @@ const Man = () => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
+      console.log(data);
       setData(data);
       setShowMandalart(true); // 데이터 로드 후 만다라트 표시
       localStorage.setItem('mandalartData', JSON.stringify(data)); // 로컬 스토리지에 데이터 저장
@@ -101,6 +102,8 @@ const Man = () => {
         "8,3": data[dataKeys[1]]?.[5] ?? '',
         "8,4": data[dataKeys[1]]?.[6] ?? '',
         "8,5": data[dataKeys[1]]?.[7] ?? '',
+        // 가운데
+        "4,4": data['job'] ?? '',
 
       });
     }
