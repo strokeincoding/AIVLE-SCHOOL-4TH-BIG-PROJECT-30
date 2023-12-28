@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import SidebarItem from "./SidebarItem";
-import profile from "../assets/profile1.png";
+import profile from "../../assets/profile1.png";
 
 const Side = styled.div`
   display: flex;
@@ -36,6 +36,7 @@ function Sidebar() {
   const menus = [
     { name: "나만의 만다르트", path: "/man" },
     { name: "팀 추천", path: "/mylist" },
+    { name: "공모전 게시판", path: "/recommend" },
     { name: "잡다 정보 게시판", path: "/post" },
     { name: "내 정보", path: "/setting"}
   ];

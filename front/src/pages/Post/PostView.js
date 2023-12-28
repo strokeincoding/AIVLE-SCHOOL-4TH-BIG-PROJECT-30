@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './Post.css';
-import Button from './ui/Button';
-import CommentList from '../components/list/CommentList';
+import Button from '../../pages/ui/Button';
+import CommentList from '../../components/list/CommentList';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -122,7 +122,7 @@ const PostView = ({ history, match }) => {
       </Container>
     </Wrapper>
     <button className="post-view-go-list-btn" onClick={() => navigate(-1)}>목록으로 돌아가기</button>
-    <Button title='Delete Post' onClick={deletePost} />
+    <Button title='Delete Post' onClick={deletePost} data={data}/>
     </>
     
   );
