@@ -169,7 +169,6 @@ function Register() {
                 label="coverletter"
                 multiline
                 rows={12}
-                defaultValue="Default Value"
                 required
                 fullWidth
                 name="coverletter"

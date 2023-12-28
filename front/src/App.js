@@ -4,14 +4,17 @@ import { useAuth } from './context/AuthContext';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Join from './pages/Join';
-import Post from './pages/Post';
-import Write from './pages/Write';
+import Post from './pages/Post/Post';
+import Write from './pages/Post/Write';
 import Man from './pages/Man/Man';
 import Chatbot from './components/ChatbotPopup/Chatbot'
 import Categories from './components/Categories';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Sidebar/Sidebar';
 import styled from 'styled-components';
-import PostView from './pages/PostView';
+import PostView from './pages/Post/PostView';
+import Recommend from './pages/Recommend/Recommend';
+import RecommendView from './pages/Recommend/RecommendView';
+import RecommendWrite from './pages/Recommend/RecommendWrite';
 
 const Layout = styled.div`
   display: flex;
@@ -33,6 +36,9 @@ const AuthRoutes = () => {
           <Route path="/post/post/:no" element={<PostView />} />
           <Route path="/create-post" element={<Write />} />
           <Route path="/man" element={<Man />} />
+          <Route path="/recommend" element={<Recommend />} />
+          <Route path="/recommend/recommend/:no" element={<RecommendView />} />
+          <Route path="/RecommendWrite" element={<RecommendWrite />} />
         </>
       ) : (
         <>

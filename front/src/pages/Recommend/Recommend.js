@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import CommonTableColumn from '../components/table/CommonTableColumn';
-import CommonTableRow from '../components/table/CommonTableRow';
-import CommonTable from '../components/table/CommonTable';
-import '../components/table/CommonTable.css';
-import Button from './ui/Button';
+import CommonTableColumn from '../../components/table/CommonTableColumn';
+import CommonTableRow from '../../components/table/CommonTableRow';
+import CommonTable from '../../components/table/CommonTable';
+import '../../components/table/CommonTable.css';
+import Button from '../../pages/ui/Button';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
 
-const Post = () => {
+const Recommend = () => {
   const [posts, setPosts] = useState([]);
 
   const navigate = useNavigate();
   
   useEffect(() => {
-    axios.get('http://localhost:8000/post/post/')
+    axios.get('http://localhost:8000/recommend/recommend/')
       .then(response => {
         setPosts(response.data);
       })
@@ -26,7 +26,7 @@ const Post = () => {
   }, []); 
 
   const navigateToCreatePost = () => {
-    navigate('/create-post');
+    navigate('/RecommendWrite ');
   };
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -54,4 +54,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default Recommend;
