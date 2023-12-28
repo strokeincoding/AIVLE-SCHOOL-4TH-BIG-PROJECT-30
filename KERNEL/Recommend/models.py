@@ -7,7 +7,7 @@ class Recommend(models.Model):
     # 2. 제목
     title = models.CharField(max_length=100)
     # 3. 유저
-    user = models.ForeignKey(User, null=False, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     # 4. 카테고리
     cate = models.TextField()
     # 5. 기술 스택
