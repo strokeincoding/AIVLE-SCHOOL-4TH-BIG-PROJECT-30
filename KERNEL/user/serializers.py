@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     )
     # occupation 필드를 다대다 관계로 정의
     occupation = serializers.PrimaryKeyRelatedField(
-        many=True,
+        allow_null=True,
         queryset=Occupation.objects.all(), # 선호 직종을 가져오기 위한 쿼리셋
         required=False
     )
@@ -22,17 +22,16 @@ class UserSerializer(serializers.ModelSerializer):
     )
     def create(self, validated_data):
         technology_stacks_data = validated_data.pop('technology_stacks', [])
-        occupation_data = validated_data.pop('occupation', [])
-        env_data = validated_data.pop('env', [])
+        occupation_data = validated_data.pop('occupation', None)
         user = User.objects.create_user(
             email = validated_data['email'],
             nickname = validated_data['nickname'],
             name = validated_data['name'],
             password = validated_data['password'],
+            env = validated_data['env'],
         )
         user.technology_stacks.set(technology_stacks_data)
         user.occupation.set(occupation_data)
-        user.env.set(env_data)
         return user
     class Meta:
         model = User
