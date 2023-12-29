@@ -1,19 +1,9 @@
 import React, { useState,useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Select, MenuItem, InputLabel, FormControl, Box, Container, Typography } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import SelectTextFields from './Dropdown';
-
-
+ 
 function Register() {
     const [formData, setFormData] = useState({
         nickname: '',
@@ -38,7 +28,7 @@ function Register() {
                 console.error('Error fetching tech stacks:', error);
             });
     }, []);  // 빈 의존성 배열로 마운트 시에만 호출
-
+ 
     // 선호 직종 데이터 불러오기
     useEffect(() => {
         fetch('http://localhost:8000/user/Occupation/')
@@ -49,7 +39,7 @@ function Register() {
                 console.error('Error fetching tech stacks:', error);
             });
     }, []);  // 빈 의존성 배열로 마운트 시에만 호출
-
+ 
     // 작업 환경 데이터 불러오기
     useEffect(() => {
         fetch('http://localhost:8000/user/Env/')
@@ -60,7 +50,7 @@ function Register() {
                 console.error('Error fetching tech stacks:', error);
             });
     }, []);  // 빈 의존성 배열로 마운트 시에만 호출
-
+ 
     // CSRF 토큰을 가져오는 함수
     const getCsrfToken = () => {
         let token = null;
@@ -76,7 +66,27 @@ function Register() {
         }
         return token;
     };
-
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+   
+        // 'value'가 문자열이 아니라 배열이어야 합니다. Material-UI는 다중 선택에서 배열을 제공합니다.
+        // 만약 문자열이 올 수도 있다면, 문자열을 배열로 변환해야 합니다.
+        let newValue;
+        if (typeof value === 'string') {
+            newValue = value.split(',');
+        } else {
+            // Material-UI는 다중 선택을 위해 배열을 반환합니다.
+            newValue = value;
+        }
+   
+        // 'newValue'를 정수 배열로 변환합니다.
+        const intValueArray = newValue.map((item) => parseInt(item));
+   
+        setFormData({
+            ...formData,
+            [name]: intValueArray,
+        });
+    };
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -84,50 +94,34 @@ function Register() {
           [name]: value,
         });
       };
+    const handleChange2 = (event) => {
+      const { name, value } = event.target;
     
-    const handleTechStackChange = (e) => {
-        try {
-            // 선택된 기술 스택의 ID를 배열로 변환
-            const selectedStacks = Array.from(e.target.selectedOptions, option => parseInt(option.value));
-            setFormData({
-                ...formData,
-                technology_stacks: selectedStacks,
-            });
-        } catch (error) {
-            // 에러 처리
-            console.error('Error handling tech stack change:', error);
-        }
+      // 'value'가 문자열이 아니라 배열이어야 합니다. Material-UI는 다중 선택에서 배열을 제공합니다.
+      // 만약 문자열이 올 수도 있다면, 문자열을 배열로 변환해야 합니다.
+      let newValue;
+      if (typeof value === 'string') {
+        newValue = [value]; // 단일 선택 시 배열로 변환
+      } else if (Array.isArray(value)) {
+        newValue = value; // 이미 배열인 경우 그대로 사용
+      } else {
+        newValue = [value]; // 다른 형식인 경우 배열로 변환
+      }
+    
+      // 'newValue'를 정수 배열로 변환합니다.
+      const intValueArray = newValue.map((item) => parseInt(item));
+    
+      setFormData({
+        ...formData,
+        [name]: intValueArray,
+      });
     };
-    const handleOccupationChange = (e) => {
-        try {
-            // 선택된 선호 직종의 ID를 배열로 변환
-            const selectedocupp = Array.from(e.target.selectedOptions, option => parseInt(option.value));
-            setFormData({
-                ...formData,
-                occupation: selectedocupp,
-            });
-        } catch (error) {
-            // 에러 처리
-            console.error('Error handling tech stack change:', error);
-        }
-    };
-    const handleEnvChange = (e) => {
-        try {
-            // 선택된 작업 환경의 ID를 배열로 변환
-            const selectedEnv = Array.from(e.target.selectedOptions, option => parseInt(option.value));
-            setFormData({
-                ...formData,
-                env: selectedEnv,
-            });
-        } catch (error) {
-            // 에러 처리
-            console.error('Error handling tech stack change:', error);
-        }
-    };
+   
+ 
     const handleSubmit = (e) => {
       e.preventDefault();
       const csrftoken = getCsrfToken();
-
+      console.log(formData);
       axios.post('http://localhost:8000/user/signup/', formData, {
           headers: {
               'X-CSRFToken': csrftoken
@@ -142,32 +136,122 @@ function Register() {
           // 에러 처리
       });
   };
-
+ 
    
-    return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" name="nickname" onChange={handleChange} placeholder="Nickname" />
-            <input type="email" name="email" onChange={handleChange} placeholder="Email" />
-            <input type="text" name="name" onChange={handleChange} placeholder="Name" />
-            <input type="password" name="password" onChange={handleChange} placeholder="Password" />
-            <select multiple name="occupation" onChange={handleOccupationChange}>
-                {occupation.map(occup => (
-                    <option key={occup.id} value={occup.id}>{occup.occupation_name}</option>
-                ))}
-            </select>
-            <select multiple name="technology_stacks" onChange={handleTechStackChange}>
-                {techStacks.map(stack => (
-                    <option key={stack.id} value={stack.id}>{stack.stack_name}</option>
-                ))}
-            </select>
-            <select multiple name="env" onChange={handleEnvChange}>
-                {env.map(env => (
-                    <option key={env.id} value={env.id}>{env.env_name}</option>
-                ))}
-            </select>
-            <button type="submit">Register</button>
-        </form>
-    );
+  return (
+    <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Typography component="h1" variant="h5">Register</Typography>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="nickname"
+                    label="Nickname"
+                    type="text"
+                    id="nickname"
+                    value={formData.nickname}
+                    onChange={handleChange}
+                    placeholder="Nickname"
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="email"
+                    label="Email Address"
+                    type="email"
+                    id="email"
+                    autoComplete="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="name"
+                    label="Name"
+                    type="text"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Name"
+                />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Password"
+                />
+                <FormControl fullWidth margin="normal">
+                    <InputLabel id="occupation-label">Occupation</InputLabel>
+                    <Select
+                        labelId="occupation-label"
+                        id="occupation"
+                        name="occupation"
+                        value={formData.occupation}
+                        onChange={handleChange2}
+                        label="Occupation"
+                    >
+                        {occupation.map(occup => (
+                            <MenuItem key={occup.id} value={occup.id}>{occup.occupation_name}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                    <InputLabel id="techStacks-label">Technology Stacks</InputLabel>
+                    <Select
+                        labelId="techStacks-label"
+                        id="technology_stacks"
+                        multiple
+                        name="technology_stacks"
+                        value={formData.technology_stacks}
+                        onChange={handleInputChange}
+                        label="Technology Stacks"
+                    >
+                        {techStacks.map(stack => (
+                            <MenuItem key={stack.id} value={stack.id}>{stack.stack_name}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                    <InputLabel id="env-label">Environment</InputLabel>
+                    <Select
+                        labelId="env-label"
+                        id="env"
+                        name="env"
+                        value={formData.env}
+                        onChange={handleChange2}
+                        label="Environment"
+                    >
+                        {env.map(env => (
+                            <MenuItem key={env.id} value={env.id}>{env.env_name}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                >
+                    Register
+                </Button>
+            </Box>
+        </Box>
+    </Container>
+);
 }
-
+ 
 export default Register;

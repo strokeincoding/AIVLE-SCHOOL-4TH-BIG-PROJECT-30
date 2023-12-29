@@ -15,6 +15,7 @@ import PostView from './pages/Post/PostView';
 import Recommend from './pages/Recommend/Recommend';
 import RecommendView from './pages/Recommend/RecommendView';
 import RecommendWrite from './pages/Recommend/RecommendWrite';
+import Mylist from './pages/Mylist/Mylist';
 
 const Layout = styled.div`
   display: flex;
@@ -36,6 +37,7 @@ const AuthRoutes = () => {
           <Route path="/post/post/:no" element={<PostView />} />
           <Route path="/create-post" element={<Write />} />
           <Route path="/man" element={<Man />} />
+          <Route path="/mylist" element={<Mylist />} />
           <Route path="/recommend" element={<Recommend />} />
           <Route path="/recommend/recommend/:no" element={<RecommendView />} />
           <Route path="/RecommendWrite" element={<RecommendWrite />} />
