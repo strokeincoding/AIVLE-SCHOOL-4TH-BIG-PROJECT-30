@@ -1,5 +1,5 @@
 from django.db import models
-from user.models import User, Occupation, TechnologyStack
+from user.models import User, Occupation, TechnologyStack, Env
 
 class Recommend(models.Model):
     # 1. 추천게시글의 id 값
@@ -13,7 +13,7 @@ class Recommend(models.Model):
     # 5. 기술 스택
     technology_stacks = models.ManyToManyField(TechnologyStack, blank=True)  # 기술 스택 추가(다대다 필드)
     # 6. 작업 환경
-    env = models.TextField()
+    env = models.ManyToManyField(Env, blank=True)
     # 7. 요구사항
     Exp_require = models.TextField()
     # 8. 선호 직종
