@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Slider.css'; // Make sure your CSS is properly set up
 
 const Slider = ({ images }) => {
-  const [current, setCurrent] = useState(1);
+  const [current, setCurrent] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
 
   // This effect runs when `current` changes.
@@ -51,7 +51,7 @@ const Slider = ({ images }) => {
               transition: isTransitioning ? 'transform 400ms ease-in-out' : 'none'
             }}
           >
-            <img src={img.src} alt={img.alt} />
+            {img.content}
           </div>
         ))}
       </div>
@@ -59,5 +59,4 @@ const Slider = ({ images }) => {
     </div>
   );
 };
-
 export default Slider;
