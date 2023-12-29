@@ -1,0 +1,47 @@
+/* Home.css */
+.card-container {
+    display: flex;
+    flex-direction: row; /* column은 세로, row는 가로 */
+    align-items: stretch; /*stretch는 모두 같은 높이*/
+    max-width: 1200px;
+    width: 100%; /* 추가: 컨테이너의 너비를 화면의 100%로 설정 */
+    margin: 40px auto;
+    flex-wrap: wrap;
+    gap: 20px; /* 카드들 사이의 간격을 20px로 설정 */
+    justify-content: space-between; /* 카드 사이에 공간을 동일하게 분배 */
+}
+  
+  /* BannerSection.css */
+  .banner-section {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    height: 50vh; /* 뷰포트 높이의 50%로 설정 */
+    width: 100%; /* 추가: 너비를 화면의 100%로 설정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+  
+  .banner-content {
+    text-align: center;
+    max-width: 600px;
+    width: 100%; /* 추가: 너비를 화면의 100%로 설정, 필요한 경우 */
+  }
+  
+  /* 미디어 쿼리를 사용하여 다양한 화면 크기에 대응 */
+  @media (max-width: 768px) {
+    .banner-section {
+      height: 30vh; /* 모바일 화면에서 높이 조정 */
+    }
+    /* 필요한 경우 모바일 화면에서의 다른 스타일 조정 */
+  }
+  
+  @media (max-width: 480px) {
+    .banner-section {
+      height: 20vh; /* 작은 모바일 화면에서 높이 조정 */
+    }
+    /* 작은 모바일 화면에서의 다른 스타일 조정 */
+  }
+  

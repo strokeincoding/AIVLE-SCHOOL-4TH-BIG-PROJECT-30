@@ -1,25 +1,31 @@
+/* Slider.css */
 .slider-container {
-    overflow: hidden;
-    position: relative;
-    background: linear-gradient(135deg, #F5F5F5 0%, #F5F5F5 100%);
-    padding: 50px; /* Increased padding */
-  }
-  
-  .slider {
-    display: flex;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .slide {
-    min-width: 100%;
-    box-sizing: border-box;
-    transform: skewX(10deg);
-    position: relative;
-    background: #fff;
-    border-radius: 50px; /* Increased border radius */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* Increased shadow for depth */
-    padding: 90px; /* Increased padding inside each slide for larger content */
-  }
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #E6A4B4 0%, #C58BF2 100%);
+  max-width: 80%;
+  margin: 40px auto;
+  padding: 25px;
+  border-radius: 20px; /* 둥근 모서리 추가 */
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.slide {
+  box-sizing: border-box;
+  transform: skewX(10deg);
+  position: relative;
+  background: #fff;
+  border-radius: 50px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  padding: 45px;
+  margin: 0 5px;
+  min-width: calc(33.333% - 10px);
+  margin: 0 15px; /* 슬라이드 사이의 여백을 조정 */
+}
   
   /* Increase the size and visibility of the navigation buttons */
   .leftBtn, .rightBtn {
@@ -34,13 +40,14 @@
     cursor: pointer;
     font-size: 2rem; /* Increased font size */
     border-radius: 50%;
-    width: 60px; /* Increased width */
-    height: 60px; /* Increased height */
+    width: 40px; /* Increased width */
+    height: 40px; /* Increased height */
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     transition: background-color 0.3s, transform 0.3s;
+    font-size: 1.5rem; /* 아이콘 크기를 줄임 */
   }
   
   .leftBtn:hover, .rightBtn:hover {
@@ -49,11 +56,11 @@
   }
   
   .leftBtn {
-    left: 30px; /* Increased distance from the edge */
+    left: 10px; /* Increased distance from the edge */
   }
   
   .rightBtn {
-    right: 30px; /* Increased distance from the edge */
+    right: 10px; /* Increased distance from the edge */
   }
   
   /* Adjustments for navigation dots */
@@ -71,4 +78,18 @@
   .text-wrap h5, .text-wrap h1, .text-wrap h4 {
     font-size: larger; /* Increased font size */
     /* You may need to adjust line-height, margins, etc. */
+  }
+
+  @media (max-width: 768px) {
+    .slider-container {
+      max-width: 100%;
+      padding: 10px;
+    }
+  
+    .slide {
+      padding: 20px;
+      min-width: 100%;
+      width: 100%; /* 모바일 뷰에서는 슬라이드를 화면 너비에 맞게 조정 */
+      margin: 0; /* 모바일 뷰에서 여백 제거 */
+    }
   }
