@@ -2,7 +2,10 @@ import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Select, MenuItem, InputLabel, FormControl, Box, Container, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Select, MenuItem, InputLabel, FormControl, Box, Container, Typography } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
+ 
  
 function Register() {
     const [formData, setFormData] = useState({
@@ -29,6 +32,7 @@ function Register() {
             });
     }, []);  // 빈 의존성 배열로 마운트 시에만 호출
  
+ 
     // 선호 직종 데이터 불러오기
     useEffect(() => {
         fetch('http://localhost:8000/user/Occupation/')
@@ -40,6 +44,7 @@ function Register() {
             });
     }, []);  // 빈 의존성 배열로 마운트 시에만 호출
  
+ 
     // 작업 환경 데이터 불러오기
     useEffect(() => {
         fetch('http://localhost:8000/user/Env/')
@@ -50,6 +55,7 @@ function Register() {
                 console.error('Error fetching tech stacks:', error);
             });
     }, []);  // 빈 의존성 배열로 마운트 시에만 호출
+ 
  
     // CSRF 토큰을 가져오는 함수
     const getCsrfToken = () => {
@@ -65,6 +71,27 @@ function Register() {
             }
         }
         return token;
+    };
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+   
+        // 'value'가 문자열이 아니라 배열이어야 합니다. Material-UI는 다중 선택에서 배열을 제공합니다.
+        // 만약 문자열이 올 수도 있다면, 문자열을 배열로 변환해야 합니다.
+        let newValue;
+        if (typeof value === 'string') {
+            newValue = value.split(',');
+        } else {
+            // Material-UI는 다중 선택을 위해 배열을 반환합니다.
+            newValue = value;
+        }
+   
+        // 'newValue'를 정수 배열로 변환합니다.
+        const intValueArray = newValue.map((item) => parseInt(item));
+   
+        setFormData({
+            ...formData,
+            [name]: intValueArray,
+        });
     };
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -253,5 +280,6 @@ function Register() {
     </Container>
 );
 }
+ 
  
 export default Register;

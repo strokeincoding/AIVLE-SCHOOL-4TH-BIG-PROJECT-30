@@ -28,39 +28,57 @@ const CommentLabel = styled.p`
     font-weight: 500;
 `;
 
-
 const RecommendView = ({ history, match }) => {
   const [data, setData] = useState(null);
+  const [occupations, setOccupations] = useState({});
+  const [technologyStacks, setTechnologyStacks] = useState({});
+  const [comment, setComment] = useState('');
 
   const { no } = useParams();
-  
-
-  
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // 기술 스택 데이터 가져오기
+    axios.get('http://127.0.0.1:8000/user/TechnologyStack/')
+      .then(response => {
+        const stackMap = response.data.reduce((map, stack) => {
+          map[stack.id] = stack.stack_name;
+          return map;
+        }, {});
+        setTechnologyStacks(stackMap);
+      })
+      .catch(error => console.error("Error fetching technology stacks: ", error));
+  }, []); // 빈 의존성 배열 추가
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/recommend/recommend/${no}`)
+    // 직업 목록 가져오기
+    axios.get('http://127.0.0.1:8000/user/Occupation/')
+      .then(response => {
+        const occupationMap = response.data.reduce((map, occupation) => {
+          map[occupation.id] = occupation.occupation_name;
+          return map;
+        }, {});
+        setOccupations(occupationMap);
+      })
+      .catch(error => console.error("Error fetching occupations: ", error));
+
+    // 게시물 데이터 가져오기
+    axios.get(`http://localhost:8000/recommend/Recommend/${no}`)
       .then(response => {
         setData(response.data);
       })
       .catch(error => {
         console.error("Error fetching data: ", error);
-        setData(null); // In case of error, set data to null
+        setData(null);
       });
-  }, [no]); 
+  }, [no]);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toISOString().split('T')[0]; // Formats the date to 'YYYY-MM-DD'
-  };
-
-   const deletePost = () => {
+  const deletePost = () => {
     if (window.confirm("Do you really want to delete this post?")) {
-      axios.delete(`http://localhost:8000/recommend/recommend/${no}`)
+      axios.delete(`http://localhost:8000/recommend/Recommend/${no}`)
         .then(() => {
           alert('Post deleted successfully');
-          navigate('/recommend'); // Navigate to home or post list page
+          navigate('/recommend');
         })
         .catch(error => {
           console.error('Error deleting post:', error.response ? error.response.data : error);
@@ -73,9 +91,6 @@ const RecommendView = ({ history, match }) => {
     console.log("Submitting comment:", comment);
     setComment(''); 
   };
-
-
-  const [comment, setComment] = useState('');
 
   return (
     <>
@@ -94,12 +109,8 @@ const RecommendView = ({ history, match }) => {
                 <label>{data.title}</label>
               </div>
               <div className="post-view-row">
-                <label>작성일</label>
-                <label>{formatDate(data.created_at)}</label>
-              </div>
-              <div className="post-view-row">
                 <label>카테고리</label>
-                <label>{data.categories}</label>
+                <label>{data.cate}</label>
               </div>
               <div className="post-view-row">
                 <label>작성자</label>
@@ -107,23 +118,23 @@ const RecommendView = ({ history, match }) => {
               </div>
               <div className="post-view-row">
                 <label>필요기술</label>
-                <div>{data.required}</div>
+                <div>{data && data.technology_stacks.map(id => technologyStacks[id]).join(', ')}</div>
               </div>
               <div className="post-view-row">
                 <label>프로젝트설명</label>
-                <div>{data.project}</div>
+                <div>{data.Project_Description}</div>
               </div>
               <div className="post-view-row">
                 <label>근무환경</label>
-                <div>{data.work}</div>
+                <div>{data.env}</div>
               </div>
               <div className="post-view-row">
                 <label>역할 및 책임</label>
-                <div>{data.roles}</div>
+                <div>{data && data.occupation.map(id => occupations[id]).join(', ')}</div>
               </div>
               <div className="post-view-row">
                 <label>경력</label>
-                <div>{data.experience}</div>
+                <div>{data.Exp_require}</div>
               </div>
               <CommentLabel>댓글</CommentLabel>
               <CommentList comments={data ? data.comment : []} />

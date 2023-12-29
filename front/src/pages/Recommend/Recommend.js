@@ -16,7 +16,7 @@ const Recommend = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    axios.get('http://localhost:8000/recommend/recommend/')
+    axios.get('http://localhost:8000/recommend/Recommend/')
       .then(response => {
         setPosts(response.data);
       })
@@ -28,20 +28,16 @@ const Recommend = () => {
   const navigateToCreatePost = () => {
     navigate('/RecommendWrite ');
   };
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toISOString().split('T')[0]; // Formats the date to 'YYYY-MM-DD'
-  };
+
   return (
     <>
-      <CommonTable headersName={['글번호', '제목', '등록일','작성자']}>
+      <CommonTable headersName={['글번호', '제목', '작성자']}>
         {posts.map((post, index) => (
           <CommonTableRow key={post.id}>
             <CommonTableColumn>{post.id}</CommonTableColumn>
             <CommonTableColumn>
-              <Link to={`/post/post/${post.id}`}>{post.title}</Link>
+              <Link to={`/recommend/Recommend/${post.id}`}>{post.title}</Link>
             </CommonTableColumn>
-            <CommonTableColumn>{formatDate(post.created_at)}</CommonTableColumn>
             <CommonTableColumn>{post.user}</CommonTableColumn>
           </CommonTableRow>
         ))}

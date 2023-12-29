@@ -38,6 +38,7 @@ const AuthRoutes = () => {
           <Route path="/create-post" element={<Write />} />
           <Route path="/man" element={<Man />} />
           <Route path="/mylist" element={<Mylist />} />
+          <Route path="/mylist" element={<Mylist />} />
           <Route path="/recommend" element={<Recommend />} />
           <Route path="/recommend/recommend/:no" element={<RecommendView />} />
           <Route path="/RecommendWrite" element={<RecommendWrite />} />
