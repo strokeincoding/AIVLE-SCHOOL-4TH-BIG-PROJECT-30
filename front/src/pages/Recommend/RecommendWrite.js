@@ -118,14 +118,13 @@ const EnvSelect = ({ envs, selectedEnv, handleEnvChange }) => (
     </FormControl>
   </Grid>
 );
-
 // RecommendWrite 메인 컴포넌트
 const RecommendWrite = () => {
 const [newPost, setNewPost] = useState({
   title: '',
   cate: '',
   technology_stacks: [],
-  env: [],
+  env: '',
   Exp_require: '',
   occupation: [],
   Project_Description: '',
@@ -312,3 +311,4 @@ return (
 };
 
 export default RecommendWrite;
+
