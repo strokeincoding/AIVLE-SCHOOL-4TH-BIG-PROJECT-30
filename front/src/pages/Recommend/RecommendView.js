@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './Post.css';
 import Button from '../../pages/ui/Button';
-import CommentList from '../../components/list/CommentList';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -23,21 +22,29 @@ const Container = styled.div`
         margin-bottom: 16px;
     }
 `;
-const CommentLabel = styled.p`
-    font-size: 16px;
-    font-weight: 500;
-`;
+
 
 const RecommendView = ({ history, match }) => {
   const [data, setData] = useState(null);
+  const [envs, setEnvs] = useState({});
   const [occupations, setOccupations] = useState({});
   const [technologyStacks, setTechnologyStacks] = useState({});
-  const [comment, setComment] = useState('');
 
   const { no } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
+
+    axios.get('http://127.0.0.1:8000/user/Env/')
+      .then(response => {
+        const envMap = response.data.reduce((map, env) => {
+          map[env.id] = env.env_name;
+          return map;
+        }, {});
+        setEnvs(envMap);
+      })
+      .catch(error => console.error("Error fetching environments: ", error));
+
     // 기술 스택 데이터 가져오기
     axios.get('http://127.0.0.1:8000/user/TechnologyStack/')
       .then(response => {
@@ -87,11 +94,6 @@ const RecommendView = ({ history, match }) => {
     }
   };
 
-  const submitComment = () => {
-    console.log("Submitting comment:", comment);
-    setComment(''); 
-  };
-
   return (
     <>
     <h2 align="center">게시글 상세정보</h2>
@@ -126,7 +128,7 @@ const RecommendView = ({ history, match }) => {
               </div>
               <div className="post-view-row">
                 <label>근무환경</label>
-                <div>{data.env}</div>
+                <div>{data.env && envs[data.env]}</div>
               </div>
               <div className="post-view-row">
                 <label>역할 및 책임</label>
@@ -136,17 +138,7 @@ const RecommendView = ({ history, match }) => {
                 <label>경력</label>
                 <div>{data.Exp_require}</div>
               </div>
-              <CommentLabel>댓글</CommentLabel>
-              <CommentList comments={data ? data.comment : []} />
-
-              <input
-                  height={40}
-                  value={comment}
-                  onChange={(event) => {
-                      setComment(event.target.value);
-                  }}
-              />
-              <Button title='댓글 작성하기' onClick={submitComment} />
+              
             </>
           ) : '해당 게시글을 찾을 수 없습니다.'
         }

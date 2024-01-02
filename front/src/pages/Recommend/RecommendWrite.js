@@ -95,6 +95,29 @@ const TechnologyStackSelect = ({ occupationName, selectedStacks, handleStackChan
 </Grid>
 );
 
+
+// EnvSelect 컴포넌트
+const EnvSelect = ({ envs, selectedEnv, handleEnvChange }) => (
+  <Grid item xs={12}>
+    <FormControl fullWidth variant="outlined">
+      <InputLabel id="env-label">Work Environment</InputLabel>
+      <Select
+        labelId="env-label"
+        id="env"
+        value={selectedEnv}
+        onChange={handleEnvChange}
+        input={<OutlinedInput label="Work Environment" />}
+        name="env"
+      >
+        {envs.map((env) => (
+          <MenuItem key={env.id} value={env.id}>
+            {env.env_name}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  </Grid>
+);
 // RecommendWrite 메인 컴포넌트
 const RecommendWrite = () => {
 const [newPost, setNewPost] = useState({
@@ -109,22 +132,28 @@ const [newPost, setNewPost] = useState({
   requiredSkills: {},
 });
 
+
+
 const [categories, setCategories] = useState([]);
 const [technologyStacks, setTechnologyStacks] = useState([]); // Technology stacks state
 const [selectedTechStacks, setSelectedTechStacks] = useState({}); // Selected tech stacks for each occupation
+const [envs, setEnvs] = useState([]); // 'env' 데이터를 위한 상태
 const navigate = useNavigate();
 const yourAuthToken = localStorage.getItem('token');
 
 const handleStackChange = (occupationId) => (event) => {
-  const { value } = event.target;
-  const currentStacks = selectedTechStacks[occupationId] || [];
+  const {
+    target: { value },
+  } = event;
   
-  // 중복된 ID 제거
-  const updatedStacks = value.filter(stackId => !currentStacks.includes(stackId));
-
-  setSelectedTechStacks({ 
-    ...selectedTechStacks, 
-    [occupationId]: [...currentStacks, ...updatedStacks]
+  // "value"는 하나의 값이 선택된 경우 문자열 형식이며 여러 값을 선택한 경우 배열 형식입니다.
+  // 항상 배열로 처리되도록 확인해야 합니다.
+  const allSelectedStacks = typeof value === 'string' ? value.split(',') : value;
+  
+  // 주어진 직업에 대한 선택된 기술 스택을 업데이트합니다.
+  setSelectedTechStacks({
+    ...selectedTechStacks,
+    [occupationId]: allSelectedStacks,
   });
 };
 
@@ -138,6 +167,10 @@ const handleCategoryChange = (event) => {
   setNewPost({ ...newPost, occupation: value});
 };
 
+const handleEnvChange = (event) => {
+  const { value } = event.target;
+  setNewPost({ ...newPost, env: value });
+};
 
 const addPost = async (e) => {
   e.preventDefault();
@@ -153,7 +186,7 @@ const addPost = async (e) => {
     title: newPost.title,
     cate: newPost.cate,
     technology_stacks: uniqueTechStacks, // 중복이 제거된 기술 스택 ID 배열
-    env: newPost.env,
+    env: [newPost.env],
     Exp_require: newPost.Exp_require,
     occupation: newPost.occupation, // occupation ID 배열 사용
     Project_Description: newPost.Project_Description
@@ -195,6 +228,16 @@ useEffect(() => {
     }
   };
 
+  const fetchEnvs = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/user/Env/');
+      setEnvs(response.data); // 'env' 데이터 저장
+    } catch (error) {
+      console.error('Error fetching envs:', error);
+    }
+  };
+
+  fetchEnvs();
   fetchOccupations();
   fetchTechnologyStacks();
 }, []);
@@ -222,24 +265,20 @@ return (
             handleCategoryChange={handleCategoryChange}
           />
           {newPost.occupation.map(occupationId => (
-<TechnologyStackSelect
-key={occupationId}
-occupationName={categories.find(c => c.id === occupationId).occupation_name}
-selectedStacks={selectedTechStacks[occupationId] || []}
-handleStackChange={handleStackChange(occupationId)}
-technologyStacks={technologyStacks}
-/>
-))}
+                <TechnologyStackSelect
+                key={occupationId}
+                occupationName={categories.find(c => c.id === occupationId).occupation_name}
+                selectedStacks={selectedTechStacks[occupationId] || []}
+                handleStackChange={handleStackChange(occupationId)}
+                technologyStacks={technologyStacks}
+                />
+                ))}
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Work Environment"
-              id="env"
-              type="text"
-              name="env"
-              value={newPost.env}
-              onChange={handleInputChange}
-            />
+          <EnvSelect
+          envs={envs}
+          selectedEnv={newPost.env}
+          handleEnvChange={handleEnvChange}
+        />
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -272,3 +311,4 @@ technologyStacks={technologyStacks}
 };
 
 export default RecommendWrite;
+
