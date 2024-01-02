@@ -53,3 +53,16 @@
   .team-member-info button:hover {
     background-color: #0056b3;
   }
+
+  /* TeamMemberCard.css */
+@media (max-width: 768px) {
+  .team-member-card {
+    width: 100%; /* 모바일 뷰에서 카드의 너비를 100%로 설정 */
+    margin: 16px 0; /* 위아래 마진을 조정 */
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .team-member-image-wrapper {
+    padding-top: 56.25%; /* 이미지 비율을 유지하도록 설정 */
+  }
+}

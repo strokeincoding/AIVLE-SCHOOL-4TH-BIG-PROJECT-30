@@ -2,11 +2,11 @@
 .slider-container {
   overflow: hidden;
   position: relative;
-  background: linear-gradient(135deg, #E6A4B4 0%, #C58BF2 100%);
-  max-width: 80%;
-  margin: 40px auto;
-  padding: 25px;
-  border-radius: 20px; /* 둥근 모서리 추가 */
+  background: #ffffff;
+  max-width: 60%; /* 슬라이더의 최대 너비를 줄입니다 */
+  margin: 20px auto; /* 위아래 마진을 줄여 슬라이더의 전체 크기를 줄입니다 */
+  padding: 15px; /* 패딩을 줄여 슬라이더의 전체 크기를 줄입니다 */
+  border-radius: 20px;
 }
 
 .slider {
@@ -19,12 +19,12 @@
   transform: skewX(10deg);
   position: relative;
   background: #fff;
-  border-radius: 50px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  padding: 45px;
-  margin: 0 5px;
-  min-width: calc(33.333% - 10px);
-  margin: 0 15px; /* 슬라이드 사이의 여백을 조정 */
+  border-radius: 20px; /* 더 둥근 모서리 */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 더 부드러운 그림자 */
+  padding: 25px; /* 통일된 패딩 */
+  min-width: calc((100% / 3) - 20px);
+  margin: 0 10px; /* 여백 조절 */
+  width: calc(100% / 3 - 20px); /* 3개의 슬라이드를 보여주기 위한 너비 계산 */
 }
   
   /* Increase the size and visibility of the navigation buttons */
@@ -82,14 +82,12 @@
 
   @media (max-width: 768px) {
     .slider-container {
-      max-width: 100%;
+      max-width: 100%; /* 슬라이더의 최대 너비를 화면의 100%로 설정 */
       padding: 10px;
     }
   
     .slide {
-      padding: 20px;
-      min-width: 100%;
-      width: 100%; /* 모바일 뷰에서는 슬라이드를 화면 너비에 맞게 조정 */
-      margin: 0; /* 모바일 뷰에서 여백 제거 */
+      min-width: 100%; /* 모바일 뷰에서 슬라이드를 하나만 보여주도록 설정 */
+      margin: 0 auto; /* 중앙 정렬 */
     }
   }
