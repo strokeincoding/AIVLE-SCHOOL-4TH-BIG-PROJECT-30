@@ -7,37 +7,32 @@ const Slider = ({ images }) => {
 
   // This effect runs when `current` changes.
   useEffect(() => {
-    // If we're at the first or last image, we want to jump to the first/last image without transition.
     if (!isTransitioning) {
-      const timeoutId = setTimeout(() => {
-        setIsTransitioning(true);
-      }, 0); // Timeout ensures this is run after the browser paints
-
-      return () => clearTimeout(timeoutId);
+      setIsTransitioning(true);
     }
-  }, [current, isTransitioning]);
+  }, [current]); // Removed isTransitioning from dependency array
 
   const goToSlide = (index, transition = true) => {
-    setIsTransitioning(transition);
-    setCurrent(index);
+    setCurrent(index); // First, update the current slide
+    // Then, after the current slide has been updated, set isTransitioning
+    setTimeout(() => setIsTransitioning(transition), 0);
   };
 
   const onPrevClick = () => {
-    if (current <= 1) {
-      goToSlide(images.length - 1, false);
+    if (current === 0) {
+      goToSlide(images.length - 1, false); // Go to the last image without transition
     } else {
-      goToSlide(current - 1);
+      goToSlide(current - 1); // Go to the previous image with transition
     }
   };
 
   const onNextClick = () => {
-    if (current >= images.length - 1) {
-      goToSlide(1, false);
+    if (current === images.length - 1) {
+      goToSlide(0, false); // Go to the first image without transition
     } else {
-      goToSlide(current + 1);
+      goToSlide(current + 1); // Go to the next image with transition
     }
   };
-
   return (
     <div className="slider-container">
       <button className="leftBtn" onClick={onPrevClick}>&lt;</button>

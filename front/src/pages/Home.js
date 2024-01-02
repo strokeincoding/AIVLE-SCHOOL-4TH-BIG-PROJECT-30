@@ -20,10 +20,9 @@ const BannerSection = () => {
   return (
     <div className="banner-section" style={{ backgroundImage: `url(${bannerImage})` }}>
       <div className="banner-content">
-        <h1>상바오</h1>
+        <h1>길잡이</h1>
         <p>"초보 개발자에게 정보제공?"</p>
         <p>추천 서비스 및 만다라트 생성 등을 통해 초보 개발자 길잡이 역할을 해줍니다.</p>
-        <button className="banner-button">스터디 바로가기</button>
       </div>
     </div>
   );
@@ -41,13 +40,13 @@ const settings = {
 
 const teamMembers = [
   // Include `name` in each member object
-  { src: team1, alt: '팀원1 이름', name: '팀원1', description: '팀원1 설명' },
-  { src: team2, alt: '팀원2 이름', name: '팀원2', description: '팀원2 설명' },
-  { src: team3, alt: '팀원3 이름', name: '팀원3', description: '팀원3 설명' },
-  { src: team4, alt: '팀원4 이름', name: '팀원4', description: '팀원4 설명' },
-  { src: team5, alt: '팀원5 이름', name: '팀원5', description: '팀원5 설명' },
-  { src: team6, alt: '팀원6 이름', name: '팀원6', description: '팀원6 설명' },
-  { src: team7, alt: '팀원7 이름', name: '팀원7', description: '팀원7 설명' },
+  { src: team1, alt: '팀원1 이름', name: '팀원1', description: 'UI/UX 담당' , email: 'team1@example.com'},
+  { src: team2, alt: '팀원2 이름', name: '팀원2', description: '팀원2 설명' , email: 'team1@example.com'},
+  { src: team3, alt: '팀원3 이름', name: '팀원3', description: '팀원3 설명' , email: 'team1@example.com'},
+  { src: team4, alt: '팀원4 이름', name: '팀원4', description: '팀원4 설명' , email: 'team1@example.com'},
+  { src: team5, alt: '팀원5 이름', name: '팀원5', description: '팀원5 설명' , email: 'team1@example.com'},
+  { src: team6, alt: '팀원6 이름', name: '팀원6', description: '팀원6 설명' , email: 'team1@example.com'},
+  { src: team7, alt: '팀원7 이름', name: '팀원7', description: '팀원7 설명' , email: 'team1@example.com'},
   // ... other team members
 ];
 
@@ -58,26 +57,25 @@ const Home = () => {
       <BannerSection bannerImage={'path-to-your-banner-image.jpg'} />
       <div className="card-container">
         <Card 
-          className="card" 
           title="만다라트" 
-          text="하이" 
+          text="하이만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트
+          만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트
+          만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트" 
           imagePath={mandaratImage} 
         />
         <Card 
-          className="card" 
           title="챗봇" 
           text="하이" 
           imagePath={chatbotImage} 
         />
         <Card 
-          className="card" 
           title="취업" 
           text="하이" 
           imagePath={employmentImage} 
         />
       </div>
       <Slider {...settings} images={teamMembers.map(member => ({
-        content: <TeamMemberCard key={member.name} src={member.src} alt={member.alt} name={member.name} description={member.description} />
+        content: <TeamMemberCard key={member.name} src={member.src} alt={member.alt} name={member.name} description={member.description} email={member.email} />
       }))} />
     </div>
   );
