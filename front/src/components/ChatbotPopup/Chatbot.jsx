@@ -6,9 +6,14 @@ function ChatbotPopup() {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([]);
     const [userInput, setUserInput] = useState('');
+    const [threadId, setThreadId] = useState(null);  // 스레드 ID 상태
 
     const togglePopup = () => {
         setIsOpen(!isOpen);
+        if (isOpen) {
+            setThreadId(null);  // 챗봇 창을 닫을 때 스레드 ID 초기화
+            setMessages([]);    // 메시지도 초기화
+        }
     };
 
     const sendMessage = async () => {
@@ -17,10 +22,10 @@ function ChatbotPopup() {
         setMessages(newMessages);
 
         try {
-            const response = await fetch('http://localhost:8000/chatbot/', {  // API 엔드포인트 URL에 맞게 조정
+            const response = await fetch('http://localhost:8000/chatbot/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userInput })
+                body: JSON.stringify({ message: userInput, thread_id: threadId })
             });
 
             if (!response.ok) {
@@ -29,6 +34,10 @@ function ChatbotPopup() {
 
             const data = await response.json();
             setMessages(prevMessages => [...prevMessages, { text: data.reply, sender: 'bot' }]);
+
+            if (!threadId) {
+                setThreadId(data.thread_id);  // 백엔드로부터 받은 새로운 스레드 ID 저장
+            }
         } catch (error) {
             console.error('챗봇 통신 오류:', error);
         }
@@ -36,7 +45,8 @@ function ChatbotPopup() {
         setUserInput('');
     };
 
-    const clearMessages = () => {
+    const clearMessages = () =>{
+        setThreadId(null);
         setMessages([]);
     };
 
