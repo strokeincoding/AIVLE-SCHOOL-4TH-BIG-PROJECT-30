@@ -22,13 +22,13 @@ def make_df(user_id):
             'env' : rec.env,
             'required_skills' : tech_stacks,
         })
-    #print(job)
+    print(job)
     member = {
         'occupation' : [occ.occupation_name for occ in user_id.occupation.all()],
         'env' : [env.env_name for env in user_id.env.all()],
         'skills': ' '.join([tech.stack_name.lower() for tech in user_id.technology_stacks.all()]),
     }
-    print(member)
+    #print(member)
     
     job_post_df = pd.DataFrame(job)
     
@@ -68,7 +68,7 @@ def make_df(user_id):
 
         final_scores = sorted(final_scores, key=lambda x: x[1], reverse=True)
         job_indices = [i[0] for i in final_scores]
-
+        
         return job_post_df.iloc[job_indices]
     return calculate_final()
 
@@ -86,6 +86,18 @@ class Contest(APIView):
             return JsonResponse({"error": "사용자를 찾을 수 없습니다."}, status=404)
         data = make_df(user)
         recommend_ids = data['id'].to_list()
-        return Response({'recommend_post_ids' :recommend_ids})
+        
+        result_recommend = []
+        for rec_id in recommend_ids:
+            recommend = get_object_or_404(Recommend, id=rec_id)
+            result_recommend.append({
+                'id' : rec_id,
+                'title' : recommend.title,
+                'cate' : recommend.cate,
+                'Exp_require' : recommend.Exp_require,
+                'Description' : recommend.Project_Description,
+            })
+        
+        return Response({'recommend_post_ids' :result_recommend})
 
 
