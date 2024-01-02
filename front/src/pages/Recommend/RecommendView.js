@@ -30,6 +30,7 @@ const CommentLabel = styled.p`
 
 const RecommendView = ({ history, match }) => {
   const [data, setData] = useState(null);
+  const [envs, setEnvs] = useState({});
   const [occupations, setOccupations] = useState({});
   const [technologyStacks, setTechnologyStacks] = useState({});
   const [comment, setComment] = useState('');
@@ -38,6 +39,17 @@ const RecommendView = ({ history, match }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+
+    axios.get('http://127.0.0.1:8000/user/Env/')
+      .then(response => {
+        const envMap = response.data.reduce((map, env) => {
+          map[env.id] = env.env_name;
+          return map;
+        }, {});
+        setEnvs(envMap);
+      })
+      .catch(error => console.error("Error fetching environments: ", error));
+
     // 기술 스택 데이터 가져오기
     axios.get('http://127.0.0.1:8000/user/TechnologyStack/')
       .then(response => {
@@ -126,7 +138,7 @@ const RecommendView = ({ history, match }) => {
               </div>
               <div className="post-view-row">
                 <label>근무환경</label>
-                <div>{data.env}</div>
+                <div>{data.env && envs[data.env]}</div>
               </div>
               <div className="post-view-row">
                 <label>역할 및 책임</label>
