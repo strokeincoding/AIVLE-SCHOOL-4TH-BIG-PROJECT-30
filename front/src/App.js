@@ -67,7 +67,7 @@ const App = () => {
           <AuthRoutes />
         </Content>
       </Layout>
-      <Chatbot /> {/* 챗봇 컴포넌트를 Layout 컴포넌트 밖에 배치 */}
+      {isLoggedIn && <Chatbot />} {/* 로그인 상태일 때만 챗봇 표시 */} {/* 챗봇 컴포넌트를 Layout 컴포넌트 밖에 배치 */}
     </>
   );
 };

@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './Post.css';
 import Button from '../../pages/ui/Button';
-import CommentList from '../../components/list/CommentList';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -23,17 +22,13 @@ const Container = styled.div`
         margin-bottom: 16px;
     }
 `;
-const CommentLabel = styled.p`
-    font-size: 16px;
-    font-weight: 500;
-`;
+
 
 const RecommendView = ({ history, match }) => {
   const [data, setData] = useState(null);
   const [envs, setEnvs] = useState({});
   const [occupations, setOccupations] = useState({});
   const [technologyStacks, setTechnologyStacks] = useState({});
-  const [comment, setComment] = useState('');
 
   const { no } = useParams();
   const navigate = useNavigate();
@@ -99,11 +94,6 @@ const RecommendView = ({ history, match }) => {
     }
   };
 
-  const submitComment = () => {
-    console.log("Submitting comment:", comment);
-    setComment(''); 
-  };
-
   return (
     <>
     <h2 align="center">게시글 상세정보</h2>
@@ -148,17 +138,7 @@ const RecommendView = ({ history, match }) => {
                 <label>경력</label>
                 <div>{data.Exp_require}</div>
               </div>
-              <CommentLabel>댓글</CommentLabel>
-              <CommentList comments={data ? data.comment : []} />
-
-              <input
-                  height={40}
-                  value={comment}
-                  onChange={(event) => {
-                      setComment(event.target.value);
-                  }}
-              />
-              <Button title='댓글 작성하기' onClick={submitComment} />
+              
             </>
           ) : '해당 게시글을 찾을 수 없습니다.'
         }
