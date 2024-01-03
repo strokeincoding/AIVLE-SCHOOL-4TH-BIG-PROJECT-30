@@ -55,7 +55,7 @@ class EnvSerializer(serializers.ModelSerializer):
 class CrawlingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Crawling
-        fields = ['id', 'title','body','image']
+        fields = ['id', 'title','body','image', 'url']
         
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
