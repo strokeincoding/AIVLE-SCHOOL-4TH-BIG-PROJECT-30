@@ -7,6 +7,7 @@ class CrawlingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class UserCrawlingLikeSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = UserCrawlingLike
         fields = '__all__'
