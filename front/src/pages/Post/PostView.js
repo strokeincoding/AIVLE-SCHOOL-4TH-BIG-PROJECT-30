@@ -26,13 +26,6 @@ const Container = styled.div`
     border-radius: 8px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
 `;
-/* Comment Label */
-const CommentLabel = styled.p`
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 10px;
-`;
 
 
 /* Input */
@@ -99,7 +92,7 @@ const PostView = ({ history, match }) => {
   }, [no, yourAuthToken]);
 
  
-  const submitComment = () => {
+  const submitComment = () => {//댓글 쓰기
     const commentData = {
         comment: newComment,
         user: currentUsername,
@@ -117,11 +110,27 @@ const PostView = ({ history, match }) => {
       setNewComment('');  // 입력 필드 초기화
     })
     .catch(error => console.error("Error posting comment: ", error));
-};
+  };
+
+  const handleDeleteComment = (commentId) => {//댓글 삭제 함수
+    const headers = {
+      'Authorization': `Bearer ${yourAuthToken}`
+    };
+  
+    axios.delete(`http://localhost:8000/post/comment/${commentId}`, { headers })
+      .then(() => {
+        const updatedComments = comments.filter((comment) => comment.id !== commentId);
+        setComments(updatedComments);
+        setData(null);
+      })
+      .catch((error) => {
+        console.error('Error deleting comment:', error);
+      });
+  };
  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toISOString().split('T')[0]; // Formats the date to 'YYYY-MM-DD'
+    return date.toISOString().split('T')[0]; // 게시물 날짜 형식 수정
   };
   // 게시물 삭제함수
   const deletePost = () => {
@@ -133,6 +142,7 @@ const PostView = ({ history, match }) => {
         .then(() => {
           alert('게시물이 성공적으로 삭제되었습니다.');
           navigate('/post'); // 게시물 목록으로 이동
+          setData(null);
         })
         .catch(error => {
           console.error('Error deleting post:', error.response ? error.response.data : error);
@@ -172,82 +182,85 @@ const PostView = ({ history, match }) => {
 
 
   return (
-<>
-<h2 align="center">게시글 상세정보</h2>
-<Wrapper>
-<Container className="post-view-wrapper">
+    <>
+    <h2 align="center">게시글 상세정보</h2>
+    <Wrapper>
+      <Container className="post-view-wrapper">
         {
           data ? (
-<>
-<div className="post-view-row">
-<label>게시글 번호</label>
-<label>{data.id}</label>
-</div>
-<div className="post-view-row">
-<label>제목</label>
+            <>
+              <div className="post-view-row">
+                <label>게시글 번호</label>
+                <label>{data.id}</label>
+              </div>
+              <div className="post-view-row">
+                <label>제목</label>
                 {isEditing ? (
                   // 편집 모드인 경우
-<StyledInput
+                  <StyledInput
                     type="text"
                     value={editTitle}
                     onChange={(event) => setEditTitle(event.target.value)}
                   />
                 ) : (
                   // 편집 모드가 아닌 경우, 기존 내용 보여줌
-<label>{data.title}</label>
+                  <label>{data.title}</label>
                 )}
-</div>
-<div className="post-view-row">
-<label>작성일</label>
-<label>{formatDate(data.created_at)}</label>
-</div>
-<div className="post-view-row">
-<label>작성자</label>
-<label>{data.user}</label>
-</div>
-<div className="post-view-row">
-<label>내용</label>
+               
+              </div>
+              <div className="post-view-row">
+                <label>작성일</label>
+                <label>{formatDate(data.created_at)}</label>
+              </div>
+              <div className="post-view-row">
+                <label>작성자</label>
+                <label>{data.user}</label>
+              </div>
+              <div className="post-view-row">
+                <label>내용</label>
                 {isEditing ? (
                   // 편집 모드인 경우
-<StyledInput
+                  <StyledInput
                     type="text"
                     value={editContent}
                     onChange={(event) => setEditContent(event.target.value)}
                   />
                 ) : (
                   // 편집 모드가 아닌 경우, 기존 내용 보여줌
-<label>{data.body}</label>
+                  <label>{data.body}</label>
                 )}
-</div>
-<CommentLabel>댓글</CommentLabel>
-<CommentList comments={Array.isArray(comments) ? comments : []}/>
-<input
+              </div>
+ 
+              <input
                   height={40}
                   value={newComment}
                   onChange={(event) => {
                       setNewComment(event.target.value);
                   }}
               />
-<Button title='댓글' onClick={submitComment}  />
-</>
+              <Button title='댓글 작성' onClick={submitComment}  />
+              <p><CommentList comments={Array.isArray(comments) ? comments : []}/></p>
+            </>
           ) : '해당 게시글을 찾을 수 없습니다.'
         }
-</Container>
-</Wrapper>
-<Button title='뒤로' onClick={() => navigate(-1)} data={data}/>
+      </Container>
+    </Wrapper>
+    <Button title='뒤로' onClick={() => navigate(-1)} data={data}/>
     {data && currentUsername === data.user && (
-<>
+      <>
         {!isEditing && (
-<Button title='수정' onClick={enableEdit} data={data}/>
+          <Button title='수정' onClick={enableEdit} data={data}/>
         )}
  
         {isEditing && (
-<Button title='수정완료'  onClick={confirmEdit} data={data}/>
+          <Button title='수정완료'  onClick={confirmEdit} data={data}/>
         )}
-<Button title='삭제' onClick={deletePost} data={data}/>
-</>
+        <Button title='삭제' onClick={deletePost} data={data}/>
+      </>
     )}
-</>
+    </>
+   
   );
 }
+ 
 export default PostView;
