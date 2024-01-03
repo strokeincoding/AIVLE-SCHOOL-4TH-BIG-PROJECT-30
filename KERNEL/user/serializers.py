@@ -1,4 +1,4 @@
-from .models import User, TechnologyStack, Occupation, Env, Crawling, Like
+from .models import User, TechnologyStack, Occupation, Env, Crawling
 from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
@@ -51,14 +51,23 @@ class EnvSerializer(serializers.ModelSerializer):
     class Meta:
         model = Env
         fields = ['id', 'env_name']
-     
+
+# class LikeSerializer(serializers.ModelSerializer):
+#     user_id = serializers.PrimaryKeyRelatedField(
+#         many=True,
+#         queryset = User.objects.all()
+#     )
+#     class Meta:
+#         model = Like
+#         fields = ['id','user_id', 'crawling_id']
+
 class CrawlingSerializer(serializers.ModelSerializer):
+    like = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+
     class Meta:
         model = Crawling
-        fields = ['id', 'title','body','image', 'url']
+        fields = ['id', 'title', 'body', 'image', 'url', 'like']
+
         
-class LikeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Like
-        fields = ['id','user_id', 'crawling_id']
+
         

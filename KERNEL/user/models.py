@@ -107,13 +107,14 @@ class Crawling(models.Model):
     id = models.AutoField(primary_key=True, null=False, blank=False) 
     title = models.CharField(max_length=100)
     body = models.TextField()
-    image = models.ImageField(upload_to='crawling_images/', null=True, blank=True)
+    image = models.URLField(null=True, blank=True)
     url = models.URLField(null=True)
+    like = models.ManyToManyField(User, related_name='like')
     
     def __str__(self):
         return self.title
     
-class Like(models.Model):
-    id = models.AutoField(primary_key=True, null=False, blank=False) 
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='like_user')
-    crawling_id = models.ForeignKey(Crawling, on_delete=models.CASCADE, related_name='like_crawling')
+# class Like(models.Model):
+#     id = models.AutoField(primary_key=True, null=False, blank=False) 
+#     user_id = models.ManyToManyField(User, related_name='like_user')
+#     crawling_id = models.ForeignKey(Crawling, on_delete=models.CASCADE, related_name='like_crawling')

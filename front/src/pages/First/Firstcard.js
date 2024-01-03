@@ -5,25 +5,40 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite'; // 좋아요 아이콘 추가
+import FavoriteIcon from '@mui/icons-material/Favorite';
+const getCookieValue = (name) => (
+  document.cookie.split('; ').find(row => row.startsWith(name + '='))
+  ?.split('=')[1]
+);
+const ImgMediaCard = ({ id, title, text, imagePath, likeStatus }) => {
+  console.log('likeStatus:', likeStatus);
+  console.log('userId:', id);
+  const userId = getCookieValue('nickname'); // 쿠키에서 userId 가져오기
+  const [liked, setLiked] = useState(likeStatus.includes(userId)); // userId는 현재 로그인한 사용자의 ID
 
-const ImgMediaCard = ({ title, text, buttonText, imagePath }) => {
-  const [liked, setLiked] = useState(false); // 좋아요 상태 관리
-
-  const handleLike = () => {
-    setLiked(!liked); // 좋아요 상태 토글
+  const handleLike = async () => {
+    const csrfToken = getCookieValue('csrftoken');
+    setLiked(!liked);
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/user/crawling/${id}/like/`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'X-CSRFToken': csrfToken, // 헤더에 CSRF 토큰 추가
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      // 서버 응답 처리 (선택적)
+    } catch (error) {
+      console.error('Failed to like/unlike:', error);
+    }
   };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
-      {imagePath && (
-        <CardMedia
-          component="img"
-          alt={title}
-          height="140"
-          image={imagePath}
-        />
-      )}
+      {imagePath && <CardMedia component="img" alt={title} height="140" image={imagePath} />}
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {title}
@@ -34,8 +49,8 @@ const ImgMediaCard = ({ title, text, buttonText, imagePath }) => {
       </CardContent>
       <CardActions>
         <Button size="small" onClick={handleLike}>
-          {liked ? <FavoriteIcon color="error" /> : <FavoriteIcon />} {/* 좋아요 상태에 따라 아이콘 색상 변경 */}
-          {buttonText}
+          {liked ? <FavoriteIcon color="error" /> : <FavoriteIcon />}
+          LIKE
         </Button>
       </CardActions>
     </Card>
