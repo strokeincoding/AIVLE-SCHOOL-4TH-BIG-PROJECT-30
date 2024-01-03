@@ -102,3 +102,17 @@ class Env(models.Model):
 
     def __str__(self):
         return self.env_name
+    
+class Crawling(models.Model):
+    id = models.AutoField(primary_key=True, null=False, blank=False) 
+    title = models.CharField(max_length=100)
+    body = models.TextField()
+    image = models.ImageField(upload_to='crawling_images/', null=True, blank=True)
+    
+    def __str__(self):
+        return self.title
+    
+class Like(models.Model):
+    id = models.AutoField(primary_key=True, null=False, blank=False) 
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='like_user')
+    crawling_id = models.ForeignKey(Crawling, on_delete=models.CASCADE, related_name='like_crawling')
