@@ -10,6 +10,9 @@ const getCookieValue = (name) => (
   document.cookie.split('; ').find(row => row.startsWith(name + '='))
   ?.split('=')[1]
 );
+
+const yourAuthToken = localStorage.getItem('token');
+
 const ImgMediaCard = ({ id, title, text, imagePath, likeStatus }) => {
   console.log('likeStatus:', likeStatus);
   console.log('userId:', id);
@@ -17,24 +20,23 @@ const ImgMediaCard = ({ id, title, text, imagePath, likeStatus }) => {
   const [liked, setLiked] = useState(likeStatus.includes(userId)); // userId는 현재 로그인한 사용자의 ID
 
   const handleLike = async () => {
-    const csrfToken = getCookieValue('csrftoken');
-    setLiked(!liked);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/user/crawling/${id}/like/`, {
-        method: 'POST',
-        credentials: 'include',
+      const response = await fetch(`http://127.0.0.1:8000/crawling/${id}/toggle_like/`, {
+        method: 'POST', // 메소드 추가
         headers: {
-          'X-CSRFToken': csrfToken, // 헤더에 CSRF 토큰 추가
+          'Authorization' : `Bearer ${yourAuthToken}`
         },
       });
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
-      // 서버 응답 처리 (선택적)
+      const data = await response.json(); // 서버 응답 처리
+      setLiked(data.liked); // 예시: 서버에서 'liked' 상태를 응답으로 보내줄 경우
     } catch (error) {
       console.error('Failed to like/unlike:', error);
     }
   };
+  
 
   return (
     <Card sx={{ maxWidth: 345 }}>

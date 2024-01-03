@@ -1,4 +1,4 @@
-from .models import User, TechnologyStack, Occupation, Env, Crawling
+from .models import User, TechnologyStack, Occupation, Env
 from rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
@@ -55,7 +55,3 @@ class EnvSerializer(serializers.ModelSerializer):
         fields = ['id', 'env_name']
 
 
-class CrawlingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Crawling
-        fields = ['id', 'title', 'body', 'image', 'url', 'like_count']

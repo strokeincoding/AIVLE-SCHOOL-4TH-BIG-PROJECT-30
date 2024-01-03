@@ -5,7 +5,7 @@ const Mylist = () => {
     const [recommendations, setRecommendations] = useState([]);
 
     const fetchRecommendations = async () => {
-        const apiUrl = `http://127.0.0.1:8000/user/Crawling/`;
+        const apiUrl = `http://127.0.0.1:8000/crawling/`;
         try {
             const response = await fetch(apiUrl, { method: 'GET', credentials: 'include' });
             if (!response.ok) {
@@ -33,7 +33,7 @@ const Mylist = () => {
                         title={`제목: ${recommendation.title}`}
                         text={`설명: ${recommendation.body}`} // body로 변경
                         imagePath={recommendation.image}
-                        likeStatus={recommendation.like} // '좋아요' 상태 추가
+                        likeStatus={recommendation.like_count} // '좋아요' 상태 추가
                     />
                 ))
             ) : (

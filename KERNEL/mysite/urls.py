@@ -40,5 +40,6 @@ urlpatterns = [
     path('user/token/logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
     path('chat-gpt/', include('mandalart.urls')),
     path('chatbot/', include('chatbot.urls')),
-    path('constest/', include('constest.urls'))
+    path('constest/', include('constest.urls')),
+    path('crawling/', include('Crawling.urls'))
  ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
