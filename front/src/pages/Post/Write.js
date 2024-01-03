@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../pages/ui/Button';
-import ImageUploadExample from './ImageUploadExample';
+
 import './Post.css';
  
  
@@ -113,7 +113,6 @@ const CreatePost = () => {
               onChange={handleInputChange}
             />
           </StyledLabel>
-          <ImageUploadExample />
           <Button title='Add Post' type="submit"/>
         </StyledForm>
       </Container>

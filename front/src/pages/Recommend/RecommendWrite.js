@@ -130,6 +130,7 @@ const [newPost, setNewPost] = useState({
   Project_Description: '',
   categories: [],
   requiredSkills: {},
+  image: null,
 });
 
 
@@ -171,32 +172,43 @@ const handleEnvChange = (event) => {
   const { value } = event.target;
   setNewPost({ ...newPost, env: value });
 };
-
+const handleImageChange = (e) => {
+  const file = e.target.files[0]; // 파일 객체 접근
+  if (file) {
+    setNewPost({ ...newPost, image: file }); // 파일 객체를 상태에 저장
+  }
+};
 const addPost = async (e) => {
   e.preventDefault();
 
-  // 모든 occupation에 대한 선택된 기술 스택 ID들을 하나의 배열로 합침
-  const combinedTechStacks = Object.values(selectedTechStacks).flat();
+  
+  
+  const formData = new FormData();
+   // 텍스트 데이터를 FormData에 추가
+   formData.append('title', newPost.title);
+   formData.append('cate', newPost.cate);
+   formData.append('Exp_require', newPost.Exp_require);
+   formData.append('Project_Description', newPost.Project_Description);
 
-  // 중복 제거
-  const uniqueTechStacks = Array.from(new Set(combinedTechStacks));
+   // 선택된 기술 스택을 FormData에 추가
+   const combinedTechStacks = Object.values(selectedTechStacks).flat();
+   const uniqueTechStacks = Array.from(new Set(combinedTechStacks));
+   uniqueTechStacks.forEach(stack => formData.append('technology_stacks', stack));
 
-  // 변경된 postData 생성
-  const postData = {
-    title: newPost.title,
-    cate: newPost.cate,
-    technology_stacks: uniqueTechStacks, // 중복이 제거된 기술 스택 ID 배열
-    env: [newPost.env],
-    Exp_require: newPost.Exp_require,
-    occupation: newPost.occupation, // occupation ID 배열 사용
-    Project_Description: newPost.Project_Description
-  };
+   // 선택된 occupation을 FormData에 추가
+   newPost.occupation.forEach(occ => formData.append('occupation', occ));
 
-  console.log(postData);
+   // 선택된 env를 FormData에 추가 (하나만 선택된 경우)
+   if (newPost.env) formData.append('env', newPost.env);
+
+   // 이미지 파일을 FormData에 추가 (파일이 있는 경우)
+   if (newPost.image) {
+     formData.append('image', newPost.image);
+   }
   try {
-    const response = await axios.post('http://127.0.0.1:8000/recommend/Recommend/', postData, {
+    const response = await axios.post('http://127.0.0.1:8000/recommend/Recommend/', formData, {
       headers: {
-        'Authorization': `Bearer ${yourAuthToken}`
+        'Authorization': `Bearer ${yourAuthToken}`,
       }
     });
     if (response.status === 201) {
@@ -302,6 +314,14 @@ return (
               onChange={handleInputChange}
             />
           </Grid>
+          <Grid item xs={12}>
+            <input
+              type="file"
+              accept='image/*'
+              name="image"
+              onChange={handleImageChange}
+            />
+          </Grid>
           </Grid>
         <Button title='Add Post' type="submit" />
       </form>
@@ -311,4 +331,3 @@ return (
 };
 
 export default RecommendWrite;
-

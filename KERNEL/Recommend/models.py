@@ -20,6 +20,7 @@ class Recommend(models.Model):
     occupation = models.ManyToManyField(Occupation, blank=True)  # 선호 직종 추가(다대다 필드)
     # 9. 프로젝트 설명 
     Project_Description=models.TextField()
-    
+    # 10. 이미지
+    image = models.ImageField(upload_to='recommend_images/', null=True, blank=True)
     def __str__(self):
         return self.title

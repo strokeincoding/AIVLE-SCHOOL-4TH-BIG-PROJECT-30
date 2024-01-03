@@ -138,6 +138,10 @@ const RecommendView = ({ history, match }) => {
                 <label>경력</label>
                 <div>{data.Exp_require}</div>
               </div>
+              <div className="post-view-row">
+                  <label>이미지</label>
+                  {data.image && <img src={data.image} alt="Post" style={{maxWidth: '100%', maxHeight: '300px'}} />}
+              </div>
               
             </>
           ) : '해당 게시글을 찾을 수 없습니다.'
