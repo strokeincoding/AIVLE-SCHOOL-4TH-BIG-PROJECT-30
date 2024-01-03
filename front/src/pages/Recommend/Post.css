@@ -24,3 +24,21 @@
     margin: 10px 0;
     width: 70%;
   }
+
+.board-title {
+    display: flex;         /* Flexbox를 사용하여 내용을 중앙에 배치 */
+    justify-content: center; /* 가로 방향으로 중앙에 배치 */
+    align-items: center;     /* 세로 방향으로 중앙에 배치 */
+    height: 100px;           /* div의 높이 설정. 필요에 따라 조정하세요 */
+    padding: 25px;           /* 패딩 적용 */
+    font-family: 'SBAggroB', sans-serif; /* 글꼴 적용 */
+    font-size: 25px;         /* 글꼴 크기 설정 */
+    box-sizing: border-box;  /* 패딩을 포함한 총 너비를 계산 */
+  }
+ 
+.create-post-container {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽에 정렬 */
+    padding-top: 20px;         /* 상단에 패딩 추가 */
+    padding-right: 20px;
+  }
