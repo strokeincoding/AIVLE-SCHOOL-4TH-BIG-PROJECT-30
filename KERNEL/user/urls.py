@@ -9,10 +9,10 @@ router.register('Occupation', OccupationViewSet)
 router.register('User', UserViewSet)
 router.register('Env', EnvViewSet)
 router.register('Crawling', CrawlingViewSet)
-#router.register('Like', LikeViewSet)
+
 urlpatterns =[
-    path('crawling/<int:pk>/like/', views.CrawlingViewSet.as_view({'post': 'like'}), name='crawling-like'),
     path('signup/', views.UserCreate.as_view()),
     path('', include(router.urls)),
-    #path('crawling/<int:pk>/like/', views.CrawlingViewSet.as_view({'post': 'like'}), name='crawling-like'),
+    #path('post_like_toggle/<int:post_id>/', views.post_like_toggle, name="post_like_toggle"),
+
  ]

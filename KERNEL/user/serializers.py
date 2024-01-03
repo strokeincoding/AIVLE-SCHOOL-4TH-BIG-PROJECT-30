@@ -20,6 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
         queryset=Env.objects.all(), # 작업 환경을 가져오기 위한 쿼리셋
         required=False
     )
+
     def create(self, validated_data):
         technology_stacks_data = validated_data.pop('technology_stacks', [])
         occupation_data = validated_data.pop('occupation', None)
@@ -29,6 +30,7 @@ class UserSerializer(serializers.ModelSerializer):
             name = validated_data['name'],
             password = validated_data['password'],
             env = validated_data['env'],
+            
         )
         user.technology_stacks.set(technology_stacks_data)
         user.occupation.set(occupation_data)
@@ -52,22 +54,8 @@ class EnvSerializer(serializers.ModelSerializer):
         model = Env
         fields = ['id', 'env_name']
 
-# class LikeSerializer(serializers.ModelSerializer):
-#     user_id = serializers.PrimaryKeyRelatedField(
-#         many=True,
-#         queryset = User.objects.all()
-#     )
-#     class Meta:
-#         model = Like
-#         fields = ['id','user_id', 'crawling_id']
 
 class CrawlingSerializer(serializers.ModelSerializer):
-    like = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-
     class Meta:
         model = Crawling
-        fields = ['id', 'title', 'body', 'image', 'url', 'like']
-
-        
-
-        
+        fields = ['id', 'title', 'body', 'image', 'url', 'like_count']

@@ -5,7 +5,6 @@ from .models import User, TechnologyStack, Occupation, Env, Crawling
 from rest_framework import generics, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.exceptions import NotAuthenticated
  
 # 회원가입
 class UserCreate(generics.CreateAPIView):
@@ -48,35 +47,7 @@ class EnvViewSet(viewsets.ModelViewSet):
 class CrawlingViewSet(viewsets.ModelViewSet):
     queryset = Crawling.objects.all()
     serializer_class = CrawlingSerializer
+    
+    
 
-    @action(detail=True, methods=['post'])
-    def like(self, request, pk=None):
-        crawling = self.get_object()
-        user = request.user
         
-        if not user.is_authenticated:
-            raise NotAuthenticated('로그인이 필요합니다')
-        
-        if crawling.like.filter(id=user.id).exists():
-            crawling.like.remove(user)
-            return Response({'status': 'like removed'})
-        else:
-            crawling.like.add(user)
-            return Response({'status': 'like added'})
-        
-# 좋아요
-# class LikeViewSet(viewsets.ModelViewSet):
-#     queryset = Like.objects.all()
-#     serializer_class = LikeSerializer
-
-#     @action(detail=True, methods=['post'])
-#     def add_or_remove_like(self, request, pk=None):
-#         like_instance = self.get_object()
-#         user = request.user
-
-#         if user in like_instance.user_id.all():
-#             like_instance.user_id.remove(user)
-#             return Response({'status': '좋아요 제거'})
-#         else:
-#             like_instance.user_id.add(user)
-#             return Response({'status': '좋아요 추가'})
