@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Card from '../../components/Card/Card';
+import ImgMediaCard from './Mediacard';
 
 const Mylist = () => {
     const [recommendations, setRecommendations] = useState([]);
@@ -36,7 +36,7 @@ const Mylist = () => {
             <button onClick={fetchRecommendations}>Get Recommendations</button>
             {recommendations.length > 0 ? (
                 recommendations.map((recommendation, index) => (
-                    <Card 
+                    <ImgMediaCard
                         key={index}
                         title={`제목: ${recommendation.title}`}
                         text={`설명: ${recommendation.Exp_require}`}
