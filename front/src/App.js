@@ -16,6 +16,7 @@ import Recommend from './pages/Recommend/Recommend';
 import RecommendView from './pages/Recommend/RecommendView';
 import RecommendWrite from './pages/Recommend/RecommendWrite';
 import Mylist from './pages/Mylist/Mylist';
+import First from './pages/First/First';
 
 const Layout = styled.div`
   display: flex;
@@ -33,6 +34,7 @@ const AuthRoutes = () => {
     <Routes>
       {isLoggedIn ? (
         <>
+          <Route path="/first" element={<First />} />
           <Route path="/post" element={<Post />} />
           <Route path="/post/post/:no" element={<PostView />} />
           <Route path="/create-post" element={<Write />} />

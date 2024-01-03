@@ -63,7 +63,7 @@ def make_df(user_id):
             skill_score = cosine_sim_skills[0, job_idx]
 
             total_score = (role_score * role_weight) + (skill_score * skill_weight) + (env_score * env_weight)
-            if total_score >= 0.1:
+            if total_score >= 0:
                 final_scores.append((job_idx, total_score))
 
         final_scores = sorted(final_scores, key=lambda x: x[1], reverse=True)
@@ -96,6 +96,7 @@ class Contest(APIView):
                 'cate' : recommend.cate,
                 'Exp_require' : recommend.Exp_require,
                 'Description' : recommend.Project_Description,
+                'image': recommend.image.url if recommend.image else None,
             })
         
         return Response({'recommend_post_ids' :result_recommend})
