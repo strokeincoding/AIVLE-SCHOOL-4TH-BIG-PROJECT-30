@@ -37,7 +37,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
     class Meta:
         model = User
-        fields = ['nickname', 'email', 'name', 'password', 'occupation','technology_stacks', 'env']# 필드에 추가
+        fields = ['id','nickname', 'email', 'name', 'password', 'occupation','technology_stacks', 'env']# 필드에 추가
         
 class TechnologyStackSerializer(serializers.ModelSerializer):
     class Meta:

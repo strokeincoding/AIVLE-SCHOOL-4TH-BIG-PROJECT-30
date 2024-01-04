@@ -7,7 +7,6 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 
-
 class CrawlingPostView(viewsets.ModelViewSet):
     queryset = Crawling.objects.all()
     serializer_class = CrawlingSerializer

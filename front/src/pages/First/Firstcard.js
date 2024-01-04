@@ -1,43 +1,89 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+ 
 const getCookieValue = (name) => (
   document.cookie.split('; ').find(row => row.startsWith(name + '='))
   ?.split('=')[1]
 );
-
-const yourAuthToken = localStorage.getItem('token');
-
-const ImgMediaCard = ({ id, title, text, imagePath, likeStatus }) => {
-  console.log('likeStatus:', likeStatus);
-  console.log('userId:', id);
-  const userId = getCookieValue('nickname'); // 쿠키에서 userId 가져오기
-  const [liked, setLiked] = useState(likeStatus.includes(userId)); // userId는 현재 로그인한 사용자의 ID
-
-  const handleLike = async () => {
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/crawling/${id}/toggle_like/`, {
-        method: 'POST', // 메소드 추가
-        headers: {
-          'Authorization' : `Bearer ${yourAuthToken}`
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
+ 
+const ImgMediaCard = ({ id, title, text, imagePath, like }) => {
+  const [liked, setLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(like); // 좋아요 수를 관리하는 상태
+  const [userId, setUserId] = useState(null);
+  const token = localStorage.getItem('token');
+  const nickname = getCookieValue('nickname');
+ 
+  // 사용자 ID 가져오기
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const userResponse = await axios.get('http://127.0.0.1:8000/user/User/', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const user = userResponse.data.find(user => user.nickname === nickname);
+        if (user) {
+          setUserId(user.id);
+        }
+      } catch (error) {
+        console.error(error);
       }
-      const data = await response.json(); // 서버 응답 처리
-      setLiked(data.liked); // 예시: 서버에서 'liked' 상태를 응답으로 보내줄 경우
+    };
+ 
+    fetchUserId();
+  }, [nickname, token]);
+ 
+ 
+  // 좋아요 상태 확인
+  useEffect(() => {
+    const fetchLikes = async () => {
+      try {
+        if (userId) {
+          const likeResponse = await axios.get('http://127.0.0.1:8000/crawling/like/', {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          const isLiked = likeResponse.data.some(like => like.user === userId && like.crawling === id);
+          console.log(isLiked);
+          setLiked(isLiked);
+         
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+ 
+    fetchLikes();
+  }, [id, userId, token]);
+ 
+  const toggleLike = async () => {
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/crawling/like/', {
+        user: userId,
+        crawling: id,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+ 
+      setLiked(!liked);
+      setLikeCount(liked ? likeCount - 1 : likeCount + 1); // 좋아요 상태에 따라 좋아요 수 업데이트
+      console.log(response.data);
     } catch (error) {
-      console.error('Failed to like/unlike:', error);
+      console.error(error);
     }
   };
-  
-
+ 
   return (
     <Card sx={{ maxWidth: 345 }}>
       {imagePath && <CardMedia component="img" alt={title} height="140" image={imagePath} />}
@@ -50,13 +96,16 @@ const ImgMediaCard = ({ id, title, text, imagePath, likeStatus }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={handleLike}>
-          {liked ? <FavoriteIcon color="error" /> : <FavoriteIcon />}
-          LIKE
-        </Button>
+        <IconButton aria-label="add to favorites" onClick={toggleLike}>
+          <FavoriteIcon color={liked ? 'error' : 'default'} />
+        </IconButton>
+        <Typography component="span">
+          {likeCount} Likes {/* 좋아요 수 실시간 표시 */}
+        </Typography>
       </CardActions>
     </Card>
   );
 };
-
+ 
 export default ImgMediaCard;
+ 
