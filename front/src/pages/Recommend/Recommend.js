@@ -18,7 +18,7 @@ const Recommend = () => {
   useEffect(() => {
     axios.get('http://localhost:8000/recommend/Recommend/')
       .then(response => {
-        setPosts(response.data);
+        setPosts(response.data.reverse());
       })
       .catch(error => {
         console.error(error);
@@ -30,11 +30,12 @@ const Recommend = () => {
   };
 
   return (
-    <>
-      <CommonTable headersName={['글번호', '제목', '작성자']}>
+    <div className="post-container">
+      <div className="board-title">공모전/해커톤 참가자 모집</div>
+      <CommonTable headersName={['No', '제목', '작성자']}>
         {posts.map((post, index) => (
           <CommonTableRow key={post.id}>
-            <CommonTableColumn>{post.id}</CommonTableColumn>
+            <CommonTableColumn>{posts.length-index}</CommonTableColumn>
             <CommonTableColumn>
               <Link to={`/recommend/Recommend/${post.id}`}>{post.title}</Link>
             </CommonTableColumn>
@@ -42,11 +43,13 @@ const Recommend = () => {
           </CommonTableRow>
         ))}
       </CommonTable>
-      <Button title='Create New Post' onClick={navigateToCreatePost}/>
+      <div className="create-post-container">
+      <Button title='글쓰기' onClick={navigateToCreatePost}/>
+      </div>
       <Stack spacing={2} alignItems="center" justifyContent="center">
         <Pagination count={10} variant="outlined" shape="rounded" />
       </Stack>
-    </>
+    </div>
   );
 };
 

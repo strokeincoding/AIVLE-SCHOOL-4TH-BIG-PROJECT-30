@@ -18,7 +18,7 @@ const Post = () => {
   useEffect(() => {
     axios.get('http://localhost:8000/post/post/')
       .then(response => {
-        setPosts(response.data);
+        setPosts(response.data.reverse());
       })
       .catch(error => {
         console.error(error);
@@ -33,12 +33,13 @@ const Post = () => {
     return date.toISOString().split('T')[0]; // Formats the date to 'YYYY-MM-DD'
   };
   return (
-    <>
-      <div className="board-title">Board list</div>
-      <CommonTable headersName={['글번호', '제목', '등록일','작성자']}>
+
+    <div className="post-container">
+      <div className="board-title">자유게시판</div>
+      <CommonTable headersName={['No', '제목', '등록일','작성자']}>
         {posts.map((post, index) => (
           <CommonTableRow key={post.id}>
-            <CommonTableColumn>{post.id}</CommonTableColumn>
+            <CommonTableColumn>{posts.length-index}</CommonTableColumn>
             <CommonTableColumn>
               <Link to={`/post/post/${post.id}`}>{post.title}</Link>
             </CommonTableColumn>
@@ -48,12 +49,16 @@ const Post = () => {
         ))}
       </CommonTable>
       <div className="create-post-container">
-      <Button title='Create New Post' onClick={navigateToCreatePost}/>
+      <Button title='글쓰기' onClick={navigateToCreatePost}/>
       </div>
+      
+      
       <Stack spacing={2} alignItems="center" justifyContent="center">
         <Pagination count={10} variant="outlined" shape="rounded" />
       </Stack>
-    </>
+      </div>
+ 
+    
   );
 };
  

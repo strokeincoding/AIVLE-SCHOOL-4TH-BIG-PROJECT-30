@@ -33,14 +33,22 @@ const Category = styled(NavLink)`
     margin-left: 1rem;
   }
 `;
+// 이름으로 쿠키 값을 가져오는 함수
+const getCookieValue = (name) => (
+  document.cookie.split('; ').find(row => row.startsWith(`${name}=`))
+  ?.split('=')[1]
+);
 
 const Categories = () => {
   const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
+  const nickname = getCookieValue('nickname');
+
 
   const handleLogout = () => {
     logout();
     navigate('/'); // 로그아웃 후 홈으로 이동
+    localStorage.removeItem('nickname');
   };
 
   return (
@@ -56,7 +64,11 @@ const Categories = () => {
           )}
           {isLoggedIn && (
             <>
-              {/* 로그아웃 기능을 수행하는 Category 컴포넌트 */}
+              
+              <Category as="div" style={{ marginLeft: '10px' }}>
+                {nickname}님 
+              </Category>
+              
               <Category as="div" onClick={handleLogout}>로그아웃</Category>
             </>
           )}

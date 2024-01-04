@@ -1,31 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import './Post.css';
+
 import Button from '../../pages/ui/Button';
 import CommentList from '../../components/list/CommentList';
 import styled from 'styled-components';
+import './PostDetails.css'; 
 
-const Wrapper = styled.div`
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-`;
-/* Container */
-const Container = styled.div`
-    background: white;
-    width: 100%;
-    max-width: 720px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-`;
 
 
 /* Input */
@@ -39,6 +20,19 @@ const StyledInput = styled.input`
         outline: none;
         border-color: #007bff;
     }
+`;
+const StyledTextArea = styled.textarea`
+  width: calc(100% - 40px); /* 전체 너비에서 오른쪽 여백만큼 빼기 */
+  padding: 10px;
+  margin: 10px 0 30px 10px; /* 오른쪽 여백 추가 */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: vertical; /* 사용자가 수직 방향으로 크기 조정 가능 */
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  rows: 10; 
 `;
 const PostView = ({ history, match }) => {
   const [data, setData] = useState(null);
@@ -183,19 +177,12 @@ const PostView = ({ history, match }) => {
 
 
   return (
-    <>
-    <h2 align="center">게시글 상세정보</h2>
-    <Wrapper>
-      <Container className="post-view-wrapper">
-        {
-          data ? (
-            <>
-              <div className="post-view-row">
-                <label>게시글 번호</label>
-                <label>{data.id}</label>
-              </div>
-              <div className="post-view-row">
-                <label>제목</label>
+    <div className="post-details-container">
+      <h2 className="post-details-title">게시글 상세정보</h2>
+        
+          {data ? (
+            <div className="post-details-content">
+              <div className="post-details-row">
                 {isEditing ? (
                   // 편집 모드인 경우
                   <StyledInput
@@ -205,49 +192,55 @@ const PostView = ({ history, match }) => {
                   />
                 ) : (
                   // 편집 모드가 아닌 경우, 기존 내용 보여줌
-                  <label>{data.title}</label>
+                  <>
+                  <span className="post-details-label">제목</span>
+                  <span className="post-details-value">{data.title}</span>
+                  </>
                 )}
-               
+               </div>
+
+
+              <div className="post-details-row">
+                <span className="post-details-label">작성자</span>
+                <span className="post-details-value">{data.user}</span>
               </div>
-              <div className="post-view-row">
-                <label>작성일</label>
-                <label>{formatDate(data.created_at)}</label>
+              <div className="post-details-row">
+                <span className="post-details-label">작성일</span>
+                <span className="post-details-value">{formatDate(data.created_at)}</span>
               </div>
-              <div className="post-view-row">
-                <label>작성자</label>
-                <label>{data.user}</label>
-              </div>
-              <div className="post-view-row">
-                <label>내용</label>
+              <div className="post-details-body">
                 {isEditing ? (
                   // 편집 모드인 경우
-                  <StyledInput
-                    type="text"
+                  <StyledTextArea
+                    rows="10"
                     value={editContent}
                     onChange={(event) => setEditContent(event.target.value)}
                   />
                 ) : (
                   // 편집 모드가 아닌 경우, 기존 내용 보여줌
-                  <label>{data.body}</label>
+                  <div>{data.body}</div>
                 )}
               </div>
- 
-              <input
-                  height={40}
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}> {/* Flex 컨테이너 추가 */}
+                <input
+                  style={{
+                    flexGrow: 1, // Flex 항목으로 만들고, 남은 공간을 채우게 함
+                    height: '30px', // 입력 필드 높이 설정
+                    marginRight: '10px' // 입력 필드 오른쪽에 마진 추가
+                  }}
                   value={newComment}
                   onChange={(event) => {
                       setNewComment(event.target.value);
                   }}
-              />
-              <Button title='댓글 작성' onClick={submitComment}  />
+                />
+                <Button style={{ marginLeft: '30px' }} title='댓글 작성' onClick={submitComment} />
+              </div>
 
-              <p><CommentList comments={Array.isArray(comments) ? comments : []} onDelete={handleDeleteComment} currentUser={currentUsername}/></p>
-            </>
+              <CommentList comments={Array.isArray(comments) ? comments : []} onDelete={handleDeleteComment} currentUser={currentUsername}/>
+            </div>
           ) : '해당 게시글을 찾을 수 없습니다.'
         }
-      </Container>
-    </Wrapper>
-    <Button title='뒤로' onClick={() => navigate(-1)} data={data}/>
+    <div className="button-group" >
     {data && currentUsername === data.user && (
       <>
         {!isEditing && (
@@ -260,8 +253,9 @@ const PostView = ({ history, match }) => {
         <Button title='삭제' onClick={deletePost} data={data}/>
       </>
     )}
-    </>
-   
+    <Button title='목록' onClick={() => navigate(-1)} data={data}/>
+    </div>
+   </div>
   );
 }
  
