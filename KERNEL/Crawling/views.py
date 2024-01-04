@@ -6,13 +6,106 @@ from .serializers import CrawlingSerializer,UserCrawlingLikeSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
+from user.models import User
+import pandas as pd 
+from surprise import Dataset, Reader, SVD
+from collections import defaultdict
+import numpy as np 
+def hybrid(user_id):
+    users = User.objects.all()
+    crawlings = Crawling.objects.all()
+    
+    ratings = []
+    items = {}
+
+    for crawling in crawlings:
+        # 해당 크롤링에 좋아요를 누른 유저들의 목록
+        liked_users = UserCrawlingLike.objects.filter(crawling=crawling).values_list('user', flat=True)
+        
+        # 좋아요를 누른 유저들의 직업 정보 수집
+        occupations = set()
+        for liked_user_id in liked_users:
+            user_occupations = User.objects.get(id=liked_user_id).occupation.all()
+            for occupation in user_occupations:
+                occupations.add(occupation.occupation_name)
+
+        # items 딕셔너리에 저장
+        items[str(crawling.id)] = list(occupations)
+
+        for user in users:
+            like = 1 if user.id in liked_users else 0
+            ratings.append((str(user.id), str(crawling.id), like))
+    
+    ratings_df = pd.DataFrame(ratings, columns=['user', 'item', 'rating'])
+    reader = Reader(rating_scale=(0, 1))
+    data = Dataset.load_from_df(ratings_df[['user', 'item', 'rating']], reader)
+    
+    def calculate_similarity(item1, item2):
+        set1 = set(items[item1])
+        set2 = set(items[item2])
+        if not set1 or not set2:
+            return 0
+        common_elements = len(set1.intersection(set2))
+        return common_elements / max(len(set1), len(set2))
+    
+    item_similarity = defaultdict(dict)
+    for item1 in items:
+        for item2 in items:
+            if item1 != item2:
+                item_similarity[item1][item2] = calculate_similarity(item1, item2)
+
+    # 협업 필터링 모델 훈련
+    algo = SVD()
+    trainset = data.build_full_trainset()
+    algo.fit(trainset)
+    
+    def hybrid_recommendations(user_id=user_id):
+        user_id = str(user_id)
+        # 사용자가 이미 평가한 아이템 제외
+        rated_items = ratings_df[(ratings_df['user'] == user_id) & (ratings_df['rating'] == 1)]['item'].values
+
+        cf_scores = []
+        for item_id in items:
+            if item_id not in rated_items:
+                est = algo.predict(user_id, item_id).est
+                cf_scores.append((item_id, est))
+
+        cb_scores = []
+        for item_id, sim_scores in item_similarity.items():
+            if item_id not in rated_items:
+                sim_score = np.mean(list(sim_scores.values()))
+                cb_scores.append((item_id, sim_score))
+
+        hybrid_scores = defaultdict(float)
+        for item_id, score in cf_scores:
+            hybrid_scores[item_id] += score
+        for item_id, score in cb_scores:
+            hybrid_scores[item_id] += score
+        
+
+        recommendations = sorted(hybrid_scores.items(), key=lambda x: x[1], reverse=True)[:]
+        return [rec[0] for rec in recommendations] 
+    return hybrid_recommendations()
+
 
 class CrawlingPostView(viewsets.ModelViewSet):
     queryset = Crawling.objects.all()
     serializer_class = CrawlingSerializer
-    
     def perform_create(self, serializer):
         serializer.save()
+    def list(self, request, *args, **kwargs):
+        user = request.user
+        if user.is_authenticated:
+            recommended_ids = hybrid(user.id)  # 추천 시스템 실행
+
+            # 추천된 아이템을 조회
+            recommended_crawlings = Crawling.objects.filter(id__in=recommended_ids)
+            # 추천 순서대로 정렬
+            ordered_crawlings = sorted(recommended_crawlings, key=lambda x: recommended_ids.index(str(x.id)))
+
+            # Serializer를 사용하여 데이터 포맷팅
+            serializer = self.get_serializer(ordered_crawlings, many=True)
+            return Response(serializer.data)
         
 class CrawlingLikeViewSet(viewsets.ModelViewSet):
     queryset = UserCrawlingLike.objects.all()

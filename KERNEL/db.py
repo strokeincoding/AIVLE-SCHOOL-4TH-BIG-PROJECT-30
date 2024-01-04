@@ -12,7 +12,7 @@ def save_from_csv():
     Crawling.objects.all().delete()
    
     # CSV 파일 읽어오기
-    df = pd.read_csv("C:\\Users\\user\\Desktop\\big_project\\test\\KERNEL\\Crawling\\naver_title_main_img_url_url_1.csv", encoding='utf-8-sig')
+    df = pd.read_csv("C:\\Users\\user\\Desktop\\big_project\\test\\KERNEL\\Crawling\\merged_sample.csv", encoding='utf-8-sig')
  
     # 각 행에 대해 모델 생성 및 저장
     for idx, row in df.iterrows():
