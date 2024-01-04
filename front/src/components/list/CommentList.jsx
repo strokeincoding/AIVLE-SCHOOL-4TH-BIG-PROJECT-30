@@ -36,19 +36,23 @@ const CommentUser = styled.span`
 `;
 
 function CommentList(props) {
-  const { comments } = props;
+  const { comments, onDelete, currentUser } = props;
 
   // Ensure comments is always an array
   const safeComments = comments || [];
-
+  if (safeComments.length === 0) {
+    return null;
+  }
   return (
     <Wrapper>
-      {safeComments.map((comment, index) => (
+      {safeComments.map((comment) => (
         <div key={comment.id}>
           {/* Render individual comment items */}
           <CommentText>
             <CommentUser>{comment.user}:</CommentUser> {comment.comment} 
-            <DeleteIcon />
+            {currentUser === comment.user && (
+              <DeleteIcon onClick={() => onDelete(comment.id)} style={{cursor: 'pointer'}}/>
+            )}
           </CommentText>
         </div>
       ))}

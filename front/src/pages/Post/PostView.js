@@ -111,17 +111,18 @@ const PostView = ({ history, match }) => {
     })
     .catch(error => console.error("Error posting comment: ", error));
   };
-
-  const handleDeleteComment = (commentId) => {//댓글 삭제 함수
+  //댓글 삭제 함수
+  const handleDeleteComment = (commentId) => {
     const headers = {
       'Authorization': `Bearer ${yourAuthToken}`
     };
   
     axios.delete(`http://localhost:8000/post/comment/${commentId}`, { headers })
       .then(() => {
+        alert('댓글이 성공적으로 삭제되었습니다.');
         const updatedComments = comments.filter((comment) => comment.id !== commentId);
         setComments(updatedComments);
-        setData(null);
+        navigate(`/post/post/${no}`);
       })
       .catch((error) => {
         console.error('Error deleting comment:', error);
@@ -239,7 +240,8 @@ const PostView = ({ history, match }) => {
                   }}
               />
               <Button title='댓글 작성' onClick={submitComment}  />
-              <p><CommentList comments={Array.isArray(comments) ? comments : []}/></p>
+
+              <p><CommentList comments={Array.isArray(comments) ? comments : []} onDelete={handleDeleteComment} currentUser={currentUsername}/></p>
             </>
           ) : '해당 게시글을 찾을 수 없습니다.'
         }
