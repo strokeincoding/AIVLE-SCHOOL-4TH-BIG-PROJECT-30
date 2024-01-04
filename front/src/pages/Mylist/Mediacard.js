@@ -5,8 +5,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
-const ImgMediaCard = ({ title, text, buttonText, imagePath }) => {
+ 
+// 여기에 onMoreClick을 추가합니다
+const ImgMediaCard = ({ title, text, buttonText, imagePath, onMoreClick }) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
       {imagePath && (
@@ -26,10 +27,11 @@ const ImgMediaCard = ({ title, text, buttonText, imagePath }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">{buttonText}</Button>
+        {/* onMoreClick을 onClick 이벤트 핸들러로 사용합니다 */}
+        <Button size="small" onClick={onMoreClick}>{buttonText}</Button>
       </CardActions>
     </Card>
   );
 };
-
+ 
 export default ImgMediaCard;

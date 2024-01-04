@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import ImgMediaCard from './Mediacard';
- 
+import { useNavigate } from 'react-router-dom'; // 추가
  
 const Mylist = () => {
     const [recommendations, setRecommendations] = useState([]);
- 
+    const navigate = useNavigate(); // 추가
     const getCookieValue = (name) => (
         document.cookie.split('; ').find(row => row.startsWith(name + '='))
         ?.split('=')[1]
     );
- 
+    const handleMoreClick = (postId) => {// 추가
+        navigate(`/recommend/Recommend/${postId}`);// 추가
+    };// 추가
     const fetchRecommendations = async () => {
         const nickname = getCookieValue('nickname');
         if (!nickname || nickname === 'undefined') {
@@ -52,6 +54,7 @@ const Mylist = () => {
                         text={`설명: ${recommendation.Exp_require}`}
                         buttonText="More"
                         imagePath={`http://127.0.0.1:8000${recommendation.image}`}
+                        onMoreClick={() => handleMoreClick(recommendation.id)} // 추가
                     />
                 ))}
 </CardContainer>
@@ -63,4 +66,3 @@ const Mylist = () => {
 };
  
 export default Mylist;
-
