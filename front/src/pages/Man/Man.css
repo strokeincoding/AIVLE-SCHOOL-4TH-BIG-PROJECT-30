@@ -3,15 +3,15 @@
 }
 
 .button-container {
-  margin: 20px 0; /* 버튼과 로딩 메시지 주변 공간 추가 */
+  margin: 2% 0; /* 버튼과 로딩 메시지 주변 공간 추가 */
 }
 
 .table-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  margin-top: 20px; /* 버튼 아래에 공간 추가 */
+  padding: 2%;
+  margin-top: 2%; /* 버튼 아래에 공간 추가 */
   animation: fadeIn 1s ease-out; /* 'fade in' 애니메이션 추가 */
 }
 
@@ -22,26 +22,47 @@
 
 .square-table {
   border-collapse: collapse;
-  border: 1px solid black;
+  border: none; /* 테이블의 외부 테두리 제거 */
 }
 
 .square-table td {
-  width: 90px; /* 셀의 너비 */
-  height: 90px; /* 셀의 높이, 정사각형 모양을 위해 너비와 같은 값 */
-  border: 1px solid black;
-  padding: 0; /* padding을 0으로 설정하여 입력란이 셀 안에 꽉 차도록 함 */
+  text-align: center; /* 텍스트를 가로 방향으로 중앙 정렬 */
+  vertical-align: middle; /* 내용을 세로 방향으로 중앙 정렬 */
+  width: 5vw;
+  height: 5vw;
+  background-color: white;
 }
 
-.mandalart-input {
-  width: 100%; /* 입력란의 너비를 셀의 너비에 맞춤 */
-  height: 100%; /* 입력란의 높이를 셀의 높이에 맞춤 */
-  border: none;
-  text-align: center;
-  box-sizing: border-box; /* padding과 border가 width와 height에 포함되도록 함 */
+
+
+
+/* 내용이 있는 셀의 스타일 */
+.cell-with-content {
+  border: 1px solid black; /* 텍스트가 있는 셀의 테두리 */
+}
+
+/* 내용이 없는 셀의 스타일 */
+.cell-without-content {
+  border: none; /* 텍스트가 없는 셀의 테두리 제거 */
+}
+
+.mandalart-input, p {
+  margin: 0 auto; /* 상하좌우 마진을 자동으로 설정하여 중앙 정렬 */
+  width: 100%; /* 셀의 너비에 맞게 */
+  border: none; /* 입력란 및 p 태그의 테두리 제거 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  box-sizing: border-box; /* padding과 border를 width와 height에 포함 */
+}
+
+.shared-value-cell {
+  color: red; /* 빨간색 텍스트 */
+  font-weight: bold; /* 굵은 글씨 */
+  font-size: 20px;
+  /* 추가 원하는 스타일 */
 }
 
 .mandalart-input:placeholder-shown {
-  background-color: #ccc; /* 어두운 배경색 */
+  background-color: white; /* 값이 없을 때 하얀색 배경 */
 }
 
 /* 입력란에 값이 있을 때의 스타일 */

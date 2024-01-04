@@ -5,7 +5,7 @@ DATABASES = {
     	'ENGINE': 'django.db.backends.mysql', 
         'NAME': 'big_project2', 
         'USER': 'root', 
-        'PASSWORD': 'aivle', 
+        'PASSWORD': '1234', 
         'HOST': '127.0.0.1', 
         'PORT': '3306', 
      }
