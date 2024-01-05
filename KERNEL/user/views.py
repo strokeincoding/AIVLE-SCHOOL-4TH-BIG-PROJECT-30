@@ -4,6 +4,7 @@ from .models import User, TechnologyStack, Occupation, Env
 from rest_framework import generics, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework import viewsets, status
  
 # 회원가입
 class UserCreate(generics.CreateAPIView):
@@ -33,6 +34,24 @@ class UserViewSet(viewsets.ModelViewSet):
  
     def perform_create(self, serializer):
         serializer.save(user = self.request.user)
+        
+    def destroy(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        print("Incoming Data:", request.data)  # Add this line to log incoming data
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+    
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+    
+        return Response(serializer.data)          
  
 # 직업환경       
 class EnvViewSet(viewsets.ModelViewSet):
