@@ -27,6 +27,7 @@ const ImgMediaCard = ({ id, title, text, imagePath, like, url }) => {
   // 텍스트를 요약해서 표시할 길이를 설정합니다.
   const summaryLength = 200; // 예시로 200글자로 설정합니다.
   const [isTextTooLong, setIsTextTooLong] = useState(text.length > summaryLength);
+  console.log(text.length);
 
   // 사용자 ID 가져오기
   useEffect(() => {
@@ -72,6 +73,10 @@ const ImgMediaCard = ({ id, title, text, imagePath, like, url }) => {
  
     fetchLikes();
   }, [id, userId, token]);
+
+  useEffect(() => {
+    setIsTextTooLong(text.length > summaryLength);
+  }, [text, summaryLength]);
  
   const toggleLike = async () => {
     try {
@@ -99,7 +104,15 @@ const ImgMediaCard = ({ id, title, text, imagePath, like, url }) => {
   return (
   <Box sx={{ display: 'flex', justifyContent: 'center', m: 2 }}>
     <Card sx={{maxWidth: 345, boxShadow: 3, display: 'flex', flexDirection: 'column', height: '100%' }}>
-      {imagePath && (<CardMedia component="img" alt={title} height="140" image={imagePath}   sx={{ objectFit: 'cover' }} />)}
+      {imagePath && (
+        <CardMedia 
+        component="img" 
+        alt={title} 
+        height="140" 
+        image={imagePath}   
+        sx={{ objectFit:'cover'}} 
+        />
+      )}
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="h5" component="div">
           {title}
@@ -116,8 +129,8 @@ const ImgMediaCard = ({ id, title, text, imagePath, like, url }) => {
           {likeCount} Likes {/* 좋아요 수 실시간 표시 */}
         </Typography>
         <Button size="small" onClick={handleReadMore}>
-              MORE
-            </Button>
+            MORE
+        </Button>
       </CardActions>
     </Card>
   </Box>
