@@ -54,6 +54,7 @@ const Mylist = () => {
                                     text={`설명: ${recommendation.body}`}
                                     imagePath={recommendation.image}
                                     like={recommendation.like_count}
+                                    url={recommendation.url} // 'url' prop 추가
                                 />
                             ))
                         ) : (

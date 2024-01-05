@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ImgMediaCard from './Mediacard';
 import { useNavigate } from 'react-router-dom'; // 추가
  
@@ -40,11 +40,14 @@ const Mylist = () => {
 </div>
         );
     };
+    useEffect(() => {//버튼을 누르지않아도 바로 추천시스템이 보이는 기능
+        fetchRecommendations();
+    }, []);
  
     return (
 <div>
 <h2>Recommended for You</h2>
-<button onClick={fetchRecommendations}>Get Recommendations</button>
+
         {recommendations.length > 0 ? (
 <CardContainer> {/* Use CardContainer here */}
                 {recommendations.map((recommendation, index) => (

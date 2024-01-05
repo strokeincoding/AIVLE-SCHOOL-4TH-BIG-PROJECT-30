@@ -1,47 +1,74 @@
 /* Home.css */
 .card-container {
-    display: flex;
-    flex-direction: row; /* column은 세로, row는 가로 */
-    align-items: stretch; /*stretch는 모두 같은 높이*/
-    max-width: 1200px;
-    width: 100%; /* 추가: 컨테이너의 너비를 화면의 100%로 설정 */
-    margin: 40px auto;
-    flex-wrap: wrap;
-    gap: 20px; /* 카드들 사이의 간격을 20px로 설정 */
-    justify-content: space-between; /* 카드 사이에 공간을 동일하게 분배 */
+  display: flex;
+  flex-direction: row; /* Keep horizontal layout */
+  align-items: stretch; /* Align items for equal height */
+  max-width: 1200px;
+  width: 100%; /* Full width of the viewport */
+  margin: 40px auto; /* Center the container with margin */
+  flex-wrap: wrap; /* Wrap items for small screens */
+  gap: 20px; /* Space between cards */
+  justify-content: space-between; /* Distribute space evenly */
 }
-  
-  /* BannerSection.css */
-  .banner-section {
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    height: 50vh; /* 뷰포트 높이의 50%로 설정 */
-    width: 100%; /* 추가: 너비를 화면의 100%로 설정 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-  }
-  
-  .banner-content {
-    text-align: center;
-    max-width: 600px;
-    width: 100%; /* 추가: 너비를 화면의 100%로 설정, 필요한 경우 */
-  }
-  
-  /* 미디어 쿼리를 사용하여 다양한 화면 크기에 대응 */
-  @media (max-width: 768px) {
-    .banner-section {
-      height: 30vh; /* 모바일 화면에서 높이 조정 */
-    }
-    /* 필요한 경우 모바일 화면에서의 다른 스타일 조정 */
-  }
-  
-  @media (max-width: 480px) {
-    .banner-section {
-      height: 20vh; /* 작은 모바일 화면에서 높이 조정 */
-    }
-    /* 작은 모바일 화면에서의 다른 스타일 조정 */
-  }
-  
+ 
+/* Adjust the cards layout for smaller screens */
+@media (max-width: 768px) {
+.card-container {
+  justify-content: center; /* Center cards on smaller screens */
+}
+}
+ 
+/* BannerSection.css */
+.banner-section {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  height: 50vh; /* Half of the viewport height */
+  width: 100%; /* Full width of the viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+ 
+.banner-content {
+  text-align: center;
+  max-width: 600px;
+  width: 100%; /* Full width of the parent element */
+  padding: 0 20px; /* Add padding for text not to touch the edges */
+}
+ 
+/* Respond to different screen sizes using media queries */
+@media (max-width: 768px) {
+.banner-section {
+  height: 30vh; /* Reduce height on medium screens */
+}
+.banner-content {
+  max-width: 90%; /* Allow more space for the content */
+}
+}
+ 
+@media (max-width: 480px) {
+.banner-section {
+  height: 20vh; /* Reduce height further on small screens */
+}
+.banner-content {
+  max-width: 100%; /* Use full width for the content */
+  padding: 0 10px; /* Adjust padding for very small screens */
+}
+}
+ 
+/* Additional Styles for better responsiveness */
+@media (max-width: 1024px) {
+.card-container {
+  gap: 15px; /* Smaller gap for tablets and large phones */
+}
+}
+ 
+@media (max-width: 480px) {
+.card-container {
+  flex-direction: column; /* Stack cards vertically on small screens */
+  align-items: center; /* Align cards to the center */
+  gap: 10px; /* Smaller gap for small devices */
+}
+}

@@ -12,6 +12,8 @@ import Stack from '@mui/material/Stack';
 
 const Recommend = () => {
   const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 10; // Set the number of posts per page
 
   const navigate = useNavigate();
   
@@ -25,17 +27,29 @@ const Recommend = () => {
       });
   }, []); 
 
+  // Calculate the number of pages
+  const pageCount = Math.ceil(posts.length / postsPerPage);
+ 
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
   const navigateToCreatePost = () => {
     navigate('/RecommendWrite ');
   };
 
+  // Change page
+  const paginate = (event, value) => {
+    setCurrentPage(value);
+  };
+
   return (
-    <div className="post-container">
-      <div className="board-title">공모전/해커톤 참가자 모집</div>
-      <CommonTable headersName={['No', '제목', '작성자']}>
-        {posts.map((post, index) => (
+    <>
+      <CommonTable headersName={['글번호', '제목', '작성자']}>
+        {currentPosts.map((post, index) => ( // Change to use currentPosts
           <CommonTableRow key={post.id}>
-            <CommonTableColumn>{posts.length-index}</CommonTableColumn>
+            <CommonTableColumn>{post.id}</CommonTableColumn>
             <CommonTableColumn>
               <Link to={`/recommend/Recommend/${post.id}`}>{post.title}</Link>
             </CommonTableColumn>
@@ -43,14 +57,18 @@ const Recommend = () => {
           </CommonTableRow>
         ))}
       </CommonTable>
-      <div className="create-post-container">
-      <Button title='글쓰기' onClick={navigateToCreatePost}/>
-      </div>
+      <Button title='Create New Post' onClick={navigateToCreatePost} />
       <Stack spacing={2} alignItems="center" justifyContent="center">
-        <Pagination count={10} variant="outlined" shape="rounded" />
+        <Pagination
+          count={pageCount} // Set the count to the number of pages
+          page={currentPage}
+          onChange={paginate}
+          variant="outlined"
+          shape="rounded"
+        />
       </Stack>
-    </div>
+    </>
   );
 };
-
+ 
 export default Recommend;

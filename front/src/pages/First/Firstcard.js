@@ -7,19 +7,27 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
- 
+import Button from '@mui/material/Button';
+import { Box } from '@mui/material';
+
+
+
 const getCookieValue = (name) => (
   document.cookie.split('; ').find(row => row.startsWith(name + '='))
   ?.split('=')[1]
 );
  
-const ImgMediaCard = ({ id, title, text, imagePath, like }) => {
+const ImgMediaCard = ({ id, title, text, imagePath, like, url }) => {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(like); // 좋아요 수를 관리하는 상태
   const [userId, setUserId] = useState(null);
   const token = localStorage.getItem('token');
   const nickname = getCookieValue('nickname');
  
+  // 텍스트를 요약해서 표시할 길이를 설정합니다.
+  const summaryLength = 200; // 예시로 200글자로 설정합니다.
+  const [isTextTooLong, setIsTextTooLong] = useState(text.length > summaryLength);
+
   // 사용자 ID 가져오기
   useEffect(() => {
     const fetchUserId = async () => {
@@ -83,27 +91,36 @@ const ImgMediaCard = ({ id, title, text, imagePath, like }) => {
       console.error(error);
     }
   };
+  // 'MORE' 버튼 클릭 핸들러
+  const handleReadMore = () => {
+    window.location.href = url; // URL로 리디렉션
+  };
  
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      {imagePath && <CardMedia component="img" alt={title} height="140" image={imagePath} />}
-      <CardContent>
+  <Box sx={{ display: 'flex', justifyContent: 'center', m: 2 }}>
+    <Card sx={{maxWidth: 345, boxShadow: 3, display: 'flex', flexDirection: 'column', height: '100%' }}>
+      {imagePath && (<CardMedia component="img" alt={title} height="140" image={imagePath}   sx={{ objectFit: 'cover' }} />)}
+      <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="h5" component="div">
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {text}
+          {isTextTooLong ? `${text.substring(0, summaryLength)}...` : text}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions sx={{ justifyContent: 'center' }}>
         <IconButton aria-label="add to favorites" onClick={toggleLike}>
           <FavoriteIcon color={liked ? 'error' : 'default'} />
         </IconButton>
         <Typography component="span">
           {likeCount} Likes {/* 좋아요 수 실시간 표시 */}
         </Typography>
+        <Button size="small" onClick={handleReadMore}>
+              MORE
+            </Button>
       </CardActions>
     </Card>
+  </Box>
   );
 };
  

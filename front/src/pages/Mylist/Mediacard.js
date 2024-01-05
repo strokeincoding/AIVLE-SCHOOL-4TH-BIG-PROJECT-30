@@ -9,12 +9,12 @@ import Typography from '@mui/material/Typography';
 // 여기에 onMoreClick을 추가합니다
 const ImgMediaCard = ({ title, text, buttonText, imagePath, onMoreClick }) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 1200 }}>
       {imagePath && (
         <CardMedia
           component="img"
           alt={title}
-          height="140"
+          height="800"
           image={imagePath}
         />
       )}
