@@ -107,10 +107,10 @@ const PostView = ({ history, match }) => {
   };
   //댓글 삭제 함수
   const handleDeleteComment = (commentId) => {
-    const headers = {
-      'Authorization': `Bearer ${yourAuthToken}`
-    };
-  
+    if (window.confirm("정말 댓글을 삭제하시겠습니까?")) {
+      const headers = {
+        'Authorization': `Bearer ${yourAuthToken}`  // 인증 헤더 설정
+      };
     axios.delete(`http://localhost:8000/post/comment/${commentId}`, { headers })
       .then(() => {
         alert('댓글이 성공적으로 삭제되었습니다.');
@@ -121,6 +121,7 @@ const PostView = ({ history, match }) => {
       .catch((error) => {
         console.error('Error deleting comment:', error);
       });
+    }
   };
  
   const formatDate = (dateString) => {

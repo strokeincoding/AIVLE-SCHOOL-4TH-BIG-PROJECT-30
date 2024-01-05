@@ -23,18 +23,16 @@ const Wrapper = styled.div`
   }
 `;
 
-const CommentText = styled.p`
+const CommentText = styled.span`
   margin: 0;
   font-size: 16px;
-  
+  margin-right: 5px;
   color: #333;
 `;
 
 const CommentUser = styled.span`
   font-weight: bold;
   margin-right: 5px;
-  color: #007bff;
-  
 `;
 const CommentItem = styled.div`
   display: flex;
@@ -44,7 +42,10 @@ const CommentItem = styled.div`
 `;
 
 const CommentContent = styled.div`
-  flex-grow: 1; /* 내용이 차지할 수 있는 모든 공간을 차지하도록 함 */
+  display: flex;
+  flex-direction: column; /* 내용을 세로로 쌓기 위해 */
+  flex-grow: 1;
+  margin-right: 10px; /* 삭제 아이콘과의 간격을 위해 */
 `;
 
 function CommentList(props) {
@@ -60,9 +61,9 @@ function CommentList(props) {
       {safeComments.map((comment) => (
         <CommentItem key={comment.id}>
           <CommentContent>
-          <CommentText>
-            <CommentUser>{comment.user}:</CommentUser> {comment.comment} 
-            </CommentText>
+          
+            <CommentUser>{comment.user}</CommentUser> 
+            <CommentText>{comment.comment} </CommentText>
             </CommentContent>
             {currentUser === comment.user && (
               <div>
