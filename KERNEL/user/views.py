@@ -4,7 +4,11 @@ from .models import User, TechnologyStack, Occupation, Env
 from rest_framework import generics, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
- 
+from django.contrib.auth import authenticate
+from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 # 회원가입
 class UserCreate(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -43,6 +47,4 @@ class EnvViewSet(viewsets.ModelViewSet):
         serializer.save(user = self.request.user)
         
     
-    
 
-        

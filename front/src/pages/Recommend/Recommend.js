@@ -8,15 +8,15 @@ import '../../components/table/CommonTable.css';
 import Button from '../../pages/ui/Button';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-
-
+ 
+ 
 const Recommend = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 10; // Set the number of posts per page
-
+ 
   const navigate = useNavigate();
-  
+ 
   useEffect(() => {
     axios.get('http://localhost:8000/recommend/Recommend/')
       .then(response => {
@@ -25,31 +25,34 @@ const Recommend = () => {
       .catch(error => {
         console.error(error);
       });
-  }, []); 
-
-  // Calculate the number of pages
+  }, []);
+ 
+  const getPostNumber = (index) => {    
+    return posts.length - (currentPage - 1) * postsPerPage - index;  
+  }
   const pageCount = Math.ceil(posts.length / postsPerPage);
  
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-
+ 
   const navigateToCreatePost = () => {
     navigate('/RecommendWrite ');
   };
-
+ 
   // Change page
   const paginate = (event, value) => {
     setCurrentPage(value);
   };
-
+ 
   return (
-    <>
-      <CommonTable headersName={['글번호', '제목', '작성자']}>
-        {currentPosts.map((post, index) => ( // Change to use currentPosts
+    <div className="post-container">
+      <div className="board-title">공모전/해커톤 참가자 모집</div>
+      <CommonTable headersName={['No', '제목', '작성자']}>
+        {currentPosts.map((post, index) => (
           <CommonTableRow key={post.id}>
-            <CommonTableColumn>{post.id}</CommonTableColumn>
+            <CommonTableColumn>{getPostNumber(index)}</CommonTableColumn>
             <CommonTableColumn>
               <Link to={`/recommend/Recommend/${post.id}`}>{post.title}</Link>
             </CommonTableColumn>
@@ -57,7 +60,9 @@ const Recommend = () => {
           </CommonTableRow>
         ))}
       </CommonTable>
-      <Button title='Create New Post' onClick={navigateToCreatePost} />
+      <div className="create-post-container">
+      <Button title='글쓰기' onClick={navigateToCreatePost}/>
+      </div>
       <Stack spacing={2} alignItems="center" justifyContent="center">
         <Pagination
           count={pageCount} // Set the count to the number of pages
@@ -67,7 +72,7 @@ const Recommend = () => {
           shape="rounded"
         />
       </Stack>
-    </>
+    </div>
   );
 };
  

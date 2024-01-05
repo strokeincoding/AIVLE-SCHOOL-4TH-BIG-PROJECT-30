@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+ 
 const MenuItem = styled.div`
   padding: 10px 20px;
   margin-bottom: 10px;
@@ -9,10 +9,11 @@ const MenuItem = styled.div`
     border-radius: 5px;
     cursor: pointer;
   }
+  font-family: var(--font-GmarketSansMedium);
 `;
-
+ 
 const SidebarItem = ({ menu }) => {
   return <MenuItem>{menu.name}</MenuItem>;
 };
-
+ 
 export default SidebarItem;

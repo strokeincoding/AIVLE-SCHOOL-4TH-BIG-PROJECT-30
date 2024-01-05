@@ -1,7 +1,10 @@
 from .models import User, TechnologyStack, Occupation, Env
 from rest_framework import serializers
+from django.core.validators import EmailValidator
 
 class UserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(validators=[EmailValidator(message="이메일 형식이 맞지 않습니다")])
+    
     # technology_stacks 필드를 다대다 관계로 정의
     technology_stacks = serializers.PrimaryKeyRelatedField(
         many=True,

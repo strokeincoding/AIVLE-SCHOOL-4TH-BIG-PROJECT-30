@@ -26,7 +26,9 @@ const Post = () => {
         console.error(error);
       });
   }, []);
-
+  const getPostNumber = (index) => {    
+    return posts.length - (currentPage - 1) * postsPerPage - index;  
+   };
   const pageCount = Math.ceil(posts.length / postsPerPage);
  
   // Get current posts
@@ -37,33 +39,33 @@ const Post = () => {
   const navigateToCreatePost = () => {
     navigate('/create-post');
   };
-
+ 
   const paginate = (event, value) => {
     setCurrentPage(value);
   };
  
-
+ 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0]; // Formats the date to 'YYYY-MM-DD'
   };
   return (
-    <>
-      <div className="board-title">Board list</div>
-  <CommonTable headersName={['글번호', '제목', '등록일', '작성자']}>
-    {currentPosts.map((post, index) => ( // 이 부분을 'posts'에서 'currentPosts'로 변경
-      <CommonTableRow key={post.id}>
-        <CommonTableColumn>{post.id}</CommonTableColumn>
-        <CommonTableColumn>
-          <Link to={`/post/post/${post.id}`}>{post.title}</Link>
-        </CommonTableColumn>
-        <CommonTableColumn>{formatDate(post.created_at)}</CommonTableColumn>
-        <CommonTableColumn>{post.user}</CommonTableColumn>
-      </CommonTableRow>
-    ))}
-  </CommonTable>
+    <div className="post-container">
+      <div className="board-title">자유게시판</div>
+      <CommonTable headersName={['No', '제목', '등록일','작성자']}>
+        {currentPosts.map((post, index) => (
+          <CommonTableRow key={post.id}>
+            <CommonTableColumn>{getPostNumber(index)}</CommonTableColumn>
+            <CommonTableColumn>
+              <Link to={`/post/post/${post.id}`}>{post.title}</Link>
+            </CommonTableColumn>
+            <CommonTableColumn>{formatDate(post.created_at)}</CommonTableColumn>
+            <CommonTableColumn>{post.user}</CommonTableColumn>
+          </CommonTableRow>
+        ))}
+      </CommonTable>
       <div className="create-post-container">
-      <Button title='Create New Post' onClick={navigateToCreatePost}/>
+      <Button title='글쓰기' onClick={navigateToCreatePost}/>
       </div>
       <Stack spacing={2} alignItems="center" justifyContent="center">
         <Pagination
@@ -74,7 +76,7 @@ const Post = () => {
           shape="rounded"
         />
       </Stack>
-    </>
+    </div>
   );
 };
  

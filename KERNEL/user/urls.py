@@ -3,6 +3,9 @@ from . import views
 from rest_framework import urls
 from .views import TechnologyStackViewSet,OccupationViewSet,UserViewSet,EnvViewSet
 from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+
 router = DefaultRouter()
 router.register('TechnologyStack', TechnologyStackViewSet)
 router.register('Occupation', OccupationViewSet)

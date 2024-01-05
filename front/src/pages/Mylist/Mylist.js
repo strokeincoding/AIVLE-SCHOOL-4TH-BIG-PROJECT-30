@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ImgMediaCard from './Mediacard';
 import { useNavigate } from 'react-router-dom'; // 추가
+import Grid from '@mui/material/Grid'; // Grid 컴포넌트를 추가하여 카드를 그리드로 배치
  
 const Mylist = () => {
     const [recommendations, setRecommendations] = useState([]);
@@ -9,9 +10,11 @@ const Mylist = () => {
         document.cookie.split('; ').find(row => row.startsWith(name + '='))
         ?.split('=')[1]
     );
+ 
     const handleMoreClick = (postId) => {// 추가
         navigate(`/recommend/Recommend/${postId}`);// 추가
     };// 추가
+ 
     const fetchRecommendations = async () => {
         const nickname = getCookieValue('nickname');
         if (!nickname || nickname === 'undefined') {
@@ -27,45 +30,38 @@ const Mylist = () => {
             }
             const data = await response.json();
             console.log(data);
-            setRecommendations(data.recommend_post_ids);
+            setRecommendations(data.recommend_post_ids); // 서버로부터 받은 데이터를 상태에 설정
         } catch (error) {
             console.error('Failed to fetch recommendations:', error);
         }
     };
  
-    const CardContainer = ({ children }) => {
-        return (
-<div style={{ display: 'flex', flexWrap: 'wrap', gap: '50px', margin: '50px' }}>
-            {children}
-</div>
-        );
-    };
-    useEffect(() => {//버튼을 누르지않아도 바로 추천시스템이 보이는 기능
+    useEffect(() => {//버튼을 누르지 않아도 바로 추천시스템이 보이는 기능
         fetchRecommendations();
     }, []);
  
     return (
-<div>
-<h2>Recommended for You</h2>
-
-        {recommendations.length > 0 ? (
-<CardContainer> {/* Use CardContainer here */}
-                {recommendations.map((recommendation, index) => (
-<ImgMediaCard
-                        key={index}
-                        title={`제목: ${recommendation.title}`}
-                        text={`설명: ${recommendation.Exp_require}`}
-                        buttonText="More"
-                        imagePath={`http://127.0.0.1:8000${recommendation.image}`}
-                        onMoreClick={() => handleMoreClick(recommendation.id)} // 추가
-                    />
-                ))}
-</CardContainer>
-        ) : (
-<p>No recommendations available</p>
-        )}
-</div>
-  );
+        <div>
+            <h2>Recommended for You</h2>
+            <Grid container spacing={4}> {/* 여기에 Grid 컨테이너를 추가하여 카드를 그리드로 배치합니다. */}
+                {recommendations.length > 0 ? (
+                    recommendations.map((recommendation, index) => (
+                        <Grid item xs={12} sm={6} md={3} key={index}> {/* 반응형 그리드 설정 */}
+                            <ImgMediaCard
+                                title={`제목: ${recommendation.title}`}
+                                text={`설명: ${recommendation.Exp_require}`}
+                                buttonText="More"
+                                imagePath={`http://127.0.0.1:8000${recommendation.image}`}
+                                onMoreClick={() => handleMoreClick(recommendation.id)}
+                            />
+                        </Grid>
+                    ))
+                ) : (
+                    <p>No recommendations available</p>
+                )}
+            </Grid>
+        </div>
+    );
 };
  
 export default Mylist;

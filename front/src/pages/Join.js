@@ -22,6 +22,7 @@ function Register() {
     const [env, setEnv] = useState([]);  // 작업 환경 상태
     const navigate = useNavigate();
     // 기술 스택 데이터 불러오기
+
     useEffect(() => {
         fetch('http://localhost:8000/user/TechnologyStack/')
             .then(response => response.json())
@@ -161,6 +162,16 @@ function Register() {
       .catch(err => {
           console.error(err);
           // 에러 처리
+          if (err.response && err.response.data) {
+            const emailErrors = err.response.data.email || [];
+            const nicknameErrors = err.response.data.nickname || [];
+            if (emailErrors.length > 0){
+                alert(emailErrors[0]);
+            }
+            if (nicknameErrors.length > 0){
+                alert(nicknameErrors[0]);
+            }
+          }
       });
   };
  

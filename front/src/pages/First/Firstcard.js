@@ -27,7 +27,6 @@ const ImgMediaCard = ({ id, title, text, imagePath, like, url }) => {
   // 텍스트를 요약해서 표시할 길이를 설정합니다.
   const summaryLength = 200; // 예시로 200글자로 설정합니다.
   const [isTextTooLong, setIsTextTooLong] = useState(text.length > summaryLength);
-  console.log(text.length);
 
   // 사용자 ID 가져오기
   useEffect(() => {
