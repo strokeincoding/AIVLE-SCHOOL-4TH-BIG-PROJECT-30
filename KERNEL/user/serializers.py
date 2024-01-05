@@ -38,6 +38,24 @@ class UserSerializer(serializers.ModelSerializer):
         user.technology_stacks.set(technology_stacks_data)
         user.occupation.set(occupation_data)
         return user
+
+    def update(self, instance, validated_data):
+        technology_stacks_data = validated_data.pop('technology_stacks', None)
+        occupation_data = validated_data.pop('occupation', None)
+        env_data = validated_data.pop('env', None)
+
+        instance.name = validated_data.get('name', instance.name)
+        instance.save()
+
+        if technology_stacks_data is not None:
+            instance.technology_stacks.set(technology_stacks_data)
+        if occupation_data is not None:
+            instance.occupation.set(occupation_data)
+        if env_data is not None:
+            instance.env.set(env_data)
+
+        return instance
+        
     class Meta:
         model = User
         fields = ['id','nickname', 'email', 'name', 'password', 'occupation','technology_stacks', 'env']# 필드에 추가

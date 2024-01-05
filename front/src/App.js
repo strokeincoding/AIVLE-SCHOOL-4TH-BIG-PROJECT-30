@@ -17,6 +17,8 @@ import RecommendView from './pages/Recommend/RecommendView';
 import RecommendWrite from './pages/Recommend/RecommendWrite';
 import Mylist from './pages/Mylist/Mylist';
 import First from './pages/First/First';
+import Infoview from './pages/Info/Info';
+import InfoUpdate from './pages/Info/Infoedit';
 
 const Layout = styled.div`
   display: flex;
@@ -44,6 +46,8 @@ const AuthRoutes = () => {
           <Route path="/recommend" element={<Recommend />} />
           <Route path="/recommend/recommend/:no" element={<RecommendView />} />
           <Route path="/RecommendWrite" element={<RecommendWrite />} />
+          <Route path="/setting" element={<Infoview />} />
+          <Route path="/edit" element={<InfoUpdate />} />
         </>
       ) : (
         <>
