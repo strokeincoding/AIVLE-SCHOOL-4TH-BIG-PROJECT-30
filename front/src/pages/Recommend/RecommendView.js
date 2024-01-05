@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './Post.css';
 import Button from '../../pages/ui/Button';
 import styled from 'styled-components';
-
+ 
 const Wrapper = styled.div`
     padding: 16px;
     width: calc(100% - 32px);
@@ -13,28 +13,28 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
 `;
-
+ 
 const Container = styled.div`
     width: 100%;
     max-width: 720px;
-
+ 
     :not(:last-child) {
         margin-bottom: 16px;
     }
 `;
-
-
+ 
+ 
 const RecommendView = ({ history, match }) => {
   const [data, setData] = useState(null);
   const [envs, setEnvs] = useState({});
   const [occupations, setOccupations] = useState({});
   const [technologyStacks, setTechnologyStacks] = useState({});
-
+ 
   const { no } = useParams();
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
-
+ 
     axios.get('http://127.0.0.1:8000/user/Env/')
       .then(response => {
         const envMap = response.data.reduce((map, env) => {
@@ -44,7 +44,7 @@ const RecommendView = ({ history, match }) => {
         setEnvs(envMap);
       })
       .catch(error => console.error("Error fetching environments: ", error));
-
+ 
     // 기술 스택 데이터 가져오기
     axios.get('http://127.0.0.1:8000/user/TechnologyStack/')
       .then(response => {
@@ -56,7 +56,7 @@ const RecommendView = ({ history, match }) => {
       })
       .catch(error => console.error("Error fetching technology stacks: ", error));
   }, []); // 빈 의존성 배열 추가
-
+ 
   useEffect(() => {
     // 직업 목록 가져오기
     axios.get('http://127.0.0.1:8000/user/Occupation/')
@@ -68,7 +68,7 @@ const RecommendView = ({ history, match }) => {
         setOccupations(occupationMap);
       })
       .catch(error => console.error("Error fetching occupations: ", error));
-
+ 
     // 게시물 데이터 가져오기
     axios.get(`http://localhost:8000/recommend/Recommend/${no}`)
       .then(response => {
@@ -80,7 +80,7 @@ const RecommendView = ({ history, match }) => {
         setData(null);
       });
   }, [no]);
-
+ 
   const deletePost = () => {
     if (window.confirm("Do you really want to delete this post?")) {
       axios.delete(`http://localhost:8000/recommend/Recommend/${no}`)
@@ -94,7 +94,7 @@ const RecommendView = ({ history, match }) => {
         });
     }
   };
-
+ 
   return (
     <>
     <h2 align="center">게시글 상세정보</h2>
@@ -143,17 +143,17 @@ const RecommendView = ({ history, match }) => {
                   <label>이미지</label>
                   {data.image && <img src={data.image} alt="Post" style={{maxWidth: '100%', maxHeight: '300px'}} />}
               </div>
-              
+             
             </>
           ) : '해당 게시글을 찾을 수 없습니다.'
         }
       </Container>
     </Wrapper>
-    <button className="post-view-go-list-btn" onClick={() => navigate(-1)}>목록으로 돌아가기</button>
-    <Button title='Delete Post' onClick={deletePost} />
+    <Button title='목록' onClick={() => navigate(-1)}/>
+    <Button title='삭제' onClick={deletePost} />
     </>
-    
+   
   );
 }
-
+ 
 export default RecommendView;

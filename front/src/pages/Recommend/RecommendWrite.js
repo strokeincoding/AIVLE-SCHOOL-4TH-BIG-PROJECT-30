@@ -10,7 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
-
+ 
 // Styled components
 const Wrapper = styled.div`
 padding: 16px;
@@ -20,7 +20,7 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 `;
-
+ 
 const Container = styled.div`
 width: 100%;
 max-width: 720px;
@@ -28,13 +28,12 @@ max-width: 720px;
     margin-bottom: 16px;
 }
 `;
-
 // TitleField 컴포넌트
 const TitleField = ({ title, handleInputChange }) => (
 <Grid item xs={12}>
   <TextField
     fullWidth
-    label="Title"
+    label="제목"
     id="Title"
     type="text"
     name="title"
@@ -43,12 +42,12 @@ const TitleField = ({ title, handleInputChange }) => (
   />
 </Grid>
 );
-
+ 
 // CategorySelect 컴포넌트
 const CategorySelect = ({ categories, selectedCategories, handleCategoryChange }) => (
 <Grid item xs={12}>
   <FormControl fullWidth variant="outlined">
-    <InputLabel id="categories-label">Categories</InputLabel>
+    <InputLabel id="categories-label">지원분야</InputLabel>
     <Select
       labelId="categories-label"
       id="Categories"
@@ -67,15 +66,15 @@ const CategorySelect = ({ categories, selectedCategories, handleCategoryChange }
   </FormControl>
 </Grid>
 );
-
-
-
+ 
+ 
+ 
 // TechnologyStackSelect 컴포넌트
 const TechnologyStackSelect = ({ occupationName, selectedStacks, handleStackChange, technologyStacks }) => (
 <Grid item xs={12}>
   <h3>{occupationName} Required Skills</h3>{/* 직업 이름을 표시 */}
   <FormControl fullWidth variant="outlined">
-    <InputLabel id="technology-stacks-label">Required Skills</InputLabel>
+    <InputLabel id="technology-stacks-label">기술 스택</InputLabel>
     <Select
       labelId="technology-stacks-label"
       id="TechnologyStacks"
@@ -94,13 +93,13 @@ const TechnologyStackSelect = ({ occupationName, selectedStacks, handleStackChan
   </FormControl>
 </Grid>
 );
-
-
+ 
+ 
 // EnvSelect 컴포넌트
 const EnvSelect = ({ envs, selectedEnv, handleEnvChange }) => (
   <Grid item xs={12}>
     <FormControl fullWidth variant="outlined">
-      <InputLabel id="env-label">Work Environment</InputLabel>
+      <InputLabel id="env-label">선호 환경</InputLabel>
       <Select
         labelId="env-label"
         id="env"
@@ -132,42 +131,42 @@ const [newPost, setNewPost] = useState({
   requiredSkills: {},
   image: null,
 });
-
-
-
+ 
+ 
+ 
 const [categories, setCategories] = useState([]);
 const [technologyStacks, setTechnologyStacks] = useState([]); // Technology stacks state
 const [selectedTechStacks, setSelectedTechStacks] = useState({}); // Selected tech stacks for each occupation
 const [envs, setEnvs] = useState([]); // 'env' 데이터를 위한 상태
 const navigate = useNavigate();
 const yourAuthToken = localStorage.getItem('token');
-
+ 
 const handleStackChange = (occupationId) => (event) => {
   const {
     target: { value },
   } = event;
-  
+ 
   // "value"는 하나의 값이 선택된 경우 문자열 형식이며 여러 값을 선택한 경우 배열 형식입니다.
   // 항상 배열로 처리되도록 확인해야 합니다.
   const allSelectedStacks = typeof value === 'string' ? value.split(',') : value;
-  
+ 
   // 주어진 직업에 대한 선택된 기술 스택을 업데이트합니다.
   setSelectedTechStacks({
     ...selectedTechStacks,
     [occupationId]: allSelectedStacks,
   });
 };
-
+ 
 const handleInputChange = (e) => {
   const { name, value } = e.target;
   setNewPost({ ...newPost, [name]: value });
 };
-
+ 
 const handleCategoryChange = (event) => {
   const { value } = event.target;
   setNewPost({ ...newPost, occupation: value});
 };
-
+ 
 const handleEnvChange = (event) => {
   const { value } = event.target;
   setNewPost({ ...newPost, env: value });
@@ -180,27 +179,27 @@ const handleImageChange = (e) => {
 };
 const addPost = async (e) => {
   e.preventDefault();
-
-  
-  
+ 
+ 
+ 
   const formData = new FormData();
    // 텍스트 데이터를 FormData에 추가
    formData.append('title', newPost.title);
    formData.append('cate', newPost.cate);
    formData.append('Exp_require', newPost.Exp_require);
    formData.append('Project_Description', newPost.Project_Description);
-
+ 
    // 선택된 기술 스택을 FormData에 추가
    const combinedTechStacks = Object.values(selectedTechStacks).flat();
    const uniqueTechStacks = Array.from(new Set(combinedTechStacks));
    uniqueTechStacks.forEach(stack => formData.append('technology_stacks', stack));
-
+ 
    // 선택된 occupation을 FormData에 추가
    newPost.occupation.forEach(occ => formData.append('occupation', occ));
-
+ 
    // 선택된 env를 FormData에 추가 (하나만 선택된 경우)
    if (newPost.env) formData.append('env', newPost.env);
-
+ 
    // 이미지 파일을 FormData에 추가 (파일이 있는 경우)
    if (newPost.image) {
      formData.append('image', newPost.image);
@@ -220,7 +219,7 @@ const addPost = async (e) => {
     console.error('Error adding post:', error);
   }
 };
-
+ 
 useEffect(() => {
   const fetchOccupations = async () => {
     try {
@@ -230,7 +229,7 @@ useEffect(() => {
       console.error('Error fetching occupations:', error);
     }
   };
-
+ 
   const fetchTechnologyStacks = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/user/TechnologyStack/');
@@ -239,7 +238,7 @@ useEffect(() => {
       console.error('Error fetching technology stacks:', error);
     }
   };
-
+ 
   const fetchEnvs = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/user/Env/');
@@ -248,23 +247,23 @@ useEffect(() => {
       console.error('Error fetching envs:', error);
     }
   };
-
+ 
   fetchEnvs();
   fetchOccupations();
   fetchTechnologyStacks();
 }, []);
-
+ 
 return (
   <Wrapper>
     <Container>
-      <h1>Add a New Post</h1>
+      <h1>공모전/해커톤 참가자 모집</h1>
       <form onSubmit={addPost}>
         <Grid container spacing={2}>
           <TitleField title={newPost.title} handleInputChange={handleInputChange} />
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="cate"
+              label="모집분야 인원"
               id="cate"
               type="text"
               name="cate"
@@ -295,7 +294,7 @@ return (
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Experience Requirements"
+              label="경력 요구사항"
               id="Exp_require"
               type="text"
               name="Exp_require"
@@ -306,7 +305,7 @@ return (
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="Project Description"
+              label="프로젝트 설명"
               id="Project_Description"
               type="text"
               name="Project_Description"
@@ -323,11 +322,13 @@ return (
             />
           </Grid>
           </Grid>
+          <Grid item xs={12}>
         <Button title='Add Post' type="submit" />
-      </form>
+        </Grid></form>
     </Container>
   </Wrapper>
 );
 };
-
+ 
 export default RecommendWrite;
+ 
