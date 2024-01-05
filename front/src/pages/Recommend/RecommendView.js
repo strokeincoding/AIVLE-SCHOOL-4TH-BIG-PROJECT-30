@@ -1,28 +1,91 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import './Post.css';
 import Button from '../../pages/ui/Button';
 import styled from 'styled-components';
  
+const LeftAlignedImage = styled.img`//이미지 왼쪽으로 정렬
+  float: left; // Aligns the image to the left
+  max-width: 100%;
+  max-height: 300px;
+  margin-right: 15px; // Adds some space to the right of the image
+  border-radius: 4px; // Optional: adds rounded corners
+  border: 1px solid #ddd;
+`;
+ 
 const Wrapper = styled.div`
-    padding: 16px;
-    width: calc(100% - 32px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  padding: 16px;
+  width: calc(100% - 32px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right bottom, #f0f3f8, #f7f9fc); /* Lighter gradient */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 20px 0;
+  transition: all 0.3s ease;
+  border: 1px solid #ccc;
+ 
+  @media (max-width: 768px) {
+    padding: 10px;
+    width: calc(100% - 20px);
+  }
+ 
+  &:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
 `;
  
 const Container = styled.div`
-    width: 100%;
-    max-width: 720px;
+  width: 100%;
+  max-width: 720px;
+  background-color: #f9f9f9; /* Very light grey */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  text-align: center;
+  border: 2px solid #bbb;
  
-    :not(:last-child) {
-        margin-bottom: 16px;
+  :not(:last-child) {
+    margin-bottom: 16px;
+  }
+ 
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+ 
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-3px);
+  }
+ 
+  .post-view-row {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+ 
+    label {
+      font-weight: 600;
+      color: #333;
+      margin-right: 10px;
+      min-width: 100px;
     }
-`;
  
+    div, img {
+      flex-grow: 1;
+    }
+  }
+ 
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+`;
  
 const RecommendView = ({ history, match }) => {
   const [data, setData] = useState(null);
@@ -103,6 +166,8 @@ const RecommendView = ({ history, match }) => {
         {
           data ? (
             <>
+                  {data.image && (
+                  <LeftAlignedImage src={data.image} alt="Post"  />)}
               <div className="post-view-row">
                 <label>게시글 번호</label>
                 <label>{data.id}</label>
@@ -139,18 +204,14 @@ const RecommendView = ({ history, match }) => {
                 <label>경력</label>
                 <div>{data.Exp_require}</div>
               </div>
-              <div className="post-view-row">
-                  <label>이미지</label>
-                  {data.image && <img src={data.image} alt="Post" style={{maxWidth: '100%', maxHeight: '300px'}} />}
-              </div>
              
             </>
           ) : '해당 게시글을 찾을 수 없습니다.'
         }
       </Container>
     </Wrapper>
-    <Button title='목록' onClick={() => navigate(-1)}/>
-    <Button title='삭제' onClick={deletePost} />
+    <button className="post-view-go-list-btn" onClick={() => navigate(-1)}>목록으로 돌아가기</button>
+    <Button title='Delete Post' onClick={deletePost} />
     </>
    
   );

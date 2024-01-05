@@ -9,7 +9,9 @@ const Side = styled.div`
   border-right: 1px solid #e0e0e0;
   flex-direction: column;
   align-items: center;
-  width: 20%;
+  min-width: 280px;
+  min-height: 100vh;
+  overflow-y: auto;
 `
 const Profile = styled.img`
   width: 150px;

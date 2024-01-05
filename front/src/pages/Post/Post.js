@@ -5,10 +5,11 @@ import CommonTableColumn from '../../components/table/CommonTableColumn';
 import CommonTableRow from '../../components/table/CommonTableRow';
 import CommonTable from '../../components/table/CommonTable';
 import '../../components/table/CommonTable.css';
-import Button from '../../pages/ui/Button';
+import Button from '../../pages/ui/Button_write';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import './Post.css';
+import ModeIcon from '@mui/icons-material/Mode';
  
 const Post = () => {
   const [posts, setPosts] = useState([]);
@@ -65,7 +66,9 @@ const Post = () => {
         ))}
       </CommonTable>
       <div className="create-post-container">
-      <Button title='글쓰기' onClick={navigateToCreatePost}/>
+      <Button onClick={navigateToCreatePost}>
+        <ModeIcon/> 글쓰기
+      </Button>
       </div>
       <Stack spacing={2} alignItems="center" justifyContent="center">
         <Pagination

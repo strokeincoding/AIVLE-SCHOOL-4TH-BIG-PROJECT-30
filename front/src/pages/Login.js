@@ -13,9 +13,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-
-
-
+ 
+ 
+ 
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -25,35 +25,38 @@ class Login extends Component {
       error: '', // 오류 메시지 상태 추가
     };
   }
-
+ 
   handleInputChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value, error: '' });
   };
-
+ 
   handleSubmit = (e) => {
     e.preventDefault();
     const { username, password } = this.state;
-
+ 
     if (!username || !password) {
       this.setState({ error: '모든 필드를 채워주세요.' });
       return;
     }
-
+ 
     // 로그인 시도 후 성공 시 홈으로 리디렉션
     this.props.login(username, password, () => {
       this.props.navigate('/first'); // 여기에서 홈으로 이동
+    }, (errorMsg) => {
+      // 로그인 실패 시 에러 메시지 업데이트
+      alert(errorMsg);
     });
   };
-
+ 
   render() {
     const { isLoggedIn } = this.props;
     const { username, password, error } = this.state;
-
+ 
     if (isLoggedIn) {
       return <Navigate to="/" />;
     }
-
+ 
     return (
       <Container component="main" maxWidth="xs">
       {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -71,8 +74,8 @@ class Login extends Component {
         <Typography component="h1" variant="h5">
               Sign in
         </Typography>
-        <TextField label="ID" 
-          required 
+        <TextField label="ID"
+          required
           fullWidth
           name="username"
           value={username}
@@ -80,7 +83,7 @@ class Login extends Component {
           autoFocus
           margin="normal"
         />
-        <TextField 
+        <TextField
           label="Password"
           type="password"
           required
@@ -91,13 +94,13 @@ class Login extends Component {
           autoComplete="current-password"
         />
         <FormControlLabel
-          control={<Checkbox value="remember" 
+          control={<Checkbox value="remember"
           color="primary" />}
           label="Remember me"
         />
         <Button
-          type="submit" 
-          fullWidth variant="contained" 
+          type="submit"
+          fullWidth variant="contained"
           sx={{mt : 3, mb : 2}}
         >
           Sign In
@@ -111,12 +114,12 @@ class Login extends Component {
           </Grid>
         </Grid>
       </Box>
-    </Container> 
+    </Container>
     );
   }
 }
-
-
+ 
+ 
 // Context 사용을 위한 HOC
 export default function LoginWithAuth(props) {
   const navigate = useNavigate();
