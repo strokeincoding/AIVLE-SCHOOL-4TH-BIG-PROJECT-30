@@ -23,16 +23,29 @@ const Wrapper = styled.div`
   }
 `;
 
-const CommentText = styled.p`
+const CommentText = styled.span`
   margin: 0;
   font-size: 16px;
+  margin-right: 5px;
   color: #333;
 `;
 
 const CommentUser = styled.span`
   font-weight: bold;
   margin-right: 5px;
-  color: #007bff;
+`;
+const CommentItem = styled.div`
+  display: flex;
+  justify-content: space-between; /* 텍스트와 삭제 아이콘을 양 끝으로 분리 */
+  align-items: center; /* 세로 중앙 정렬 */
+  width: 100%; /* 필요하다면 전체 너비를 사용 */
+`;
+
+const CommentContent = styled.div`
+  display: flex;
+  flex-direction: column; /* 내용을 세로로 쌓기 위해 */
+  flex-grow: 1;
+  margin-right: 10px; /* 삭제 아이콘과의 간격을 위해 */
 `;
 
 function CommentList(props) {
@@ -46,15 +59,18 @@ function CommentList(props) {
   return (
     <Wrapper>
       {safeComments.map((comment) => (
-        <div key={comment.id}>
-          {/* Render individual comment items */}
-          <CommentText>
-            <CommentUser>{comment.user}:</CommentUser> {comment.comment} 
+        <CommentItem key={comment.id}>
+          <CommentContent>
+          
+            <CommentUser>{comment.user}</CommentUser> 
+            <CommentText>{comment.comment} </CommentText>
+            </CommentContent>
             {currentUser === comment.user && (
+              <div>
               <DeleteIcon onClick={() => onDelete(comment.id)} style={{cursor: 'pointer'}}/>
+              </div>
             )}
-          </CommentText>
-        </div>
+        </CommentItem>
       ))}
     </Wrapper>
   );
