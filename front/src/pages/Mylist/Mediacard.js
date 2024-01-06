@@ -27,6 +27,13 @@ const cardMediaStyles = `
   animation: wobble 0.5s infinite;
 }
 `;
+ 
+const truncateText = (text, maxLength) => {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + '…';
+  }
+  return text;
+};
 // 여기에 onMoreClick을 추가합니다
 const ImgMediaCard = ({ title, text, buttonText, imagePath, onMoreClick }) => {
   return (
@@ -44,11 +51,11 @@ const ImgMediaCard = ({ title, text, buttonText, imagePath, onMoreClick }) => {
           />
         )}
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {title}
+        <Typography gutterBottom variant="h5" component="div">
+         {truncateText(title, 10)}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {text}
+          {truncateText(text, 20)}
           </Typography>
         </CardContent>
         <CardActions>

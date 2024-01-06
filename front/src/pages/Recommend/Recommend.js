@@ -56,7 +56,7 @@ const Recommend = () => {
  
   return (     // 시작
     <div className="post-container">
-      <div className="board-title">공모전/해커톤 참가자 모집</div>
+      <div className="board-title" style={{ fontSize: '2rem', fontWeight: 'bold' }}>공모전/해커톤 참가자 모집</div>
 <CommonTable headersName={['No', '제목', '작성자']}>    
   {currentPosts.map((post, index) => (
     <CommonTableRow key={post.id}>

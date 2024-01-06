@@ -64,12 +64,12 @@ const Home = () => {
           imagePath={mandaratImage}
         />
         <Card
-          title="챗봇"
+          title="추천시스템"
           text="하이"
           imagePath={chatbotImage}
         />
         <Card
-          title="취업"
+          title="챗봇"
           text="하이"
           imagePath={employmentImage}
         />

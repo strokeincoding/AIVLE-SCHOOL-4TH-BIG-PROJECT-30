@@ -59,7 +59,7 @@ const Mylist = () => {
  
     return (
         <div>
-            <h2 style={{ textAlign: 'center' }}>진행 공모전 현황</h2>
+            <h2 style={{ textAlign: 'center',fontSize: '2rem', fontWeight: 'bold' }}>진행 공모전 현황</h2>
             <Grid container spacing={4}>
                 {currentPosts.map((recommendation, index) => (
                     <Grid item xs={12} sm={6} md={3} key={index}>

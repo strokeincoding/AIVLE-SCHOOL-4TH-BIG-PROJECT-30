@@ -27,6 +27,15 @@ const Post = () => {
         console.error(error);
       });
   }, []);
+ 
+  const truncateString = (str, num) => {
+    if (str.length > num) {
+      return str.slice(0, num) + '...';
+    } else {
+      return str;
+    }
+  };
+ 
   const getPostNumber = (index) => {    
     return posts.length - (currentPage - 1) * postsPerPage - index;  
    };
@@ -52,33 +61,21 @@ const Post = () => {
   };
   return (
     <div className="post-container">
-      <div className="board-title">자유게시판</div>
+      <div className="board-title"style={{ fontSize: '2rem', fontWeight: 'bold' }}>자유게시판</div>
       <CommonTable headersName={['No', '제목', '등록일','작성자']}>
         {currentPosts.map((post, index) => (
           <CommonTableRow key={post.id}>
             <CommonTableColumn>{getPostNumber(index)}</CommonTableColumn>
             <CommonTableColumn>
-              <Link to={`/post/post/${post.id}`}>{post.title}</Link>
+              {/* Use truncateString to truncate the title */}
+              <Link to={`/post/post/${post.id}`}>{truncateString(post.title, 20)}</Link>
             </CommonTableColumn>
             <CommonTableColumn>{formatDate(post.created_at)}</CommonTableColumn>
             <CommonTableColumn>{post.user}</CommonTableColumn>
           </CommonTableRow>
         ))}
       </CommonTable>
-      <div className="create-post-container">
-      <Button onClick={navigateToCreatePost}>
-        <ModeIcon/> 글쓰기
-      </Button>
-      </div>
-      <Stack spacing={2} alignItems="center" justifyContent="center">
-        <Pagination
-          count={pageCount} // Set the count to the number of pages
-          page={currentPage}
-          onChange={paginate}
-          variant="outlined"
-          shape="rounded"
-        />
-      </Stack>
+      {/* ... existing code for Pagination and other components ... */}
     </div>
   );
 };

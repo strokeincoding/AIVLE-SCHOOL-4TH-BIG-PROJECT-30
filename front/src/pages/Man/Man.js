@@ -156,7 +156,7 @@ initialPredefinedValues['4,4'] = '?';
  
   return (
     <div className="container">
-    <h1 className="mandalart-guide-title">만다라트 가이드</h1>
+    <h1 className="mandalart-guide-title"style={{ fontSize: '2rem', fontWeight: 'bold' }}>만다라트 가이드</h1>
     <div className="button-container">
       <button onClick={handleButtonClick}>만다라트 생성</button>
     </div>
