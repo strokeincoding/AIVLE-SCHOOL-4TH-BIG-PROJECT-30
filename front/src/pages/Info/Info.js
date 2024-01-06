@@ -4,14 +4,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import InfoUpdate from './Infoedit';
-import Infodelete from './Infoedit';
-
+import { useAuth } from '../../context/AuthContext';
+ 
 // InfoUpdate 컴포넌트 외부에 getCookieValue 함수 정의
 const getCookieValue = (name) => (
     document.cookie.split('; ').find(row => row.startsWith(name + '='))
     ?.split('=')[1]
   );
-
+ 
 function Infoview() {
   const [Email, setEmail] = useState('');
   const [Nickname, setNickname] = useState('');
@@ -28,6 +28,7 @@ function Infoview() {
   const [selectedTechnologyStacks, setSelectedTechnologyStacks] = useState([]);
   const [selectedOccupations, setSelectedOccupations] = useState([]);
   const [selectedEnvs, setSelectedEnvs] = useState([]);
+  const { logout } = useAuth(); // useAuth 훅으로부터 logout 함수 가져오기
   const handleEditClick = () => {
     nav('/edit'); // This should match the path you set up in your routes
   };
@@ -37,7 +38,7 @@ function Infoview() {
       nav('/login');
       return;
     }
-  
+ 
     axios.get('http://127.0.0.1:8000/user/User/', {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -55,7 +56,7 @@ function Infoview() {
       alert("사용자 목록을 가져오는 데 실패했습니다.");
     });
   }, [token, nav, nickname]);
-
+ 
   const fetchUserData = (userId) => {
     axios.get(`http://127.0.0.1:8000/user/User/${userId}/`, {
       headers: {
@@ -90,7 +91,7 @@ function Infoview() {
     }
     setSelectedTechnologyStacks(value);
   };
-
+ 
   const onEmailHandler = (e) => {
     setEmail(e.currentTarget.value);
   };
@@ -126,20 +127,20 @@ function Infoview() {
       })
       .then(response => {
         console.log("User deleted successfully");
-        // Logout the user
-        localStorage.removeItem('token'); // Clear the token from local storage
-        console.log('Token removed from storage, logging out...');
-        // Redirect to homepage
-        nav('/'); // Navigate to the homepage
-        console.log('Redirected to homepage');
+ 
+        // 로그아웃 처리
+        logout();
+        localStorage.removeItem('token'); // 토큰 삭제 (선택적)
+        nav('/'); // 홈으로 이동
       })
       .catch(error => {
         console.error('Error deleting user: ', error);
         alert("탈퇴 처리 중 오류가 발생했습니다.");
       });
     }
-  }
-
+  };
+ 
+ 
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (!userId) {
@@ -157,7 +158,7 @@ function Infoview() {
       occupation: parseIds(Occupation),
       env: parseIds(Env),
     };
-  
+ 
     axios.put(`http://127.0.0.1:8000/user/User/${userId}/`, req, {
       headers: {
         "Authorization": `Token ${token}`,
@@ -172,7 +173,7 @@ function Infoview() {
       alert("오류 발생");
     });
   };
-
+ 
   return (
     <div style={{ padding: '63px', marginLeft: '256px' }}>
       <h2 className="text-base font-semibold leading-7 text-gray-900">개인정보 조회</h2>
@@ -192,10 +193,5 @@ function Infoview() {
     </div>
   );
 }
-    
+   
 export default Infoview;
-
-
-
-
-    
