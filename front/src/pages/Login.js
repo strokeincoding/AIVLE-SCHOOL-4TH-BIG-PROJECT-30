@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -13,6 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+ 
  
  
  
@@ -43,9 +42,6 @@ class Login extends Component {
     // 로그인 시도 후 성공 시 홈으로 리디렉션
     this.props.login(username, password, () => {
       this.props.navigate('/first'); // 여기에서 홈으로 이동
-    }, (errorMsg) => {
-      // 로그인 실패 시 에러 메시지 업데이트
-      alert(errorMsg);
     });
   };
  
@@ -72,9 +68,9 @@ class Login extends Component {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-              Sign in
+              로그인
         </Typography>
-        <TextField label="ID"
+        <TextField label="로그인"
           required
           fullWidth
           name="username"
@@ -84,7 +80,7 @@ class Login extends Component {
           margin="normal"
         />
         <TextField
-          label="Password"
+          label="비밀번호"
           type="password"
           required
           fullWidth
@@ -92,11 +88,6 @@ class Login extends Component {
           value={password}
           onChange={this.handleInputChange}
           autoComplete="current-password"
-        />
-        <FormControlLabel
-          control={<Checkbox value="remember"
-          color="primary" />}
-          label="Remember me"
         />
         <Button
           type="submit"
@@ -107,10 +98,9 @@ class Login extends Component {
         </Button>
         <Grid container>
           <Grid item xs>
-            <Link href="#">Forgot password? </Link>
           </Grid>
           <Grid item>
-            <Link href="Join">Sign Up</Link>
+            <Link href="Join">회원가입</Link>
           </Grid>
         </Grid>
       </Box>

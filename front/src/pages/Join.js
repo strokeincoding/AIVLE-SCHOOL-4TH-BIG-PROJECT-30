@@ -2,11 +2,10 @@ import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Select, MenuItem, InputLabel, FormControl, Box, Container, Typography } from '@mui/material';
-// import { useNavigate } from 'react-router-dom';
-// import { TextField, Button, Select, MenuItem, InputLabel, FormControl, Box, Container, Typography } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
- 
- 
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Avatar from '@mui/material/Avatar';
+
 function Register() {
     const [formData, setFormData] = useState({
         nickname: '',
@@ -22,7 +21,6 @@ function Register() {
     const [env, setEnv] = useState([]);  // 작업 환경 상태
     const navigate = useNavigate();
     // 기술 스택 데이터 불러오기
-
     useEffect(() => {
         fetch('http://localhost:8000/user/TechnologyStack/')
             .then(response => response.json())
@@ -32,8 +30,7 @@ function Register() {
                 console.error('Error fetching tech stacks:', error);
             });
     }, []);  // 빈 의존성 배열로 마운트 시에만 호출
- 
- 
+
     // 선호 직종 데이터 불러오기
     useEffect(() => {
         fetch('http://localhost:8000/user/Occupation/')
@@ -44,8 +41,7 @@ function Register() {
                 console.error('Error fetching tech stacks:', error);
             });
     }, []);  // 빈 의존성 배열로 마운트 시에만 호출
- 
- 
+
     // 작업 환경 데이터 불러오기
     useEffect(() => {
         fetch('http://localhost:8000/user/Env/')
@@ -56,8 +52,7 @@ function Register() {
                 console.error('Error fetching tech stacks:', error);
             });
     }, []);  // 빈 의존성 배열로 마운트 시에만 호출
- 
- 
+
     // CSRF 토큰을 가져오는 함수
     const getCsrfToken = () => {
         let token = null;
@@ -75,7 +70,6 @@ function Register() {
     };
     // const handleInputChange = (event) => {
     //     const { name, value } = event.target;
-   
     //     // 'value'가 문자열이 아니라 배열이어야 합니다. Material-UI는 다중 선택에서 배열을 제공합니다.
     //     // 만약 문자열이 올 수도 있다면, 문자열을 배열로 변환해야 합니다.
     //     let newValue;
@@ -85,10 +79,8 @@ function Register() {
     //         // Material-UI는 다중 선택을 위해 배열을 반환합니다.
     //         newValue = value;
     //     }
-   
     //     // 'newValue'를 정수 배열로 변환합니다.
     //     const intValueArray = newValue.map((item) => parseInt(item));
-   
     //     setFormData({
     //         ...formData,
     //         [name]: intValueArray,
@@ -96,7 +88,6 @@ function Register() {
     // };
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-   
         // 'value'가 문자열이 아니라 배열이어야 합니다. Material-UI는 다중 선택에서 배열을 제공합니다.
         // 만약 문자열이 올 수도 있다면, 문자열을 배열로 변환해야 합니다.
         let newValue;
@@ -106,10 +97,8 @@ function Register() {
             // Material-UI는 다중 선택을 위해 배열을 반환합니다.
             newValue = value;
         }
-   
         // 'newValue'를 정수 배열로 변환합니다.
         const intValueArray = newValue.map((item) => parseInt(item));
-   
         setFormData({
             ...formData,
             [name]: intValueArray,
@@ -124,7 +113,6 @@ function Register() {
       };
     const handleChange2 = (event) => {
       const { name, value } = event.target;
-    
       // 'value'가 문자열이 아니라 배열이어야 합니다. Material-UI는 다중 선택에서 배열을 제공합니다.
       // 만약 문자열이 올 수도 있다면, 문자열을 배열로 변환해야 합니다.
       let newValue;
@@ -135,17 +123,14 @@ function Register() {
       } else {
         newValue = [value]; // 다른 형식인 경우 배열로 변환
       }
-    
       // 'newValue'를 정수 배열로 변환합니다.
       const intValueArray = newValue.map((item) => parseInt(item));
-    
       setFormData({
         ...formData,
         [name]: intValueArray,
       });
     };
-   
- 
+
     const handleSubmit = (e) => {
       e.preventDefault();
       const csrftoken = getCsrfToken();
@@ -162,94 +147,86 @@ function Register() {
       .catch(err => {
           console.error(err);
           // 에러 처리
-          if (err.response && err.response.data) {
-            const emailErrors = err.response.data.email || [];
-            const nicknameErrors = err.response.data.nickname || [];
-            if (emailErrors.length > 0){
-                alert(emailErrors[0]);
-            }
-            if (nicknameErrors.length > 0){
-                alert(nicknameErrors[0]);
-            }
-          }
       });
   };
- 
-   
+
   return (
-    <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Typography component="h1" variant="h5">Register</Typography>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
-                <TextField
+<Container component="main" maxWidth="xs">
+<CssBaseline />
+<Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+<Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+<LockOutlinedIcon />
+</Avatar>
+<Typography component="h1" variant="h5">회원가입</Typography>
+<Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+<TextField
                     margin="normal"
                     required
                     fullWidth
                     name="nickname"
-                    label="Nickname"
+                    label="아이디"
                     type="text"
                     id="nickname"
                     value={formData.nickname}
                     onChange={handleChange}
-                    placeholder="Nickname"
+                    placeholder="아이디"
                 />
-                <TextField
+<TextField
                     margin="normal"
                     required
                     fullWidth
                     name="email"
-                    label="Email Address"
+                    label="이메일"
                     type="email"
                     id="email"
                     autoComplete="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Email"
+                    placeholder="이메일"
                 />
-                <TextField
+<TextField
                     margin="normal"
                     required
                     fullWidth
                     name="name"
-                    label="Name"
+                    label="이름"
                     type="text"
                     id="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Name"
+                    placeholder="이름"
                 />
-                <TextField
+<TextField
                     margin="normal"
                     required
                     fullWidth
                     name="password"
-                    label="Password"
+                    label="비밀번호"
                     type="password"
                     id="password"
                     autoComplete="current-password"
                     value={formData.password}
                     onChange={handleChange}
-                    placeholder="Password"
+                    placeholder="비밀번호"
                 />
-                <FormControl fullWidth margin="normal">
-                    <InputLabel id="occupation-label">Occupation</InputLabel>
-                    <Select
+<FormControl fullWidth margin="normal">
+<InputLabel id="occupation-label">희망 직종</InputLabel>
+<Select
                         labelId="occupation-label"
                         id="occupation"
                         name="occupation"
                         value={formData.occupation}
                         onChange={handleChange2}
                         label="Occupation"
-                    >
+>
                         {occupation.map(occup => (
-                            <MenuItem key={occup.id} value={occup.id}>{occup.occupation_name}</MenuItem>
+<MenuItem key={occup.id} value={occup.id}>{occup.occupation_name}</MenuItem>
                         ))}
-                    </Select>
-                </FormControl>
-                <FormControl fullWidth margin="normal">
-                    <InputLabel id="techStacks-label">Technology Stacks</InputLabel>
-                    <Select
+</Select>
+</FormControl>
+<FormControl fullWidth margin="normal">
+<InputLabel id="techStacks-label">Technology Stacks</InputLabel>
+<Select
                         labelId="techStacks-label"
                         id="technology_stacks"
                         multiple
@@ -257,40 +234,39 @@ function Register() {
                         value={formData.technology_stacks}
                         onChange={handleInputChange}
                         label="Technology Stacks"
-                    >
+>
                         {techStacks.map(stack => (
-                            <MenuItem key={stack.id} value={stack.id}>{stack.stack_name}</MenuItem>
+<MenuItem key={stack.id} value={stack.id}>{stack.stack_name}</MenuItem>
                         ))}
-                    </Select>
-                </FormControl>
-                <FormControl fullWidth margin="normal">
-                    <InputLabel id="env-label">Environment</InputLabel>
-                    <Select
+</Select>
+</FormControl>
+<FormControl fullWidth margin="normal">
+<InputLabel id="env-label">선호 환경</InputLabel>
+<Select
                         labelId="env-label"
                         id="env"
                         name="env"
                         value={formData.env}
                         onChange={handleChange2}
                         label="Environment"
-                    >
+>
                         {env.map(env => (
-                            <MenuItem key={env.id} value={env.id}>{env.env_name}</MenuItem>
+<MenuItem key={env.id} value={env.id}>{env.env_name}</MenuItem>
                         ))}
-                    </Select>
-                </FormControl>
-                <Button
+</Select>
+</FormControl>
+<Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
-                >
+>
                     Register
-                </Button>
-            </Box>
-        </Box>
-    </Container>
+</Button>
+</Box>
+</Box>
+</Container>
 );
 }
- 
- 
+
 export default Register;
