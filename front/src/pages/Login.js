@@ -42,6 +42,9 @@ class Login extends Component {
     // 로그인 시도 후 성공 시 홈으로 리디렉션
     this.props.login(username, password, () => {
       this.props.navigate('/first'); // 여기에서 홈으로 이동
+    }, (errorMsg) => {
+      // 로그인 실패 시 에러 메시지 업데이트
+      alert(errorMsg);
     });
   };
  

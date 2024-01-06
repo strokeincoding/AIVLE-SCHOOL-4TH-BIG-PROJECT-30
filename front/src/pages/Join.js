@@ -145,8 +145,18 @@ function Register() {
           navigate('/login'); // 회원가입 성공 후 로그인 페이지로 이동
       })
       .catch(err => {
-          console.error(err);
-          // 에러 처리
+        console.error(err);
+        // 에러 처리
+        if (err.response && err.response.data) {
+          const emailErrors = err.response.data.email || [];
+          const nicknameErrors = err.response.data.nickname || [];
+          if (emailErrors.length > 0){
+              alert(emailErrors[0]);
+          }
+          if (nicknameErrors.length > 0){
+              alert(nicknameErrors[0]);
+          }
+        }
       });
   };
 

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import ImgMediaCard from './Mediacard';
-import { useNavigate } from 'react-router-dom'; // 추가
-import Grid from '@mui/material/Grid'; // Grid 컴포넌트를 추가하여 카드를 그리드로 배치
- 
+import { useNavigate } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
+import Pagination from '@mui/material/Pagination'; // 페이지네이션 컴포넌트를 추가합니다.
+import Stack from '@mui/material/Stack';
  
 const Mylist = () => {
     const [recommendations, setRecommendations] = useState([]);
-    const navigate = useNavigate(); // 추가
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태를 추가합니다.
+    const postsPerPage = 8; // 페이지 당 게시물 수를 8로 설정합니다.
+    const navigate = useNavigate();
     const getCookieValue = (name) => (
         document.cookie.split('; ').find(row => row.startsWith(name + '='))
         ?.split('=')[1]
@@ -15,7 +18,7 @@ const Mylist = () => {
     const handleMoreClick = (postId) => {// 추가
         navigate(`/recommend/Recommend/${postId}`);// 추가
     };// 추가
-   
+ 
     const fetchRecommendations = async () => {
         const nickname = getCookieValue('nickname');
         if (!nickname || nickname === 'undefined') {
@@ -41,26 +44,45 @@ const Mylist = () => {
         fetchRecommendations();
     }, []);
  
+    const paginate = (event, value) => {
+        setCurrentPage(value);
+    };
+ 
+    useEffect(() => {
+        fetchRecommendations();
+    }, [currentPage]);
+ 
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = recommendations.slice(indexOfFirstPost, indexOfLastPost);
+    const pageCount = Math.ceil(recommendations.length / postsPerPage);
+ 
     return (
         <div>
-            <h2 style={{ textAlign: 'center', fontSize: '30px'}}>진행 공모전 현황</h2> {/* 가운데 정렬, 폰트 크기 30px */}
-            <Grid container spacing={1}> {/* 포스터간 간격 */}
-                {recommendations.length > 0 ? (
-                    recommendations.map((recommendation, index) => (
-                        <Grid item xs={12} sm={6} md={3} key={index}> {/* 반응형 그리드 설정 */}
-                            <ImgMediaCard
-                                title={`제목: ${recommendation.title}`}
-                                text={`설명: ${recommendation.Exp_require}`}
-                                buttonText="More"
-                                imagePath={`http://127.0.0.1:8000${recommendation.image}`}
-                                onMoreClick={() => handleMoreClick(recommendation.id)}
-                            />
-                        </Grid>
-                    ))
-                ) : (
-                    <p>현재 관련 공모전이 없습니다.</p>
-                )}
+            <h2 style={{ textAlign: 'center' }}>진행 공모전 현황</h2>
+            <Grid container spacing={4}>
+                {currentPosts.map((recommendation, index) => (
+                    <Grid item xs={12} sm={6} md={3} key={index}>
+                        <ImgMediaCard
+                            title={`제목: ${recommendation.title}`}
+                            text={`설명: ${recommendation.Exp_require}`}
+                            buttonText="More"
+                            imagePath={`http://127.0.0.1:8000${recommendation.image}`}
+                            onMoreClick={() => handleMoreClick(recommendation.id)}
+                        />
+                    </Grid>
+                ))}
             </Grid>
+            {/* 페이지네이션 컴포넌트를 추가합니다. */}
+            <Stack spacing={2} alignItems="center" justifyContent="center">
+                <Pagination
+                    count={pageCount}
+                    page={currentPage}
+                    onChange={paginate}
+                    variant="outlined"
+                    shape="rounded"
+                />
+            </Stack>
         </div>
     );
 };
