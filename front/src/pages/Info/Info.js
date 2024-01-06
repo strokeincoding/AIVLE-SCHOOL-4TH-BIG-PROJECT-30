@@ -5,7 +5,9 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import InfoUpdate from './Infoedit';
 import { useAuth } from '../../context/AuthContext';
- 
+import ImgMediaCard from '../First/Firstcard';
+import { Box } from '@mui/material';
+
 // InfoUpdate 컴포넌트 외부에 getCookieValue 함수 정의
 const getCookieValue = (name) => (
     document.cookie.split('; ').find(row => row.startsWith(name + '='))
@@ -29,6 +31,7 @@ function Infoview() {
   const [selectedOccupations, setSelectedOccupations] = useState([]);
   const [selectedEnvs, setSelectedEnvs] = useState([]);
   const { logout } = useAuth(); // useAuth 훅으로부터 logout 함수 가져오기
+  const [recommendations, setRecommendations] = useState([]);
   const handleEditClick = () => {
     nav('/edit'); // This should match the path you set up in your routes
   };
@@ -55,7 +58,10 @@ function Infoview() {
       console.error(error);
       alert("사용자 목록을 가져오는 데 실패했습니다.");
     });
-  }, [token, nav, nickname]);
+    if (userId){
+      fetchRecommendations();
+    }
+  }, [token, nav, nickname, userId]);
  
   const fetchUserData = (userId) => {
     axios.get(`http://127.0.0.1:8000/user/User/${userId}/`, {
@@ -79,6 +85,27 @@ function Infoview() {
       alert("사용자 정보를 가져오는 데 실패했습니다.");
     });
   };
+
+  const fetchRecommendations = async () => {
+    if (!userId) return;  // 사용자 ID 없을 경우 함수 종료
+  
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/crawling/userliked/`, { // 추천 데이터를 불러오는 API 경로로 변경해주세요
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (response.status === 200) {
+        setRecommendations(response.data); // 응답 데이터를 상태에 저장
+      } else {
+        throw new Error('Failed to fetch recommendations');
+      }
+    } catch (error) {
+      console.error('Error fetching recommendations:', error);
+    }
+  };
+
+
   // ...이벤트 핸들러 함수들...
   // 드롭다운의 선택 변경을 처리하는 핸들러 함수들
   const handleTechnologyStacksChange = (event) => {
@@ -190,6 +217,32 @@ function Infoview() {
           <Button onClick={handleDeleteClick} type="button">탈퇴하기</Button>
         </div>
       </div>
+
+      <Box sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        gap: 2
+      }}>
+        {recommendations.length > 0 ? (
+          recommendations.map((recommendation, index) =>(
+            <ImgMediaCard
+              key={index}
+              id={recommendation.id}
+              title={`${recommendation.title}`}
+              text={`${recommendation.body}`}
+              imagePath={recommendation.image}
+              like={recommendation.like_count}
+              url={recommendation.url} // 'url' prop 추가
+            />
+          )) 
+        ) : (
+          <p>No recommendations available</p>
+
+        )}
+      </Box>
+
+
     </div>
   );
 }

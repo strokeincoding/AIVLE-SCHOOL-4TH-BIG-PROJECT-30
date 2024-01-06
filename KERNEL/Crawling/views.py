@@ -139,3 +139,14 @@ class CrawlingLikeViewSet(viewsets.ModelViewSet):
             crawling.like_count += 1
             crawling.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class UserLikedCrawlings(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        user = request.user
+        liked_crawlings = UserCrawlingLike.objects.filter(user=user).values_list('crawling', flat=True)
+        crawlings = Crawling.objects.filter(id__in=liked_crawlings)
+        serializer = CrawlingSerializer(crawlings, many=True)
+        return Response(serializer.data)
