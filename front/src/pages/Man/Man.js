@@ -149,7 +149,7 @@ initialPredefinedValues['4,4'] = '?';
  
     return (
       <td className={cellClass} style={cellStyle}>
-        <p style={{ fontSize: '0.68vw' }}>{content}</p>
+        <p style={{ fontSize: '0.66vw' }}>{content}</p>
       </td>
     );
   };

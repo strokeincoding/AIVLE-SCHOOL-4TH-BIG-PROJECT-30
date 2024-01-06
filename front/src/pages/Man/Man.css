@@ -17,7 +17,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2%;
+  padding: 1%;
   margin-top: 2%; /* 버튼 아래에 공간 추가 */
 }
  
@@ -27,7 +27,6 @@
 }
  
 .square-table {
-  border-collapse: collapse;
   border: none; /* 테이블의 외부 테두리 제거 */
 }
  
@@ -37,6 +36,7 @@
   width: 4vw;
   height: 4vw;
   background-color: white;
+  border-radius: 8px; /* 테두리의 둥근 정도를 설정 */
 }
  
 /* 내용이 있는 셀의 스타일 */
@@ -55,7 +55,6 @@
   border: none; /* 입력란 및 p 태그의 테두리 제거 */
   text-align: center; /* 텍스트 중앙 정렬 */
   box-sizing: border-box; /* padding과 border를 width와 height에 포함 */
-  font-size: 14px;
 }
  
  

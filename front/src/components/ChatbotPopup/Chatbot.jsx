@@ -7,17 +7,19 @@ function ChatbotPopup() {
     const [messages, setMessages] = useState([]);
     const [userInput, setUserInput] = useState('');
     const [threadId, setThreadId] = useState(null);  // 스레드 ID 상태
+    const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
 
     const togglePopup = () => {
         setIsOpen(!isOpen);
         if (isOpen) {
-            setThreadId(null);  // 챗봇 창을 닫을 때 스레드 ID 초기화
-            setMessages([]);    // 메시지도 초기화
+            setThreadId(null);
+            setMessages([]);
         }
     };
 
     const sendMessage = async () => {
         if (userInput.trim() === '') return;
+        setIsLoading(true);  // 로딩 시작
         const newMessages = [...messages, { text: userInput, sender: 'user' }];
         setMessages(newMessages);
 
@@ -41,7 +43,7 @@ function ChatbotPopup() {
         } catch (error) {
             console.error('챗봇 통신 오류:', error);
         }
-
+        setIsLoading(false);  // 로딩 종료
         setUserInput('');
     };
 
@@ -63,6 +65,11 @@ function ChatbotPopup() {
                                 {message.text}
                             </div>
                         ))}
+                        {isLoading && (  // 로딩 인디케이터 추가
+                            <div className="loader-container">
+                                <div className="loader"></div>
+                            </div>
+                        )}
                     </div>
                     <div className="input-and-buttons">
                         <input
