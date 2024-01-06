@@ -40,7 +40,7 @@ function Sidebar() {
     { name: "나만의 만다르트", path: "/man" },
     { name: "추천 시스템", path: "/mylist" },
     { name: "공모전 게시판", path: "/recommend" },
-    { name: "잡다 정보 게시판", path: "/post" },
+    { name: "자유 게시판", path: "/post" },
     { name: "내 정보", path: "/setting"}
   ];
   return (
