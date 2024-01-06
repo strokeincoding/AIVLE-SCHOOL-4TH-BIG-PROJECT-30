@@ -38,7 +38,7 @@ const Mylist = () => {
         <div>
             {isLoggedIn ? (
                 <>
-                    <h2>Recommended for You</h2>
+                    <h2 style={{ textAlign: 'center', fontSize: '30px' }}>IT 정보 추천 페이지</h2> {/*가운데 정렬, 폰트 크기 30px*/}
                     <Box sx={{
                         display: 'flex',
                         flexWrap: 'wrap',

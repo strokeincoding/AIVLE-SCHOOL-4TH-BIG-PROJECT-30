@@ -46,20 +46,28 @@ const Recommend = () => {
     setCurrentPage(value);
   };
  
-  return (
+  const truncateString = (str, num) => { //글자수 제한 함수
+    if (str.length > num) {
+      return str.slice(0, num) + '...';
+    } else {
+      return str;
+    }
+  };
+ 
+  return (     // 시작
     <div className="post-container">
       <div className="board-title">공모전/해커톤 참가자 모집</div>
-      <CommonTable headersName={['No', '제목', '작성자']}>
-        {currentPosts.map((post, index) => (
-          <CommonTableRow key={post.id}>
-            <CommonTableColumn>{getPostNumber(index)}</CommonTableColumn>
-            <CommonTableColumn>
-              <Link to={`/recommend/Recommend/${post.id}`}>{post.title}</Link>
-            </CommonTableColumn>
-            <CommonTableColumn>{post.user}</CommonTableColumn>
-          </CommonTableRow>
-        ))}
-      </CommonTable>
+<CommonTable headersName={['No', '제목', '작성자']}>    
+  {currentPosts.map((post, index) => (
+    <CommonTableRow key={post.id}>
+      <CommonTableColumn>{getPostNumber(index)}</CommonTableColumn>
+      <CommonTableColumn>
+        <Link to={`/recommend/Recommend/${post.id}`}>{truncateString(post.title, 20)}</Link>
+      </CommonTableColumn>
+      <CommonTableColumn>{post.user}</CommonTableColumn>
+    </CommonTableRow>
+  ))}
+</CommonTable>     
       <div className="create-post-container">
       <Button onClick={navigateToCreatePost}>
         <ModeIcon/> 글쓰기

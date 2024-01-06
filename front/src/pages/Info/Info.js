@@ -32,6 +32,9 @@ function Infoview() {
   const [selectedEnvs, setSelectedEnvs] = useState([]);
   const { logout } = useAuth(); // useAuth 훅으로부터 logout 함수 가져오기
   const [recommendations, setRecommendations] = useState([]);
+  const [envs, setEnvs] = useState({});
+  const [technologyStacksMap, setTechnologyStacksMap] = useState({});
+  const [occupations, setOccupations] = useState({});
   const handleEditClick = () => {
     nav('/edit'); // This should match the path you set up in your routes
   };
@@ -61,7 +64,38 @@ function Infoview() {
     if (userId){
       fetchRecommendations();
     }
+    axios.get('http://127.0.0.1:8000/user/Env/')
+      .then(response => {
+        const newEnvs = response.data.reduce((map, env) => {
+          map[env.id] = env.env_name;
+          return map;
+        }, {});
+        setEnvs(newEnvs);
+      })
+      .catch(error => console.error("Error fetching environments: ", error));
+ 
+    axios.get('http://127.0.0.1:8000/user/TechnologyStack/')
+      .then(response => {
+        const newTechnologyStacksMap = response.data.reduce((map, stack) => {
+          map[stack.id] = stack.stack_name;
+          return map;
+        }, {});
+        setTechnologyStacksMap(newTechnologyStacksMap);
+      })
+      .catch(error => console.error("Error fetching technology stacks: ", error));
+ 
+    axios.get('http://127.0.0.1:8000/user/Occupation/')
+      .then(response => {
+        const newOccupations = response.data.reduce((map, occupation) => {
+          map[occupation.id] = occupation.occupation_name;
+          return map;
+        }, {});
+        setOccupations(newOccupations);
+      })
+      .catch(error => console.error("Error fetching occupations: ", error));
   }, [token, nav, nickname, userId]);
+
+  
  
   const fetchUserData = (userId) => {
     axios.get(`http://127.0.0.1:8000/user/User/${userId}/`, {
@@ -208,9 +242,9 @@ function Infoview() {
         <p><strong>닉네임:</strong> {Nickname}</p>
         <p><strong>이메일:</strong> {Email}</p>
         <p><strong>이름:</strong> {Name}</p>
-        <p><strong>기술 스택:</strong> {TechnologyStacks}</p>
-        <p><strong>선호 직종:</strong> {Occupation}</p>
-        <p><strong>작업 환경:</strong> {Env}</p>
+        <p><strong>기술 스택:</strong> {TechnologyStacks.map(id => technologyStacksMap[id]).join(', ')}</p>
+        <p><strong>선호 직종:</strong> {Occupation.map(id => occupations[id]).join(', ')}</p>
+        <p><strong>작업 환경:</strong> {Env.map(id => envs[id]).join(', ')}</p>
         <div className="mt-3 flex items-center justify-end gap-x-2">
           <Button onClick={handleEditClick} type="button">수정하기</Button>
           {/* Add a button for the deletion functionality */}

@@ -3,6 +3,7 @@ import ImgMediaCard from './Mediacard';
 import { useNavigate } from 'react-router-dom'; // 추가
 import Grid from '@mui/material/Grid'; // Grid 컴포넌트를 추가하여 카드를 그리드로 배치
  
+ 
 const Mylist = () => {
     const [recommendations, setRecommendations] = useState([]);
     const navigate = useNavigate(); // 추가
@@ -14,7 +15,7 @@ const Mylist = () => {
     const handleMoreClick = (postId) => {// 추가
         navigate(`/recommend/Recommend/${postId}`);// 추가
     };// 추가
- 
+   
     const fetchRecommendations = async () => {
         const nickname = getCookieValue('nickname');
         if (!nickname || nickname === 'undefined') {
@@ -42,8 +43,8 @@ const Mylist = () => {
  
     return (
         <div>
-            <h2>Recommended for You</h2>
-            <Grid container spacing={4}> {/* 여기에 Grid 컨테이너를 추가하여 카드를 그리드로 배치합니다. */}
+            <h2 style={{ textAlign: 'center', fontSize: '30px'}}>진행 공모전 현황</h2> {/* 가운데 정렬, 폰트 크기 30px */}
+            <Grid container spacing={1}> {/* 포스터간 간격 */}
                 {recommendations.length > 0 ? (
                     recommendations.map((recommendation, index) => (
                         <Grid item xs={12} sm={6} md={3} key={index}> {/* 반응형 그리드 설정 */}
@@ -57,7 +58,7 @@ const Mylist = () => {
                         </Grid>
                     ))
                 ) : (
-                    <p>No recommendations available</p>
+                    <p>현재 관련 공모전이 없습니다.</p>
                 )}
             </Grid>
         </div>
