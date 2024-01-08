@@ -60,9 +60,9 @@ class User(AbstractBaseUser):
     email = models.EmailField(default='', max_length=100, null=False, blank=False, unique=True)
     nickname = models.CharField(default='', max_length=100, null=False, blank=False, unique=True)
     name = models.CharField(default='', max_length=100, null=False, blank=False)
-    occupation = models.ManyToManyField('Occupation', blank=True)  # 선호 직종 추가(다대다 필드)
-    technology_stacks = models.ManyToManyField('TechnologyStack', blank=True) # 기술 스택 추가(다대다 필드)
-    env = models.ManyToManyField('Env', blank=True) # 작업환경 추가(다대다 필드)
+    occupation = models.ManyToManyField('Occupation', blank=True)  # 희망직종(다대다 필드)
+    technology_stacks = models.ManyToManyField('TechnologyStack', blank=True) # 기술스택(다대다 필드)
+    env = models.ManyToManyField('Env', blank=True) # 선호환경(다대다 필드)
     # User 모델의 필수 field
     is_active = models.BooleanField(default=True)    
     is_staff = models.BooleanField(default=False)
@@ -84,19 +84,20 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-    
+
+# 기술스택 
 class TechnologyStack(models.Model):
     stack_name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.stack_name
-    
+# 희망직종   
 class Occupation(models.Model):
     occupation_name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.occupation_name
-    
+# 선호환경   
 class Env(models.Model):
     env_name = models.CharField(max_length=100, unique=True)
 

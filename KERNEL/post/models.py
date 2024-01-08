@@ -1,3 +1,4 @@
+post/models.py
 from django.db import models
 from user.models import User
 
@@ -17,10 +18,15 @@ class Post(models.Model):
         return self.title
     
 class Comment(models.Model):
+    # 1. 댓글의 id 값
     id = models.AutoField(primary_key=True, null=False, blank=False)
+    # 2. 게시글
     post = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
+    # 3. 작성자
     user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
+    # 4. 작성일
     created_at = models.DateField(auto_now_add=True, null=False, blank=False)
+    # 5. 댓글
     comment = models.TextField()
 
     def __str__(self):
