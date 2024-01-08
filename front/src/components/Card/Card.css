@@ -28,7 +28,7 @@
  
 .card-image-wrapper {
   width: 100%;
-  height: 200px; /* Fixed height for the image wrapper */
+  height: 100%; /* Fixed height for the image wrapper */
   background-color: #f0f0f0; /* Placeholder in case the image doesn't load */
 }
  
@@ -38,9 +38,31 @@
   object-fit: cover; /* Ensures the image covers the area */
 }
  
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+ 
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 1001;
+}
+ 
 .card-content {
   padding: 15px;
-  flex-grow: 1; /* Allows the content to fill the space */
+  flex-grow: 1; /* Allows the content to fill the space, keeping the image size fixed */
+  overflow: hidden; /* Hides any content that overflows the fixed height */
+  height: 200px; /* Fixed height large enough to fit the content */
 }
  
 .card-title {

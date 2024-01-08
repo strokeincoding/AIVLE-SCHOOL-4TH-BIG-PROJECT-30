@@ -249,14 +249,23 @@ function Infoview() {
 </div>
  
         <div style={{ flex: '1', marginLeft: '20px' }}>
+        <Box sx={{ width: '100%' }}>
+      <h2 className="text-base font-semibold leading-7 text-gray-900" style={{ textAlign: 'center',marginBottom: '20px' }}>
+        좋아요한 컨텐츠
+      </h2>
+      </Box>
+        
 <Box sx={{
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'center',
             gap: 2
           }}>
+            
             {recommendations.length > 0 ? (
+              
               recommendations.map((recommendation, index) =>(
+                
 <ImgMediaCard
                   key={index}
                   id={recommendation.id}
@@ -268,7 +277,7 @@ function Infoview() {
                 />
               )) 
             ) : (
-<p>No recommendations available</p>
+<p>좋아요한 게시물이 없습니다</p>
  
             )}
 </Box>

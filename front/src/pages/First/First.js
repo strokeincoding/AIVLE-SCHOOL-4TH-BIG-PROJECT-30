@@ -51,7 +51,7 @@ const Mylist = () => {
         <div>
             {isLoggedIn ? (
                 <>
-                    <h2 style={{ textAlign: 'center',fontSize: '2rem', fontWeight: 'bold' }}>Latest AI-related news</h2>
+                    <h2 style={{ textAlign: 'center',fontSize: '2rem', fontWeight: 'bold' }}>추천 IT 컨텐츠</h2>
                     <Box sx={{
                         display: 'flex',
                         flexWrap: 'wrap',
@@ -71,7 +71,7 @@ const Mylist = () => {
                                 />
                             ))
                         ) : (
-                            <p>There are currently no recommended news</p>
+                            <p>현재 추천 IT 컨텐츠가 없습니다</p>
                         )}
                     </Box>
                     {/* Add Pagination here */}

@@ -2,10 +2,10 @@ import React from 'react';
 import Card from '../components/Card/Card';
 import Slider from '../components/Slider/Slider';
 import './Home.css'; // 이 줄을 추가하세요.
-import mandaratImage from '../assets/mandarat.png';
+import mandaratImage from '../assets/Mandarat.png';
 import bannerImage from '../assets/back1.jpg'; // Replace with your actual banner image path
-import chatbotImage from '../assets/chatbotImage.png'; // Replace with your actual image path
-import employmentImage from '../assets/employmentImage.png'; // Replace with your actual image path
+import RecommendImage from '../assets/recommend.png'; // Replace with your actual image path
+import ChatbotImage from '../assets/chatbot.png'; // Replace with your actual image path
 import TeamMemberCard from '../components/TeamMemberCard/TeamMemberCard';
 import team1 from '../assets/김태형.png'; // Replace with your actual image path
 import team2 from '../assets/전수민.jpg'; // Replace with your actual image path
@@ -13,7 +13,6 @@ import team3 from '../assets/이상우.png'; // Replace with your actual image p
 import team4 from '../assets/박선빈.png'; // Replace with your actual image path
 import team5 from '../assets/오현진.png'; // Replace with your actual image path
 import team6 from '../assets/안수호.png'; // Replace with your actual image path
-import team7 from '../assets/김장현.png'; // Replace with your actual image path
  
 // 배너 섹션 컴포넌트
 const BannerSection = () => {
@@ -40,13 +39,12 @@ const settings = {
  
 const teamMembers = [
   // Include `name` in each member object
-  { src: team1, alt: '팀원1 이름', name: '김태형', description: 'pm' , email: 'steve181813@gmail.com'},
-  { src: team2, alt: '팀원2 이름', name: '전수민', description: '프론트엔드' , email: 'tnals8097@naver.com'},
-  { src: team3, alt: '팀원3 이름', name: '이상우', description: '프론트엔드' , email: 'vcx0526@naver.com'},
-  { src: team4, alt: '팀원4 이름', name: '박선빈', description: '백엔드' , email: 'sunbeen0111@naver.com'},
-  { src: team5, alt: '팀원5 이름', name: '오현진', description: '백엔드' , email: 'dhguswls5028@naver.com'},
-  { src: team6, alt: '팀원6 이름', name: '안수호', description: 'ai' , email: 'ashmaster12@naver.com'},
-  { src: team7, alt: '팀원7 이름', name: '김장현', description: 'ai' , email: 'kharu3126@gmail.com'},
+  { src: team1, alt: '팀원1 이름', name: '김태형', description: 'PM' , email: 'steve181813@gmail.com'},
+  { src: team2, alt: '팀원2 이름', name: '전수민', description: 'FE' , email: 'tnals8097@naver.com'},
+  { src: team3, alt: '팀원3 이름', name: '이상우', description: 'FE' , email: 'vcx0526@naver.com'},
+  { src: team4, alt: '팀원4 이름', name: '박선빈', description: 'BE' , email: 'sunbeen0111@naver.com'},
+  { src: team5, alt: '팀원5 이름', name: '오현진', description: 'BE' , email: 'dhguswls5028@naver.com'},
+  { src: team6, alt: '팀원6 이름', name: '안수호', description: 'AI' , email: 'ashmaster12@naver.com'},
   // ... other team members
 ];
  
@@ -58,20 +56,21 @@ const Home = () => {
       <div className="card-container">
         <Card
           title="만다라트"
-          text="하이만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트
-          만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트
-          만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트만다라트"
+          text="만다라트에 대한 전체 내용입니다."
+          fullText="만다라트에 대한 전체 내용입니다.만다라트에 대한 전체 내용입니다.만다라트에 대한 전체 내용입니다.만다라트에 대한 전체 내용입니다."
           imagePath={mandaratImage}
         />
         <Card
           title="추천시스템"
-          text="하이"
-          imagePath={chatbotImage}
+          text="추천시스템에 대한 전체 내용입니다."
+          fullText="만다라트에 대한 전체 내용입니다."
+          imagePath={RecommendImage}
         />
         <Card
           title="챗봇"
-          text="하이"
-          imagePath={employmentImage}
+          text="챗봇에 대한 전체 내용입니다."
+          fullText="만다라트에 대한 전체 내용입니다."
+          imagePath={ChatbotImage}
         />
       </div>
       <Slider {...settings} images={teamMembers.map(member => ({

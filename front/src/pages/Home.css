@@ -26,7 +26,7 @@
   width: 100%; /* Full width of the viewport */
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end; /* Aligns the content to the bottom */
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 글자에 그림자 효과 추가 */
 }
@@ -34,7 +34,7 @@
 .banner-content {
   text-align: left;
   width: 100%; /* Full width of the parent element */
-  padding: 0 100px 50px;/* Add padding for text not to touch the edges */
+  padding: 0 100px 100px;/* Add padding for text not to touch the edges */
  
   position: relative; /* 배너 내용을 위로 올림 */
   z-index: 1;

@@ -9,8 +9,7 @@ import Button from '../../pages/ui/Button_write';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import './Post.css';
-import ModeIcon from '@mui/icons-material/Mode';
- 
+import ModeIcon from '@mui/icons-material/Mode'; 
 const Post = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,7 +26,6 @@ const Post = () => {
         console.error(error);
       });
   }, []);
- 
   const truncateString = (str, num) => {
     if (str.length > num) {
       return str.slice(0, num) + '...';
@@ -35,7 +33,6 @@ const Post = () => {
       return str;
     }
   };
- 
   const getPostNumber = (index) => {    
     return posts.length - (currentPage - 1) * postsPerPage - index;  
    };
@@ -67,7 +64,6 @@ const Post = () => {
           <CommonTableRow key={post.id}>
             <CommonTableColumn>{getPostNumber(index)}</CommonTableColumn>
             <CommonTableColumn>
-              {/* Use truncateString to truncate the title */}
               <Link to={`/post/post/${post.id}`}>{truncateString(post.title, 20)}</Link>
             </CommonTableColumn>
             <CommonTableColumn>{formatDate(post.created_at)}</CommonTableColumn>
@@ -75,7 +71,20 @@ const Post = () => {
           </CommonTableRow>
         ))}
       </CommonTable>
-      {/* ... existing code for Pagination and other components ... */}
+      <div className="create-post-container">
+      <Button onClick={navigateToCreatePost}>
+        <ModeIcon/> 글쓰기
+      </Button>
+      </div>
+      <Stack spacing={2} alignItems="center" justifyContent="center">
+        <Pagination
+          count={pageCount} // Set the count to the number of pages
+          page={currentPage}
+          onChange={paginate}
+          variant="outlined"
+          shape="rounded"
+        />
+      </Stack>
     </div>
   );
 };

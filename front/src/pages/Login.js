@@ -73,7 +73,7 @@ class Login extends Component {
         <Typography component="h1" variant="h5">
               로그인
         </Typography>
-        <TextField label="로그인"
+        <TextField label="아이디"
           required
           fullWidth
           name="username"
