@@ -134,7 +134,6 @@ const RecommendView = ({ history, match }) => {
     axios.get(`http://localhost:8000/recommend/Recommend/${no}`)
       .then(response => {
         setData(response.data);
-        console.log(data);
       })
       .catch(error => {
         console.error("Error fetching data: ", error);

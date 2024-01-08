@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './TeamMemberCard.css';
 
 const TeamMemberCard = ({ src, alt, name, description, email }) => {

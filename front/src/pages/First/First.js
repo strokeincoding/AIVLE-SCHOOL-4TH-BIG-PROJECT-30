@@ -1,52 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ImgMediaCard from './Firstcard';
 import { Box, Pagination, Stack } from '@mui/material'; 
 import { useAuth } from '../../context/AuthContext';
- 
+
 const Mylist = () => {
     const [recommendations, setRecommendations] = useState([]);
     const { isLoggedIn } = useAuth(); 
     const [currentPage, setCurrentPage] = useState(1); 
     const postsPerPage = 9;
     const pageCount = Math.ceil(recommendations.length / postsPerPage);
-    const fetchRecommendations = async () => {
-      if (!isLoggedIn) return; 
+
+    // useCallback으로 fetchRecommendations 함수 감싸기
+    const fetchRecommendations = useCallback(async () => {
+        if (!isLoggedIn) return;
  
-      const token = localStorage.getItem('token'); 
-      const apiUrl = `http://127.0.0.1:8000/crawling/crawlingview`;
-      try {
-          const response = await fetch(apiUrl, {
-              method: 'GET',
-              headers: {
-                  'Authorization': `Bearer ${token}`,
-              },
-              credentials: 'include'
-          });
-          if (!response.ok) {
-              throw new Error(`Error: ${response.status}`);
-          }
-          const data = await response.json();
-          setRecommendations(data);
-      } catch (error) {
-          console.error('Failed to fetch recommendations:', error);
-      }
-  };
+        const token = localStorage.getItem('token'); 
+        const apiUrl = `http://127.0.0.1:8000/crawling/crawlingview`;
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                credentials: 'include'
+            });
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            const data = await response.json();
+            setRecommendations(data);
+        } catch (error) {
+            console.error('Failed to fetch recommendations:', error);
+        }
+    }, [isLoggedIn]); // 의존성 배열에 isLoggedIn 추가
+
     const paginate = (event, value) => {
-    setCurrentPage(value);
+        setCurrentPage(value);
     };
- 
+
     useEffect(() => {
         fetchRecommendations();
-    }, [isLoggedIn]);
-    useEffect(() => {
-        fetchRecommendations();
-    }, [isLoggedIn]);
- 
+    }, [fetchRecommendations, isLoggedIn]);
+
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = recommendations.slice(indexOfFirstPost, indexOfLastPost);
- 
- 
+
     return (
         <div>
             {isLoggedIn ? (

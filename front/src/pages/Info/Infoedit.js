@@ -53,6 +53,30 @@ function InfoUpdate() {
       nav('/login');
       return;
     }
+
+    const fetchUserData = (userId) => {
+      axios.get(`http://127.0.0.1:8000/user/User/${userId}/`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(response => {
+        const userData = response.data;
+        setUserId(userData.id);
+        setNickname(userData.nickname);
+        setEmail(userData.email);
+        setNewPassword(userData.password)
+        setName(userData.name);
+        setSelectedTechStacks(userData.technology_stacks); 
+        setSelectedOccupation(userData.occupation); 
+        setSelectedEnv(userData.env); 
+      })
+      .catch(error => {
+        console.error(error);
+        alert("사용자 정보를 가져오는 데 실패했습니다.");
+      });
+    };
+    
     axios.get('http://127.0.0.1:8000/user/Env/', {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => setEnvironments(response.data));
@@ -83,28 +107,7 @@ function InfoUpdate() {
     });
   }, [token, nav, nickname]);
  
-  const fetchUserData = (userId) => {
-    axios.get(`http://127.0.0.1:8000/user/User/${userId}/`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-    .then(response => {
-      const userData = response.data;
-      setUserId(userData.id);
-      setNickname(userData.nickname);
-      setEmail(userData.email);
-      setNewPassword(userData.password)
-      setName(userData.name);
-      setSelectedTechStacks(userData.technology_stacks); 
-      setSelectedOccupation(userData.occupation); 
-      setSelectedEnv(userData.env); 
-    })
-    .catch(error => {
-      console.error(error);
-      alert("사용자 정보를 가져오는 데 실패했습니다.");
-    });
-  };
+  
  
   const onNameHandler = (e) => {
     setName(e.currentTarget.value);

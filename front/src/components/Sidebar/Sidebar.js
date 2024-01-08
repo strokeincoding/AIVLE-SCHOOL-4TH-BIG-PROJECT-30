@@ -66,22 +66,6 @@ const ProfileImage = styled.img`
   margin-right: 10px; 
   cursor: pointer;
 `;
-const Tooltip = styled.div`
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 150%;
-  left: 50%;
-  margin-left: -60px;
-  opacity: 0;
-  transition: opacity 0.3s;
-`;
 
 const ProfileTitle = styled.h3`
   background: rgba(255, 255, 255, 0.7);

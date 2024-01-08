@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback  } from 'react';
 import ImgMediaCard from './Mediacard';
 import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
@@ -10,6 +10,7 @@ const Mylist = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const postsPerPage = 8; 
     const navigate = useNavigate();
+    
     const getCookieValue = (name) => (
         document.cookie.split('; ').find(row => row.startsWith(name + '='))
         ?.split('=')[1]
@@ -19,7 +20,7 @@ const Mylist = () => {
         navigate(`/recommend/Recommend/${postId}`);
     };
  
-    const fetchRecommendations = async () => {
+    const fetchRecommendations = useCallback(async () => {
         const nickname = getCookieValue('nickname');
         if (!nickname || nickname === 'undefined') {
             console.error('Nickname is not found or undefined');
@@ -38,11 +39,8 @@ const Mylist = () => {
         } catch (error) {
             console.error('Failed to fetch recommendations:', error);
         }
-    };
- 
-    useEffect(() => {
-        fetchRecommendations();
     }, []);
+
  
     const paginate = (event, value) => {
         setCurrentPage(value);
@@ -50,7 +48,7 @@ const Mylist = () => {
  
     useEffect(() => {
         fetchRecommendations();
-    }, [currentPage]);
+    }, [currentPage,fetchRecommendations]);
  
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;

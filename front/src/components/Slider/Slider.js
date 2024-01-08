@@ -9,7 +9,7 @@ const Slider = ({ images }) => {
     if (!isTransitioning) {
       setIsTransitioning(true);
     }
-  }, [current]); 
+  }, [current,isTransitioning]); 
  
   const goToSlide = (index, transition = true) => {
     setCurrent(index); 
