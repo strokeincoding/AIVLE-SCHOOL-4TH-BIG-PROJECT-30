@@ -33,7 +33,6 @@ const Category = styled(NavLink)`
     margin-left: 1rem;
   }
 `;
-// 이름으로 쿠키 값을 가져오는 함수
 const getCookieValue = (name) => (
   document.cookie.split('; ').find(row => row.startsWith(`${name}=`))
   ?.split('=')[1]
@@ -47,7 +46,7 @@ const Categories = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/'); // 로그아웃 후 홈으로 이동
+    navigate('/'); 
     localStorage.removeItem('nickname');
   };
 
@@ -65,7 +64,7 @@ const Categories = () => {
           {isLoggedIn && (
             <>
               
-              <Category as="div" style={{ marginLeft: '10px' }}>
+              <Category to="/setting" style={{ marginLeft: '10px' }}>
                 {nickname}님 
               </Category>
               

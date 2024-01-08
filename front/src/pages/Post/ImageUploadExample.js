@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 
 function ImageUploadExample() {
   const [fileImage, setFileImage] = useState("");
-  const fileInputRef = useRef(null);  // Create a ref for the file input
+  const fileInputRef = useRef(null);  
 
   const saveFileImage = (e) => {
     setFileImage(URL.createObjectURL(e.target.files[0]));
@@ -12,7 +12,7 @@ function ImageUploadExample() {
     URL.revokeObjectURL(fileImage);
     setFileImage("");
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';  // Reset the file input value
+      fileInputRef.current.value = ''; 
     }
   };
 
@@ -27,7 +27,7 @@ function ImageUploadExample() {
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 {fileImage && <img alt="Uploaded Sample" src={fileImage} style={{ margin: "auto", maxWidth: "100%", maxHeight: "300px" }} />}
                 <input
-                  ref={fileInputRef}  // Attach the ref to the file input
+                  ref={fileInputRef}  
                   name="imgUpload"
                   type="file"
                   accept="image/*"

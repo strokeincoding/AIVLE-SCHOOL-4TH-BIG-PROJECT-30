@@ -6,10 +6,9 @@ import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import FormControl from '@mui/material/FormControl'; // Import FormControl
-import InputLabel from '@mui/material/InputLabel'; // Import InputLabel
+import FormControl from '@mui/material/FormControl'; 
+import InputLabel from '@mui/material/InputLabel'; 
  
-// InfoUpdate 컴포넌트 외부에 getCookieValue 함수 정의
 const getCookieValue = (name) => (
     document.cookie.split('; ').find(row => row.startsWith(name + '='))
     ?.split('=')[1]
@@ -23,7 +22,7 @@ function InfoUpdate() {
   const nickname = getCookieValue('nickname');
   const nav = useNavigate();
   const token = localStorage.getItem('token');
-  const [userId, setUserId] = useState(null); // userId 상태 추가
+  const [userId, setUserId] = useState(null); 
   const [selectedTechStacks, setSelectedTechStacks] = useState([]);
   const [selectedOccupation, setSelectedOccupation] = useState([]);
   const [selectedEnv, setSelectedEnv] = useState([]);
@@ -34,7 +33,6 @@ function InfoUpdate() {
   const handleTechStackChange = (event) => {
     const { value } = event.target;
     setSelectedTechStacks(
-      // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
   };
@@ -59,12 +57,10 @@ function InfoUpdate() {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => setEnvironments(response.data));
  
-    // Fetch technology stacks
     axios.get('http://127.0.0.1:8000/user/TechnologyStack/', {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => setTechStacks(response.data));
  
-    // Fetch occupations
     axios.get('http://127.0.0.1:8000/user/Occupation/', {
       headers: { 'Authorization': `Bearer ${token}` }
     }).then(response => setOccupations(response.data));
@@ -100,17 +96,15 @@ function InfoUpdate() {
       setEmail(userData.email);
       setNewPassword(userData.password)
       setName(userData.name);
-      setSelectedTechStacks(userData.technology_stacks); // 기존 상태 대신 selected 상태를 업데이트
-      setSelectedOccupation(userData.occupation); // 기존 상태 대신 selected 상태를 업데이트
-      setSelectedEnv(userData.env); // 기존 상태 대신 selected 상태를 업데이트
+      setSelectedTechStacks(userData.technology_stacks); 
+      setSelectedOccupation(userData.occupation); 
+      setSelectedEnv(userData.env); 
     })
     .catch(error => {
       console.error(error);
       alert("사용자 정보를 가져오는 데 실패했습니다.");
     });
   };
-  // ...이벤트 핸들러 함수들...
-  // Dropdown for Technology Stacks
  
   const onNameHandler = (e) => {
     setName(e.currentTarget.value);
@@ -118,33 +112,29 @@ function InfoUpdate() {
  
   const onSubmitHandler = (e) => {
     e.preventDefault();
-      // Check if the selectedTechStacks array is empty
     if (selectedTechStacks.length === 0) {
-    alert("기술 스택을 선택해주세요."); // Alert the user
-    return; // Prevent the form from being submitted
+    alert("기술 스택을 선택해주세요."); 
+    return; 
     }
-      // Check if the selectedTechStacks array is empty
     if (selectedOccupation.length === 0) {
-    alert("선호 직무을 선택해주세요."); // Alert the user
-    return; // Prevent the form from being submitted
+    alert("선호 직무을 선택해주세요."); 
+    return;
     }
-      // Check if the selectedTechStacks array is empty
     if (selectedEnv.length === 0) {
-    alert("근무 환경을 선택해주세요."); // Alert the user
-    return; // Prevent the form from being submitted
+    alert("근무 환경을 선택해주세요."); 
+    return; 
     }
     if (!userId) {
       alert("사용자 ID를 찾을 수 없습니다.");
       return;
     }
  
-    // ID가 유효한지 확인하는 추가 로직이 필요할 수 있습니다.
     const req = {
       nickname: Nickname,
       email: Email,
       name: Name,
       password: NewPassword,
-      technology_stacks: selectedTechStacks, // This can stay as is if it's an array
+      technology_stacks: selectedTechStacks, 
       occupation: Array.isArray(selectedOccupation) ? selectedOccupation : [selectedOccupation],
       env: Array.isArray(selectedEnv) ? selectedEnv : [selectedEnv],
     };
@@ -169,7 +159,6 @@ function InfoUpdate() {
       <form onSubmit={onSubmitHandler}>
         <div className="space-y-12">
          
-          {/* Personal Information Section */}
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">개인정보 수정</h2>
             <div className="mt-10">
@@ -179,13 +168,12 @@ function InfoUpdate() {
                 variant="outlined"
                 value={Name}
                 onChange={onNameHandler}
-                style={{ width: '50%', margin: '20px 0' }} // Adjusted to match other fields
+                style={{ width: '50%', margin: '20px 0' }} 
               />
             </div>
           </div>
  
-          {/* Technology Stacks Dropdown */}
-          <div style={{ margin: '20px 0' }}> {/* Adjusted to match other fields */}
+          <div style={{ margin: '20px 0' }}> 
             <FormControl variant="outlined" style={{ width: '50%' }}>
               <InputLabel id="tech-stack-select-label">기술 스택</InputLabel>
               <Select
@@ -205,10 +193,9 @@ function InfoUpdate() {
             </FormControl>
           </div>
  
-          {/* Occupations Dropdown */}
-          <div style={{ margin: '20px 0' }}> {/* Adjusted to match other fields */}
+          <div style={{ margin: '20px 0' }}> 
             <FormControl variant="outlined" style={{ width: '50%' }}>
-              <InputLabel id="occupation-select-label">선호 직업</InputLabel>
+              <InputLabel id="occupation-select-label">희망 직종</InputLabel>
               <Select
                 labelId="occupation-select-label"
                 id="occupation-select"
@@ -225,8 +212,7 @@ function InfoUpdate() {
             </FormControl>
           </div>
  
-          {/* Environments Dropdown */}
-          <div style={{ margin: '20px 0' }}> {/* Adjusted to match other fields */}
+          <div style={{ margin: '20px 0' }}> 
             <FormControl variant="outlined" style={{ width: '50%' }}>
               <InputLabel id="env-select-label">선호 환경</InputLabel>
               <Select
@@ -245,7 +231,6 @@ function InfoUpdate() {
             </FormControl>
           </div>
  
-          {/* Buttons */}
           <div style={{ marginTop: '20px', display: 'flex' }}>
             <Button onClick={() => nav('/setting')} type="button">
               취소

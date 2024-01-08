@@ -36,22 +36,21 @@ const CommentUser = styled.span`
 `;
 const CommentItem = styled.div`
   display: flex;
-  justify-content: space-between; /* 텍스트와 삭제 아이콘을 양 끝으로 분리 */
-  align-items: center; /* 세로 중앙 정렬 */
-  width: 100%; /* 필요하다면 전체 너비를 사용 */
+  justify-content: space-between; 
+  align-items: center; 
+  width: 100%; 
 `;
 
 const CommentContent = styled.div`
   display: flex;
-  flex-direction: column; /* 내용을 세로로 쌓기 위해 */
+  flex-direction: column; 
   flex-grow: 1;
-  margin-right: 10px; /* 삭제 아이콘과의 간격을 위해 */
+  margin-right: 10px; 
 `;
 
 function CommentList(props) {
   const { comments, onDelete, currentUser } = props;
 
-  // Ensure comments is always an array
   const safeComments = comments || [];
   if (safeComments.length === 0) {
     return null;

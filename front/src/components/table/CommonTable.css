@@ -1,12 +1,12 @@
 .board-title {
-  display: flex;         /* Flexbox를 사용하여 내용을 중앙에 배치 */
-  justify-content: center; /* 가로 방향으로 중앙에 배치 */
-  align-items: left;     /* 세로 방향으로 중앙에 배치 */
-  height: 100px;           /* div의 높이 설정. 필요에 따라 조정하세요 */
-  padding: 25px;           /* 패딩 적용 */
-  font-family: 'SBAggroB', sans-serif; /* 글꼴 적용 */
-  font-size: 25px;         /* 글꼴 크기 설정 */
-  box-sizing: border-box;  /* 패딩을 포함한 총 너비를 계산 */
+  display: flex;         
+  justify-content: center;
+  align-items: left;     
+  height: 100px;           
+  padding: 25px;           
+  font-family: 'SBAggroB', sans-serif; 
+  font-size: 25px;        
+  box-sizing: border-box; 
 }
 .common-table {
   width: 80%;
@@ -15,18 +15,18 @@
   border-spacing: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
-  border-radius: 10px; /* Rounded corners for the table */
-  text-overflow: ellipsis;     /* 생략 처리 ( ... )*/
-  overflow: hidden;            /* 스크롤 처리 하지 않음*/
+  border-radius: 10px; 
+  text-overflow: ellipsis;     
+  overflow: hidden;            
 }
 .common-table-header-column {
-  background-color: #f2f2f2; /* Light grey background */
+  background-color: #f2f2f2; 
   border-bottom: 2px solid #e8e8e8;
-  padding: 20px 15px; /* Increased padding for more space */
+  padding: 20px 15px; 
   font-size: 16px;
   font-weight: bold;
-  color: #333333; /* Dark grey text */
-  overflow: hidden;            /* 스크롤 처리 하지 않음*/
+  color: #333333; 
+  overflow: hidden; 
 }
 .common-table-row:hover {
   background-color: #eceaea;

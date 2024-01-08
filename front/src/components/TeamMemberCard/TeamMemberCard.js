@@ -5,7 +5,7 @@ const TeamMemberCard = ({ src, alt, name, description, email }) => {
   const [showEmail, setShowEmail] = React.useState(false);
 
   const handleEmailButtonClick = () => {
-    setShowEmail(!showEmail); // 버튼을 토글합니다.
+    setShowEmail(!showEmail); 
   };
 
   return (
@@ -17,7 +17,7 @@ const TeamMemberCard = ({ src, alt, name, description, email }) => {
         <h3>{name}</h3>
         <p>{description}</p>
         {showEmail ? (
-          <p>{email}</p> // 이메일 주소를 표시합니다.
+          <p>{email}</p> 
         ) : (
           <button onClick={handleEmailButtonClick}>이메일 보기</button>
         )}

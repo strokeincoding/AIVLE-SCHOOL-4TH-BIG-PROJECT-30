@@ -4,12 +4,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../../pages/ui/Button';
 import styled from 'styled-components';
  
-const LeftAlignedImage = styled.img`//이미지 왼쪽으로 정렬
+const LeftAlignedImage = styled.img`
   float: left; // Aligns the image to the left
   max-width: 100%;
   max-height: 300px;
-  margin-right: 15px; // Adds some space to the right of the image
-  border-radius: 4px; // Optional: adds rounded corners
+  margin-right: 15px; 
+  border-radius: 4px; 
   border: 1px solid #ddd;
 `;
  
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to right bottom, #f0f3f8, #f7f9fc); /* Lighter gradient */
+  background: linear-gradient(to right bottom, #f0f3f8, #f7f9fc); 
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   margin: 20px 0;
@@ -41,7 +41,7 @@ const Wrapper = styled.div`
 const Container = styled.div`
   width: 100%;
   max-width: 720px;
-  background-color: #f9f9f9; /* Very light grey */
+  background-color: #f9f9f9; 
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
@@ -108,7 +108,6 @@ const RecommendView = ({ history, match }) => {
       })
       .catch(error => console.error("Error fetching environments: ", error));
  
-    // 기술 스택 데이터 가져오기
     axios.get('http://127.0.0.1:8000/user/TechnologyStack/')
       .then(response => {
         const stackMap = response.data.reduce((map, stack) => {
@@ -118,10 +117,10 @@ const RecommendView = ({ history, match }) => {
         setTechnologyStacks(stackMap);
       })
       .catch(error => console.error("Error fetching technology stacks: ", error));
-  }, []); // 빈 의존성 배열 추가
+  }, []); 
  
   useEffect(() => {
-    // 직업 목록 가져오기
+
     axios.get('http://127.0.0.1:8000/user/Occupation/')
       .then(response => {
         const occupationMap = response.data.reduce((map, occupation) => {
@@ -132,7 +131,6 @@ const RecommendView = ({ history, match }) => {
       })
       .catch(error => console.error("Error fetching occupations: ", error));
  
-    // 게시물 데이터 가져오기
     axios.get(`http://localhost:8000/recommend/Recommend/${no}`)
       .then(response => {
         setData(response.data);

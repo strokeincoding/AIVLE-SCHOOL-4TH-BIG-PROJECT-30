@@ -47,10 +47,9 @@
     margin-top: 10px;
   }
   .button-group button {
-    margin-left: 10px; /* 버튼 사이 간격을 10px로 설정 */
+    margin-left: 10px; 
   }
   
-  /* 첫 번째 버튼은 왼쪽 마진이 없도록 설정 */
   .button-group button:first-child {
     margin-left: 0;
   }

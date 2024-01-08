@@ -13,7 +13,7 @@ const StyledButton = styled.button`
 `;
  
 function Button(props) {
-    const { onClick, children } = props;  // Change from title to children
+    const { onClick, children } = props;  
  
     return <StyledButton onClick={onClick}>{children || "Button"}</StyledButton>;
 }

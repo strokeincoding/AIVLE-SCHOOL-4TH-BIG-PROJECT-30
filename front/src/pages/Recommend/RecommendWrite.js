@@ -11,7 +11,6 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
  
-// Styled components
 const Wrapper = styled.div`
 padding: 16px;
 width: calc(100% - 32px);
@@ -28,7 +27,6 @@ max-width: 720px;
     margin-bottom: 16px;
 }
 `;
-// TitleField 컴포넌트
 const TitleField = ({ title, handleInputChange }) => (
 <Grid item xs={12}>
   <TextField
@@ -43,11 +41,10 @@ const TitleField = ({ title, handleInputChange }) => (
 </Grid>
 );
  
-// CategorySelect 컴포넌트
 const CategorySelect = ({ categories, selectedCategories, handleCategoryChange }) => (
 <Grid item xs={12}>
   <FormControl fullWidth variant="outlined">
-    <InputLabel id="categories-label">지원분야</InputLabel>
+    <InputLabel id="categories-label">모집분야</InputLabel>
     <Select
       labelId="categories-label"
       id="Categories"
@@ -69,10 +66,9 @@ const CategorySelect = ({ categories, selectedCategories, handleCategoryChange }
  
  
  
-// TechnologyStackSelect 컴포넌트
 const TechnologyStackSelect = ({ occupationName, selectedStacks, handleStackChange, technologyStacks }) => (
 <Grid item xs={12}>
-  <h3>{occupationName} Required Skills</h3>{/* 직업 이름을 표시 */}
+  <h3>{occupationName}</h3>
   <FormControl fullWidth variant="outlined">
     <InputLabel id="technology-stacks-label">기술 스택</InputLabel>
     <Select
@@ -95,7 +91,6 @@ const TechnologyStackSelect = ({ occupationName, selectedStacks, handleStackChan
 );
  
  
-// EnvSelect 컴포넌트
 const EnvSelect = ({ envs, selectedEnv, handleEnvChange }) => (
   <Grid item xs={12}>
     <FormControl fullWidth variant="outlined">
@@ -117,7 +112,7 @@ const EnvSelect = ({ envs, selectedEnv, handleEnvChange }) => (
     </FormControl>
   </Grid>
 );
-// RecommendWrite 메인 컴포넌트
+
 const RecommendWrite = () => {
 const [newPost, setNewPost] = useState({
   title: '',
@@ -135,9 +130,9 @@ const [newPost, setNewPost] = useState({
  
  
 const [categories, setCategories] = useState([]);
-const [technologyStacks, setTechnologyStacks] = useState([]); // Technology stacks state
-const [selectedTechStacks, setSelectedTechStacks] = useState({}); // Selected tech stacks for each occupation
-const [envs, setEnvs] = useState([]); // 'env' 데이터를 위한 상태
+const [technologyStacks, setTechnologyStacks] = useState([]); 
+const [selectedTechStacks, setSelectedTechStacks] = useState({}); 
+const [envs, setEnvs] = useState([]); 
 const navigate = useNavigate();
 const yourAuthToken = localStorage.getItem('token');
  
@@ -146,11 +141,10 @@ const handleStackChange = (occupationId) => (event) => {
     target: { value },
   } = event;
  
-  // "value"는 하나의 값이 선택된 경우 문자열 형식이며 여러 값을 선택한 경우 배열 형식입니다.
-  // 항상 배열로 처리되도록 확인해야 합니다.
+  
   const allSelectedStacks = typeof value === 'string' ? value.split(',') : value;
  
-  // 주어진 직업에 대한 선택된 기술 스택을 업데이트합니다.
+  
   setSelectedTechStacks({
     ...selectedTechStacks,
     [occupationId]: allSelectedStacks,
@@ -172,9 +166,9 @@ const handleEnvChange = (event) => {
   setNewPost({ ...newPost, env: value });
 };
 const handleImageChange = (e) => {
-  const file = e.target.files[0]; // 파일 객체 접근
+  const file = e.target.files[0]; 
   if (file) {
-    setNewPost({ ...newPost, image: file }); // 파일 객체를 상태에 저장
+    setNewPost({ ...newPost, image: file }); 
   }
 };
 const addPost = async (e) => {
@@ -183,24 +177,19 @@ const addPost = async (e) => {
  
  
   const formData = new FormData();
-   // 텍스트 데이터를 FormData에 추가
    formData.append('title', newPost.title);
    formData.append('cate', newPost.cate);
    formData.append('Exp_require', newPost.Exp_require);
    formData.append('Project_Description', newPost.Project_Description);
  
-   // 선택된 기술 스택을 FormData에 추가
    const combinedTechStacks = Object.values(selectedTechStacks).flat();
    const uniqueTechStacks = Array.from(new Set(combinedTechStacks));
    uniqueTechStacks.forEach(stack => formData.append('technology_stacks', stack));
  
-   // 선택된 occupation을 FormData에 추가
    newPost.occupation.forEach(occ => formData.append('occupation', occ));
  
-   // 선택된 env를 FormData에 추가 (하나만 선택된 경우)
    if (newPost.env) formData.append('env', newPost.env);
  
-   // 이미지 파일을 FormData에 추가 (파일이 있는 경우)
    if (newPost.image) {
      formData.append('image', newPost.image);
    }
@@ -224,7 +213,7 @@ useEffect(() => {
   const fetchOccupations = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/user/Occupation/');
-      setCategories(response.data); // 전체 occupation 데이터 저장
+      setCategories(response.data); 
     } catch (error) {
       console.error('Error fetching occupations:', error);
     }
@@ -233,7 +222,7 @@ useEffect(() => {
   const fetchTechnologyStacks = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/user/TechnologyStack/');
-      setTechnologyStacks(response.data); // Save technology stacks data
+      setTechnologyStacks(response.data); 
     } catch (error) {
       console.error('Error fetching technology stacks:', error);
     }
@@ -242,7 +231,7 @@ useEffect(() => {
   const fetchEnvs = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/user/Env/');
-      setEnvs(response.data); // 'env' 데이터 저장
+      setEnvs(response.data); 
     } catch (error) {
       console.error('Error fetching envs:', error);
     }
@@ -263,7 +252,7 @@ return (
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="모집분야 인원"
+              label="모집분야 및 인원수"
               id="cate"
               type="text"
               name="cate"
@@ -294,7 +283,7 @@ return (
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="경력 요구사항"
+              label="요구사항"
               id="Exp_require"
               type="text"
               name="Exp_require"
@@ -305,7 +294,7 @@ return (
           <Grid item xs={12}>
             <TextField
               fullWidth
-              label="프로젝트 설명"
+              label="설명"
               id="Project_Description"
               type="text"
               name="Project_Description"

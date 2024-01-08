@@ -19,16 +19,14 @@ const getCookieValue = (name) => (
  
 const ImgMediaCard = ({ id, title, text, imagePath, like, url }) => {
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(like); // 좋아요 수를 관리하는 상태
+  const [likeCount, setLikeCount] = useState(like); 
   const [userId, setUserId] = useState(null);
   const token = localStorage.getItem('token');
   const nickname = getCookieValue('nickname');
  
-  // 텍스트를 요약해서 표시할 길이를 설정합니다.
-  const summaryLength = 200; // 예시로 200글자로 설정합니다.
+  const summaryLength = 200; 
   const [isTextTooLong, setIsTextTooLong] = useState(text.length > summaryLength);
 
-  // 사용자 ID 가져오기
   useEffect(() => {
     const fetchUserId = async () => {
       try {
@@ -49,8 +47,6 @@ const ImgMediaCard = ({ id, title, text, imagePath, like, url }) => {
     fetchUserId();
   }, [nickname, token]);
  
- 
-  // 좋아요 상태 확인
   useEffect(() => {
     const fetchLikes = async () => {
       try {
@@ -89,15 +85,14 @@ const ImgMediaCard = ({ id, title, text, imagePath, like, url }) => {
       });
  
       setLiked(!liked);
-      setLikeCount(liked ? likeCount - 1 : likeCount + 1); // 좋아요 상태에 따라 좋아요 수 업데이트
+      setLikeCount(liked ? likeCount - 1 : likeCount + 1); 
       console.log(response.data);
     } catch (error) {
       console.error(error);
     }
   };
-  // 'MORE' 버튼 클릭 핸들러
   const handleReadMore = () => {
-    window.location.href = url; // URL로 리디렉션
+    window.location.href = url; 
   };
  
   return (
@@ -125,7 +120,7 @@ const ImgMediaCard = ({ id, title, text, imagePath, like, url }) => {
           <FavoriteIcon color={liked ? 'error' : 'default'} />
         </IconButton>
         <Typography component="span">
-          {likeCount} Likes {/* 좋아요 수 실시간 표시 */}
+          {likeCount} Likes 
         </Typography>
         <Button size="small" onClick={handleReadMore}>
             MORE

@@ -13,7 +13,7 @@ import './Post.css';
 const Recommend = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 10; // Set the number of posts per page
+  const postsPerPage = 10; 
  
   const navigate = useNavigate();
  
@@ -32,7 +32,6 @@ const Recommend = () => {
   }
   const pageCount = Math.ceil(posts.length / postsPerPage);
  
-  // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -41,12 +40,11 @@ const Recommend = () => {
     navigate('/RecommendWrite ');
   };
  
-  // Change page
   const paginate = (event, value) => {
     setCurrentPage(value);
   };
  
-  const truncateString = (str, num) => { //글자수 제한 함수
+  const truncateString = (str, num) => { 
     if (str.length > num) {
       return str.slice(0, num) + '...';
     } else {
@@ -54,7 +52,7 @@ const Recommend = () => {
     }
   };
  
-  return (     // 시작
+  return (   
     <div className="post-container">
       <div className="board-title" style={{ fontSize: '2rem', fontWeight: 'bold' }}>공모전/해커톤 참가자 모집</div>
 <CommonTable headersName={['No', '제목', '작성자']}>    
@@ -75,7 +73,7 @@ const Recommend = () => {
       </div>
       <Stack spacing={2} alignItems="center" justifyContent="center">
         <Pagination
-          count={pageCount} // Set the count to the number of pages
+          count={pageCount} 
           page={currentPage}
           onChange={paginate}
           variant="outlined"

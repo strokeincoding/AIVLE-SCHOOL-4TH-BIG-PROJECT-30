@@ -22,12 +22,12 @@ const StyledInput = styled.input`
     }
 `;
 const StyledTextArea = styled.textarea`
-  width: calc(100% - 40px); /* 전체 너비에서 오른쪽 여백만큼 빼기 */
+  width: calc(100% - 40px); 
   padding: 10px;
-  margin: 10px 0 30px 10px; /* 오른쪽 여백 추가 */
+  margin: 10px 0 30px 10px; 
   border: 1px solid #ddd;
   border-radius: 5px;
-  resize: vertical; /* 사용자가 수직 방향으로 크기 조정 가능 */
+  resize: vertical; 
   &:focus {
     outline: none;
     border-color: #007bff;
@@ -36,11 +36,11 @@ const StyledTextArea = styled.textarea`
 `;
 const PostView = ({ history, match }) => {
   const [data, setData] = useState(null);
-  const [currentUsername, setCurrentUsername] = useState(null); // 로그인한 사용자의 닉네임
+  const [currentUsername, setCurrentUsername] = useState(null); 
   const { no } = useParams();
-  const [editContent, setEditContent] = useState(''); // 게시물 내용
-  const [editTitle, setEditTitle] = useState(''); // 게시물 제목
-  const [isEditing, setIsEditing] = useState(false);  // 편집 모드 상태
+  const [editContent, setEditContent] = useState(''); 
+  const [editTitle, setEditTitle] = useState(''); 
+  const [isEditing, setIsEditing] = useState(false); 
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const navigate = useNavigate();
@@ -52,7 +52,6 @@ const PostView = ({ history, match }) => {
     ?.split('=')[1]
   );
   useEffect(() => {
-    // 쿠키에서 사용자 닉네임을 가져와 상태에 설정
     const nickname = getCookieValue('nickname');
     console.log(nickname);
     if (!nickname || nickname === 'undefined') {
@@ -60,9 +59,8 @@ const PostView = ({ history, match }) => {
     } else {
       setCurrentUsername(nickname);
     }
-    // 게시글 데이터 가져오기
     const headers = {
-      'Authorization': `Bearer ${yourAuthToken}`  // 인증 헤더 설정
+      'Authorization': `Bearer ${yourAuthToken}`  
     };
     axios.get(`http://localhost:8000/post/post/${no}`, { headers })
       .then(response => {
@@ -70,28 +68,25 @@ const PostView = ({ history, match }) => {
       })
       .catch(error => {
         console.error("Error fetching data: ", error);
-        setData(null); // In case of error, set data to null
+        setData(null); 
       });
-    // 댓글 데이터 가져오기
     axios.get(`http://localhost:8000/post/comment/`)
       .then(response => {
         const allComments = response.data;
-        const commentsForPost = allComments.filter(c => parseInt(c.post) === parseInt(no));  // post ID가 no와 일치하는 댓글만 필터링
+        const commentsForPost = allComments.filter(c => parseInt(c.post) === parseInt(no));  
         setComments(commentsForPost);
       })
       .catch(error => {
         console.error("Error fetching data: ", error);
-        // In case of error, set data to null
       });
   }, [no, yourAuthToken]);
 
  
-  const submitComment = () => {//댓글 쓰기
+  const submitComment = () => {
     const commentData = {
         comment: newComment,
         user: currentUsername,
         post: no,
-        // 필요한 다른 데이터
     };
     axios.post(`http://localhost:8000/post/comment/`, commentData,{
       headers: {
@@ -100,16 +95,15 @@ const PostView = ({ history, match }) => {
     })
     .then(response => {
       const updatedComments = Array.isArray(comments) ? [...comments, response.data] : [response.data];
-      setComments(updatedComments);  // 댓글 목록 업데이트
-      setNewComment('');  // 입력 필드 초기화
+      setComments(updatedComments);  
+      setNewComment('');  
     })
     .catch(error => console.error("Error posting comment: ", error));
   };
-  //댓글 삭제 함수
   const handleDeleteComment = (commentId) => {
     if (window.confirm("정말 댓글을 삭제하시겠습니까?")) {
       const headers = {
-        'Authorization': `Bearer ${yourAuthToken}`  // 인증 헤더 설정
+        'Authorization': `Bearer ${yourAuthToken}`  
       };
     axios.delete(`http://localhost:8000/post/comment/${commentId}`, { headers })
       .then(() => {
@@ -126,18 +120,17 @@ const PostView = ({ history, match }) => {
  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toISOString().split('T')[0]; // 게시물 날짜 형식 수정
+    return date.toISOString().split('T')[0]; 
   };
-  // 게시물 삭제함수
   const deletePost = () => {
     if (window.confirm("정말 이 게시물을 삭제하시겠습니까?")) {
       const headers = {
-        'Authorization': `Bearer ${yourAuthToken}`  // 인증 헤더 설정
+        'Authorization': `Bearer ${yourAuthToken}`  
       };
       axios.delete(`http://localhost:8000/post/post/${no}`, { headers })
         .then(() => {
           alert('게시물이 성공적으로 삭제되었습니다.');
-          navigate('/post'); // 게시물 목록으로 이동
+          navigate('/post'); 
           setData(null);
         })
         .catch(error => {
@@ -146,13 +139,12 @@ const PostView = ({ history, match }) => {
         });
     }
   };
-  // '수정' 버튼 클릭 핸들러
   const enableEdit = () => {
-    setIsEditing(true);  // 편집 모드 활성화
-    setEditContent(data.body);  // 편집할 내용을 현재 게시물 내용으로 초기화
-    setEditTitle(data.title);  // 편집할 제목을 현재 게시물 제목으로 초기화
+    setIsEditing(true);  
+    setEditContent(data.body); 
+    setEditTitle(data.title); 
   };
-  // 게시물 수정 함수
+
   const confirmEdit = () => {
     if (window.confirm("이 게시물을 수정하시겠습니까?")) {
       const headers = {
@@ -165,14 +157,14 @@ const PostView = ({ history, match }) => {
       axios.put(`http://localhost:8000/post/post/${no}/`, updatedData, { headers })
         .then(() => {
           alert('게시물이 성공적으로 수정되었습니다.');
-          setData({...data, title: editTitle, body: editContent});  // UI를 업데이트된 데이터로 갱신
+          setData({...data, title: editTitle, body: editContent}); 
         })
         .catch(error => {
           console.error('Error updating post:', error.response ? error.response.data : error);
           alert('Failed to update the post');
         });
     }
-    setIsEditing(false);  // 편집 모드 비활성화
+    setIsEditing(false); 
   };
 
 
@@ -185,14 +177,12 @@ const PostView = ({ history, match }) => {
             <div className="post-details-content">
               <div className="post-details-row">
                 {isEditing ? (
-                  // 편집 모드인 경우
                   <StyledInput
                     type="text"
                     value={editTitle}
                     onChange={(event) => setEditTitle(event.target.value)}
                   />
                 ) : (
-                  // 편집 모드가 아닌 경우, 기존 내용 보여줌
                   <>
                   <span className="post-details-label">제목</span>
                   <span className="post-details-value">{data.title}</span>
@@ -211,23 +201,21 @@ const PostView = ({ history, match }) => {
               </div>
               <div className="post-details-body">
                 {isEditing ? (
-                  // 편집 모드인 경우
                   <StyledTextArea
                     rows="10"
                     value={editContent}
                     onChange={(event) => setEditContent(event.target.value)}
                   />
                 ) : (
-                  // 편집 모드가 아닌 경우, 기존 내용 보여줌
                   <div>{data.body}</div>
                 )}
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}> {/* Flex 컨테이너 추가 */}
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                 <input
                   style={{
-                    flexGrow: 1, // Flex 항목으로 만들고, 남은 공간을 채우게 함
-                    height: '30px', // 입력 필드 높이 설정
-                    marginRight: '10px' // 입력 필드 오른쪽에 마진 추가
+                    flexGrow: 1, 
+                    height: '30px', 
+                    marginRight: '10px' 
                   }}
                   value={newComment}
                   onChange={(event) => {

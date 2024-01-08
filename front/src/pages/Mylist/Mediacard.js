@@ -34,7 +34,6 @@ const truncateText = (text, maxLength) => {
   }
   return text;
 };
-// 여기에 onMoreClick을 추가합니다
 const ImgMediaCard = ({ title, text, buttonText, imagePath, onMoreClick }) => {
   return (
     <>
@@ -46,8 +45,8 @@ const ImgMediaCard = ({ title, text, buttonText, imagePath, onMoreClick }) => {
             alt={title}
             height="350"
             image={imagePath}
-            sx={{ objectFit: "contain" }} // 이미지를 컨테이너에 맞추되, 비율 유지
-            className="card-media" // 이 클래스를 추가하여 hover 효과를 적용
+            sx={{ objectFit: "contain" }} 
+            className="card-media" 
           />
         )}
         <CardContent>

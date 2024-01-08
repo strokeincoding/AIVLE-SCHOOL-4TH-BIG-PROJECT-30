@@ -55,15 +55,15 @@ const ActiveLinkStyle = {
   };
   
 const ProfileSelector = styled.div`
-  display: flex; /* 사진들을 가로로 나열합니다 */
-  overflow-x: auto; /* 옆으로 스크롤 가능하게 합니다 */
-  max-width: 280px; /* 선택 가능한 프로필 사진 영역의 최대 너비 */
+  display: flex; 
+  overflow-x: auto; 
+  max-width: 280px; 
 `;
 const ProfileImage = styled.img`
-  width: 50px; /* 프로필 선택 이미지의 너비 */
-  height: 50px; /* 프로필 선택 이미지의 높이 */
-  border-radius: 50%; /* 원형으로 보이게 합니다 */
-  margin-right: 10px; /* 이미지 사이의 간격 */
+  width: 50px; 
+  height: 50px; 
+  border-radius: 50%; 
+  margin-right: 10px; 
   cursor: pointer;
 `;
 const Tooltip = styled.div`
@@ -87,8 +87,8 @@ const ProfileTitle = styled.h3`
   background: rgba(255, 255, 255, 0.7);
   border-radius: 10px;
   padding: 5px 20px;
-  margin-bottom: 10px; // 프로필 사진 위에 나타나도록 조정
-  z-index: 10; // 다른 요소들 위에 나타나도록 z-index 설정
+  margin-bottom: 10px; 
+  z-index: 10; 
 `;
 
 function Sidebar() {
@@ -96,12 +96,12 @@ function Sidebar() {
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
 
   const handleProfileClick = () => {
-    setIsSelectorOpen(!isSelectorOpen); // 프로필 선택기의 표시 상태를 토글합니다.
+    setIsSelectorOpen(!isSelectorOpen); 
   };
 
   const handleProfileSelect = (image) => {
-    setCurrentProfile(image); // 선택된 이미지로 현재 프로필을 업데이트합니다.
-    setIsSelectorOpen(false); // 프로필 선택기를 닫습니다.
+    setCurrentProfile(image); 
+    setIsSelectorOpen(false); 
   };
   const menus = [
     { name: "홈", path: "/first"},
@@ -114,7 +114,7 @@ function Sidebar() {
   return (
     <Side>
       <ProfileContainer>
-        <ProfileTitle>프로필 변경</ProfileTitle> {/* 제목을 프로필 이미지 위에 표시 */}
+        <ProfileTitle>프로필 사진 변경</ProfileTitle>
         <Profile src={currentProfile} onClick={handleProfileClick} />
         {isSelectorOpen && (
           <ProfileSelector>

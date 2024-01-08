@@ -13,7 +13,7 @@ import ModeIcon from '@mui/icons-material/Mode';
 const Post = () => {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 10; // Set the number of posts per page
+  const postsPerPage = 10;
  
   const navigate = useNavigate();
  
@@ -38,7 +38,6 @@ const Post = () => {
    };
   const pageCount = Math.ceil(posts.length / postsPerPage);
  
-  // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -54,7 +53,7 @@ const Post = () => {
  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toISOString().split('T')[0]; // Formats the date to 'YYYY-MM-DD'
+    return date.toISOString().split('T')[0];
   };
   return (
     <div className="post-container">
@@ -78,7 +77,7 @@ const Post = () => {
       </div>
       <Stack spacing={2} alignItems="center" justifyContent="center">
         <Pagination
-          count={pageCount} // Set the count to the number of pages
+          count={pageCount} 
           page={currentPage}
           onChange={paginate}
           variant="outlined"

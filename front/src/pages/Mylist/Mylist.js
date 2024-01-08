@@ -2,22 +2,22 @@ import React, { useState, useEffect } from 'react';
 import ImgMediaCard from './Mediacard';
 import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
-import Pagination from '@mui/material/Pagination'; // 페이지네이션 컴포넌트를 추가합니다.
+import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
  
 const Mylist = () => {
     const [recommendations, setRecommendations] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태를 추가합니다.
-    const postsPerPage = 8; // 페이지 당 게시물 수를 8로 설정합니다.
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 8; 
     const navigate = useNavigate();
     const getCookieValue = (name) => (
         document.cookie.split('; ').find(row => row.startsWith(name + '='))
         ?.split('=')[1]
     );
  
-    const handleMoreClick = (postId) => {// 추가
-        navigate(`/recommend/Recommend/${postId}`);// 추가
-    };// 추가
+    const handleMoreClick = (postId) => {
+        navigate(`/recommend/Recommend/${postId}`);
+    };
  
     const fetchRecommendations = async () => {
         const nickname = getCookieValue('nickname');
@@ -34,13 +34,13 @@ const Mylist = () => {
             }
             const data = await response.json();
             console.log(data);
-            setRecommendations(data.recommend_post_ids); // 서버로부터 받은 데이터를 상태에 설정
+            setRecommendations(data.recommend_post_ids);
         } catch (error) {
             console.error('Failed to fetch recommendations:', error);
         }
     };
  
-    useEffect(() => {//버튼을 누르지 않아도 바로 추천시스템이 보이는 기능
+    useEffect(() => {
         fetchRecommendations();
     }, []);
  
@@ -73,7 +73,6 @@ const Mylist = () => {
                     </Grid>
                 ))}
             </Grid>
-            {/* 페이지네이션 컴포넌트를 추가합니다. */}
             <Stack spacing={2} alignItems="center" justifyContent="center">
                 <Pagination
                     count={pageCount}

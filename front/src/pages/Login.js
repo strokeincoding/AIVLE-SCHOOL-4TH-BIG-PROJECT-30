@@ -1,4 +1,3 @@
-// src/pages/Login.js
 import React, { Component } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -21,7 +20,7 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
-      error: '', // 오류 메시지 상태 추가
+      error: '', 
     };
   }
  
@@ -39,11 +38,9 @@ class Login extends Component {
       return;
     }
  
-    // 로그인 시도 후 성공 시 홈으로 리디렉션
     this.props.login(username, password, () => {
-      this.props.navigate('/first'); // 여기에서 홈으로 이동
+      this.props.navigate('/first'); 
     }, (errorMsg) => {
-      // 로그인 실패 시 에러 메시지 업데이트
       alert(errorMsg);
     });
   };
@@ -113,7 +110,6 @@ class Login extends Component {
 }
  
  
-// Context 사용을 위한 HOC
 export default function LoginWithAuth(props) {
   const navigate = useNavigate();
   const auth = useAuth();

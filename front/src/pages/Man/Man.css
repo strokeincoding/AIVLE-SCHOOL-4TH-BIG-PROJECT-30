@@ -1,16 +1,16 @@
 .container {
-  text-align: center; /* 모든 내용을 중앙 정렬 */
+  text-align: center; 
 }
  
 .button-container {
-  margin: 2% 0; /* 버튼과 로딩 메시지 주변 공간 추가 */
+  margin: 2% 0; 
 }
  
 .loader-container {
   display: flex;
-  justify-content: center; /* 중앙 정렬 */
+  justify-content: center; 
   align-items: center;
-  margin-top: 20px; /* 버튼과 로더 사이의 간격 */
+  margin-top: 20px; 
 }
  
 .table-container {
@@ -18,43 +18,40 @@
   justify-content: center;
   align-items: center;
   padding: 1%;
-  margin-top: 2%; /* 버튼 아래에 공간 추가 */
+  margin-top: 2%; 
 }
  
 .mandalart-guide-title {
   text-align: center;
-  /* 추가 스타일링 옵션 */
 }
  
 .square-table {
-  border: none; /* 테이블의 외부 테두리 제거 */
+  border: none; 
 }
  
 .square-table td {
-  text-align: center; /* 텍스트를 가로 방향으로 중앙 정렬 */
-  vertical-align: middle; /* 내용을 세로 방향으로 중앙 정렬 */
+  text-align: center; 
+  vertical-align: middle; 
   width: 4vw;
   height: 4vw;
   background-color: white;
-  border-radius: 8px; /* 테두리의 둥근 정도를 설정 */
+  border-radius: 8px;
 }
  
-/* 내용이 있는 셀의 스타일 */
 .cell-with-content {
-  border: 1px solid black; /* 텍스트가 있는 셀의 테두리 */
+  border: 1px solid black; 
 }
  
-/* 내용이 없는 셀의 스타일 */
 .cell-without-content {
-  border: none; /* 텍스트가 없는 셀의 테두리 제거 */
+  border: none; 
 }
  
 .p {
-  margin: 0 auto; /* 상하좌우 마진을 자동으로 설정하여 중앙 정렬 */
-  width: 100%; /* 셀의 너비에 맞게 */
-  border: none; /* 입력란 및 p 태그의 테두리 제거 */
-  text-align: center; /* 텍스트 중앙 정렬 */
-  box-sizing: border-box; /* padding과 border를 width와 height에 포함 */
+  margin: 0 auto; 
+  width: 100%; 
+  border: none; 
+  text-align: center; 
+  box-sizing: border-box; 
 }
  
  

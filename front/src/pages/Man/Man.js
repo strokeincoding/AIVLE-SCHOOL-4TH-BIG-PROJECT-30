@@ -4,7 +4,19 @@ import image1 from "./lefttop.png";
 import image2 from "./righttop.png";
 import image3 from "./leftdown.png";
 import image4 from "./rightdown.png";
- 
+
+const initialPredefinedValues = {};
+for (let i = 0; i < 9; i++) {
+  for (let j = 0; j < 9; j++) {
+    initialPredefinedValues[`${i},${j}`] = '';
+  }
+}
+initialPredefinedValues['1,1'] = "기술 스택";
+initialPredefinedValues['7,1'] = '문제해결능력';
+initialPredefinedValues['1,7'] = 'Soft Skill';
+initialPredefinedValues['7,7'] = '트렌드';
+initialPredefinedValues['4,4'] = '?';
+
 const Man = () => {
   const [data, setData] = useState(() => {
     const savedData = localStorage.getItem('mandalartData');
@@ -45,17 +57,6 @@ const Man = () => {
     setIsLoading(false);
   };
  
-  const initialPredefinedValues = {};
-for (let i = 0; i < 9; i++) {
-  for (let j = 0; j < 9; j++) {
-    initialPredefinedValues[`${i},${j}`] = '';
-  }
-}
-initialPredefinedValues['1,1'] = "기술 스택";
-initialPredefinedValues['7,1'] = '문제해결능력';
-initialPredefinedValues['1,7'] = 'Soft Skill';
-initialPredefinedValues['7,7'] = '트렌드';
-initialPredefinedValues['4,4'] = '?';
  
   const [predefinedValues, setPredefinedValues] = useState(initialPredefinedValues);
  
@@ -63,55 +64,51 @@ initialPredefinedValues['4,4'] = '?';
     if (data) {
       const newValues = { ...initialPredefinedValues };
  
-      // '기술 스택' 데이터 매핑
       if (Array.isArray(data["기술 스택"])) {
         data["기술 스택"].forEach((val, index) => {
           const coordinates = [
             "0,0", "0,1", "0,2",
-            "1,0", /* 중앙셀에 항목 이름 */ "1,2",
+            "1,0", "1,2",
             "2,0", "2,1", "2,2"
           ];
           newValues[coordinates[index]] = val;
         });
       }
  
-      // '문제해결 능력' 데이터 매핑
       if (Array.isArray(data["문제해결 능력"])) {
         data["문제해결 능력"].forEach((val, index) => {
           const coordinates = [
             "6,0", "6,1", "6,2",
-            "7,0", /* 중앙셀에 항목 이름 */ "7,2",
+            "7,0", "7,2",
             "8,0", "8,1", "8,2"
           ];
           newValues[coordinates[index]] = val;
         });
       }
- 
-      // 'soft skill'
+
       if (Array.isArray(data["soft skill"])) {
         data["soft skill"].forEach((val, index) => {
           const coordinates = [
             "0,6", "0,7", "0,8",
-            "1,6", /* 중앙셀에 항목 이름 */ "1,8",
+            "1,6", "1,8",
             "2,6", "2,7", "2,8"
           ];
           newValues[coordinates[index]] = val;
         });
       }
      
-      // '트렌드'
       if (Array.isArray(data["트렌드"])) {
         data["트렌드"].forEach((val, index) => {
           const coordinates = [
             "6,6", "6,7", "6,8",
-            "7,6", /* 중앙셀에 항목 이름 */ "7,8",
+            "7,6", "7,8",
             "8,6", "8,7", "8,8"
           ];
           newValues[coordinates[index]] = val;
         });
       }
  
-      newValues["4,4"] = data['job']; // 중앙 셀에 'job' 배치
+      newValues["4,4"] = data['job']; 
  
       setPredefinedValues(newValues);
     }
@@ -134,7 +131,6 @@ initialPredefinedValues['4,4'] = '?';
     const cellClass = content ? "cell-with-content" : "cell-without-content";
     const imagePath = imagePaths[cellKey];
    
-    // 키 값이 들어간 셀에 대한 인라인 스타일
     const cellStyle = ["1,1", "7,1", "1,7", "7,7"].includes(cellKey)
                       ? { color: 'red' }
                       : {};

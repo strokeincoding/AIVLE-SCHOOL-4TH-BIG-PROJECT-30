@@ -1,42 +1,40 @@
 .card-container {
   display: flex;
-  flex-direction: row; /* Keep horizontal layout */
-  align-items: stretch; /* Align items for equal height */
+  flex-direction: row; 
+  align-items: stretch; 
   max-width: 1800px;
-  width: 100%; /* Full width of the viewport */
-  margin: 40px auto; /* Center the container with margin */
-  flex-wrap: wrap; /* Wrap items for small screens */
-  gap: 20px; /* Space between cards */
-  justify-content: space-between; /* Distribute space evenly */
+  width: 100%; 
+  margin: 40px auto;
+  flex-wrap: wrap; 
+  gap: 20px; 
+  justify-content: space-between;
 }
  
-/* Adjust the cards layout for smaller screens */
 @media (max-width: 768px) {
 .card-container {
-  justify-content: center; /* Center cards on smaller screens */
+  justify-content: center; 
 }
 }
  
-/* BannerSection.css */
 .banner-section {
   position: relative;
   background-size: cover;
   background-position: center;
-  height: 80vh; /* Half of the viewport height */
-  width: 100%; /* Full width of the viewport */
+  height: 80vh; 
+  width: 100%; 
   display: flex;
   justify-content: center;
-  align-items: flex-end; /* Aligns the content to the bottom */
+  align-items: flex-end; 
   color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 글자에 그림자 효과 추가 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
 }
  
 .banner-content {
   text-align: left;
-  width: 100%; /* Full width of the parent element */
-  padding: 0 100px 100px;/* Add padding for text not to touch the edges */
+  width: 100%;
+  padding: 0 100px 100px;
  
-  position: relative; /* 배너 내용을 위로 올림 */
+  position: relative; 
   z-index: 1;
 }
 .banner-section::after {
@@ -46,41 +44,39 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경으로 그림자 효과 */
+  background: rgba(0, 0, 0, 0.5);
   z-index: -1;
 }
  
-/* Respond to different screen sizes using media queries */
 @media (max-width: 768px) {
 .banner-section {
-  height: 30vh; /* Reduce height on medium screens */
+  height: 30vh; 
 }
 .banner-content {
-  max-width: 90%; /* Allow more space for the content */
+  max-width: 90%; 
 }
 }
  
 @media (max-width: 480px) {
 .banner-section {
-  height: 20vh; /* Reduce height further on small screens */
+  height: 20vh; 
 }
 .banner-content {
-  max-width: 100%; /* Use full width for the content */
-  padding: 0 10px; /* Adjust padding for very small screens */
+  max-width: 100%;
+  padding: 0 10px;
 }
 }
  
-/* Additional Styles for better responsiveness */
 @media (max-width: 1024px) {
 .card-container {
-  gap: 15px; /* Smaller gap for tablets and large phones */
+  gap: 15px; 
 }
 }
  
 @media (max-width: 480px) {
 .card-container {
-  flex-direction: column; /* Stack cards vertically on small screens */
-  align-items: center; /* Align cards to the center */
-  gap: 10px; /* Smaller gap for small devices */
+  flex-direction: column; 
+  align-items: center; 
+  gap: 10px; 
 }
 }

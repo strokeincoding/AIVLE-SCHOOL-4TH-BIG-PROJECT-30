@@ -28,7 +28,6 @@ const Content = styled.div`
   flex-grow: 1;
 `;
 
-// AuthRoutes 컴포넌트
 const AuthRoutes = () => {
   const { isLoggedIn } = useAuth();
 
@@ -60,20 +59,19 @@ const AuthRoutes = () => {
   );
 };
 
-// App 컴포넌트
 const App = () => {
-  const { isLoggedIn } = useAuth(); // 로그인 상태 확인
+  const { isLoggedIn } = useAuth(); 
 
   return (
     <>
       <Categories />
       <Layout>
-        {isLoggedIn && <Sidebar />} {/* 로그인 상태일 때만 사이드바 표시 */}
+        {isLoggedIn && <Sidebar />} 
         <Content>
           <AuthRoutes />
         </Content>
       </Layout>
-      {isLoggedIn && <Chatbot />} {/* 로그인 상태일 때만 챗봇 표시 */} {/* 챗봇 컴포넌트를 Layout 컴포넌트 밖에 배치 */}
+      {isLoggedIn && <Chatbot />}
     </>
   );
 };

@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import ImgMediaCard from './Firstcard';
-import { Box, Pagination, Stack } from '@mui/material'; // Import Pagination and Stack
+import { Box, Pagination, Stack } from '@mui/material'; 
 import { useAuth } from '../../context/AuthContext';
  
 const Mylist = () => {
     const [recommendations, setRecommendations] = useState([]);
-    const { isLoggedIn } = useAuth(); // Check login status
-    const [currentPage, setCurrentPage] = useState(1); // Current page state
+    const { isLoggedIn } = useAuth(); 
+    const [currentPage, setCurrentPage] = useState(1); 
     const postsPerPage = 9;
     const pageCount = Math.ceil(recommendations.length / postsPerPage);
     const fetchRecommendations = async () => {
-      if (!isLoggedIn) return; // 로그인하지 않은 경우 함수 실행 중지
+      if (!isLoggedIn) return; 
  
-      const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
+      const token = localStorage.getItem('token'); 
       const apiUrl = `http://127.0.0.1:8000/crawling/crawlingview`;
       try {
           const response = await fetch(apiUrl, {
               method: 'GET',
               headers: {
-                  'Authorization': `Bearer ${token}`, // 인증 토큰 추가
+                  'Authorization': `Bearer ${token}`,
               },
-              credentials: 'include' // 쿠키 기반 인증을 사용하는 경우
+              credentials: 'include'
           });
           if (!response.ok) {
               throw new Error(`Error: ${response.status}`);
@@ -40,7 +40,7 @@ const Mylist = () => {
     }, [isLoggedIn]);
     useEffect(() => {
         fetchRecommendations();
-    }, [isLoggedIn]); // 로그인 상태 변경 시 재실행
+    }, [isLoggedIn]);
  
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;

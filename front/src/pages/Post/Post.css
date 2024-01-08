@@ -22,7 +22,7 @@
 }
 
 .post-view-row label:first-child {
-  font-weight: bold; /* Make the title label bold */
+  font-weight: bold;
 }
 
 
@@ -33,14 +33,14 @@
 }
 
 .board-title {
-  display: flex;         /* Flexbox를 사용하여 내용을 중앙에 배치 */
-  justify-content: center; /* 가로 방향으로 중앙에 배치 */
-  align-items: center;     /* 세로 방향으로 중앙에 배치 */
-  height: 100px;           /* div의 높이 설정. 필요에 따라 조정하세요 */
-  padding: 25px;           /* 패딩 적용 */
-  font-family: 'SBAggroB', sans-serif; /* 글꼴 적용 */
-  font-size: 25px;         /* 글꼴 크기 설정 */
-  box-sizing: border-box;  /* 패딩을 포함한 총 너비를 계산 */
+  display: flex;        
+  justify-content: center;
+  align-items: center;     
+  height: 100px;          
+  padding: 25px;           
+  font-family: 'SBAggroB', sans-serif;
+  font-size: 25px;        
+  box-sizing: border-box;
 }
 
 .post-container {
@@ -50,20 +50,20 @@
 }
 
 .create-post-container {
-  align-self: flex-end; /* Flex 컨테이너 내에서 오른쪽 정렬 */
-  margin-top: auto; /* 모든 여유 공간을 위로 밀어 올림 */
-  margin-right: 9%; /* 오른쪽에서 20px 떨어뜨려 배치 */
+  align-self: flex-end; 
+  margin-top: auto; 
+  margin-right: 9%; 
 }
 
 .post-container .common-table a {
-  text-decoration: none; /* 밑줄 제거 */
-  color: inherit; /* 링크 색상을 텍스트와 동일하게 설정 */
+  text-decoration: none; 
+  color: inherit; 
 }
 
 .post-container .common-table a:visited {
-  color: inherit; /* 방문한 링크 색상을 텍스트와 동일하게 설정 */
+  color: inherit;
 }
 
 .post-container .common-table a:hover {
-  text-decoration: underline; /* 마우스를 올렸을 때 밑줄 표시 */
+  text-decoration: underline; 
 }

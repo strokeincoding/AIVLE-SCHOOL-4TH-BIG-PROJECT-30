@@ -6,8 +6,8 @@ function ChatbotPopup() {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([]);
     const [userInput, setUserInput] = useState('');
-    const [threadId, setThreadId] = useState(null);  // 스레드 ID 상태
-    const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
+    const [threadId, setThreadId] = useState(null); 
+    const [isLoading, setIsLoading] = useState(false); 
 
     const togglePopup = () => {
         setIsOpen(!isOpen);
@@ -19,7 +19,7 @@ function ChatbotPopup() {
 
     const sendMessage = async () => {
         if (userInput.trim() === '') return;
-        setIsLoading(true);  // 로딩 시작
+        setIsLoading(true);  
         const newMessages = [...messages, { text: userInput, sender: 'user' }];
         setMessages(newMessages);
 
@@ -38,12 +38,12 @@ function ChatbotPopup() {
             setMessages(prevMessages => [...prevMessages, { text: data.reply, sender: 'bot' }]);
 
             if (!threadId) {
-                setThreadId(data.thread_id);  // 백엔드로부터 받은 새로운 스레드 ID 저장
+                setThreadId(data.thread_id); 
             }
         } catch (error) {
             console.error('챗봇 통신 오류:', error);
         }
-        setIsLoading(false);  // 로딩 종료
+        setIsLoading(false);  
         setUserInput('');
     };
 
@@ -65,7 +65,7 @@ function ChatbotPopup() {
                                 {message.text}
                             </div>
                         ))}
-                        {isLoading && (  // 로딩 인디케이터 추가
+                        {isLoading && (  
                             <div className="loader-container">
                                 <div className="loader"></div>
                             </div>

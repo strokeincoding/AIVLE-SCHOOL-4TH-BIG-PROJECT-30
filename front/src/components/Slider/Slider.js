@@ -1,36 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import './Slider.css'; // Make sure your CSS is properly set up
+import './Slider.css';
  
 const Slider = ({ images }) => {
   const [current, setCurrent] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
  
-  // This effect runs when `current` changes.
   useEffect(() => {
     if (!isTransitioning) {
       setIsTransitioning(true);
     }
-  }, [current]); // Removed isTransitioning from dependency array
+  }, [current]); 
  
   const goToSlide = (index, transition = true) => {
-    setCurrent(index); // First, update the current slide
-    // Then, after the current slide has been updated, set isTransitioning
+    setCurrent(index); 
     setTimeout(() => setIsTransitioning(transition), 0);
   };
  
   const onPrevClick = () => {
     if (current === 0) {
-      goToSlide(images.length - 3, false); // Go to the last image without transition
+      goToSlide(images.length - 3, false); 
     } else {
-      goToSlide(current - 1); // Go to the previous image with transition
+      goToSlide(current - 1); 
     }
   };
  
   const onNextClick = () => {
     if (current === images.length - 3) {
-      goToSlide(0, false); // Go to the first image without transition
+      goToSlide(0, false); 
     } else {
-      goToSlide(current + 1); // Go to the next image with transition
+      goToSlide(current + 1); 
     }
   };
   return (

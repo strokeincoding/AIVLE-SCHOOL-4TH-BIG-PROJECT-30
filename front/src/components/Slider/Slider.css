@@ -2,9 +2,9 @@
   overflow: hidden;
   position: relative;
   background: #ffffff;
-  max-width: 50%; /* 슬라이더의 최대 너비를 줄입니다 */
-  margin: 20px auto; /* 위아래 마진을 줄여 슬라이더의 전체 크기를 줄입니다 */
-  padding: 15px; /* 패딩을 줄여 슬라이더의 전체 크기를 줄입니다 */
+  max-width: 50%;
+  margin: 20px auto; 
+  padding: 15px; 
   border-radius: 20px;
 }
  
@@ -18,15 +18,14 @@
   transform: skewX(10deg);
   position: relative;
   background: #fff;
-  border-radius: 20px; /* 더 둥근 모서리 */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 더 부드러운 그림자 */
-  padding: 25px; /* 통일된 패딩 */
+  border-radius: 20px; 
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+  padding: 25px; 
   min-width: calc((100% / 3) - 20px);
-  margin: 0 10px; /* 여백 조절 */
-  width: calc(100% / 3 - 20px); /* 3개의 슬라이드를 보여주기 위한 너비 계산 */
+  margin: 0 10px; 
+  width: calc(100% / 3 - 20px); 
 }
  
-  /* Increase the size and visibility of the navigation buttons */
   .leftBtn, .rightBtn {
     position: absolute;
     top: 50%;
@@ -35,58 +34,55 @@
     background: #ffffff;
     color: #000000;
     border: none;
-    padding: 0; /* Padding removed because width and height are specified */
+    padding: 0; 
     cursor: pointer;
-    font-size: 2rem; /* Increased font size */
+    font-size: 2rem; 
     border-radius: 50%;
-    width: 40px; /* Increased width */
-    height: 40px; /* Increased height */
+    width: 40px; 
+    height: 40px; 
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     transition: background-color 0.3s, transform 0.3s;
-    font-size: 1.5rem; /* 아이콘 크기를 줄임 */
+    font-size: 1.5rem; 
   }
  
   .leftBtn:hover, .rightBtn:hover {
     background-color: #dddddd;
-    transform: scale(1.2) translateY(-50%); /* Larger scale on hover */
+    transform: scale(1.2) translateY(-50%); 
   }
  
   .leftBtn {
-    left: 10px; /* Increased distance from the edge */
+    left: 10px; 
   }
  
   .rightBtn {
-    right: 10px; /* Increased distance from the edge */
+    right: 10px; 
   }
  
-  /* Adjustments for navigation dots */
   .dots {
-    bottom: 30px; /* Increased distance from the bottom */
+    bottom: 30px; 
   }
  
   .dot {
-    height: 15px; /* Increased dot size */
-    width: 15px; /* Increased dot size */
-    margin: 0 6px; /* Adjust spacing between dots */
+    height: 15px; 
+    width: 15px; 
+    margin: 0 6px; 
   }
  
-  /* Adjust text size and positioning for readability */
   .text-wrap h5, .text-wrap h1, .text-wrap h4 {
-    font-size: larger; /* Increased font size */
-    /* You may need to adjust line-height, margins, etc. */
+    font-size: larger; 
   }
  
   @media (max-width: 768px) {
     .slider-container {
-      max-width: 100%; /* 슬라이더의 최대 너비를 화면의 100%로 설정 */
+      max-width: 100%; 
       padding: 10px;
     }
  
     .slide {
-      min-width: 100%; /* 모바일 뷰에서 슬라이드를 하나만 보여주도록 설정 */
-      margin: 0 auto; /* 중앙 정렬 */
+      min-width: 100%; 
+      margin: 0 auto; 
     }
   }
