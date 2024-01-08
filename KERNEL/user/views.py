@@ -2,7 +2,6 @@ from django.shortcuts import render
 from .serializers import UserSerializer, TechnologyStackSerializer, OccupationSerializer, EnvSerializer
 from .models import User, TechnologyStack, Occupation, Env
 from rest_framework import generics, viewsets
-from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets, status
  
@@ -43,7 +42,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        print("Incoming Data:", request.data)  # Add this line to log incoming data
+        print("Incoming Data:", request.data)  
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)

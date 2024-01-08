@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from openai import OpenAI
 import my_settings
-from user.models import User, Occupation
+from user.models import User
 
 client = OpenAI(api_key=my_settings.OPEN_API_KEY)
 

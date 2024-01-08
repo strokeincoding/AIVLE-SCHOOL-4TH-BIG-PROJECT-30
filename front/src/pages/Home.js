@@ -2,7 +2,7 @@ import React from 'react';
 import Card from '../components/Card/Card';
 import Slider from '../components/Slider/Slider';
 import './Home.css'; // 이 줄을 추가하세요.
-import mandaratImage from '../assets/Mandarat.png';
+import mandaratImage from '../assets/mandarat.png';
 import bannerImage from '../assets/back1.jpg'; // Replace with your actual banner image path
 import RecommendImage from '../assets/recommend.png'; // Replace with your actual image path
 import ChatbotImage from '../assets/chatbot.png'; // Replace with your actual image path

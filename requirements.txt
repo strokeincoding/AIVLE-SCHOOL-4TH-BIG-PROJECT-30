@@ -4,3 +4,6 @@ Pillow
 Django
 tensorflow-cpu
 openai
+django-cors-headers
+djangorestframework-simplejwt
+scikit-surprise
