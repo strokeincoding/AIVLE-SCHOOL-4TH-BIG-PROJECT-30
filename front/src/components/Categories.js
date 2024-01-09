@@ -58,7 +58,7 @@ const Categories = () => {
             <>
               <Category to="/">홈</Category>
               <Category to="/login">로그인</Category>
-              <Category to="/join">회원가입</Category>
+              <Category to="/TermsOfUse">회원가입</Category>
             </>
           )}
           {isLoggedIn && (

@@ -19,6 +19,8 @@ import Mylist from './pages/Mylist/Mylist';
 import First from './pages/First/First';
 import Infoview from './pages/Info/Info';
 import InfoUpdate from './pages/Info/Infoedit';
+import TermsOfUseForm from './pages/TermsOfUse/TermsOfUseForm';
+
 
 const Layout = styled.div`
   display: flex;
@@ -53,6 +55,7 @@ const AuthRoutes = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
+          <Route path="/TermsOfUse" element={<TermsOfUseForm />} />
         </>
       )}
     </Routes>

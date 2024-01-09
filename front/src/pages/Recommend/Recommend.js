@@ -59,7 +59,7 @@ const Recommend = () => {
   {currentPosts.map((post, index) => (
     <CommonTableRow key={post.id}>
       <CommonTableColumn>{getPostNumber(index)}</CommonTableColumn>
-      <CommonTableColumn>
+      <CommonTableColumn className="title-column">
         <Link to={`/recommend/Recommend/${post.id}`}>{truncateString(post.title, 20)}</Link>
       </CommonTableColumn>
       <CommonTableColumn>{post.user}</CommonTableColumn>

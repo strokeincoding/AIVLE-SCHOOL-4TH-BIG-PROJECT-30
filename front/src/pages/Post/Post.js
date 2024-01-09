@@ -62,7 +62,7 @@ const Post = () => {
         {currentPosts.map((post, index) => (
           <CommonTableRow key={post.id}>
             <CommonTableColumn>{getPostNumber(index)}</CommonTableColumn>
-            <CommonTableColumn>
+            <CommonTableColumn className="title-column">
               <Link to={`/post/post/${post.id}`}>{truncateString(post.title, 20)}</Link>
             </CommonTableColumn>
             <CommonTableColumn>{formatDate(post.created_at)}</CommonTableColumn>

@@ -113,8 +113,8 @@ button {
 }
 
 .chatbot-button img {
-  width: 100px; 
-  height: 100px; 
+  width: 75px; 
+  height: 75px; 
   border-radius: 50%; 
   display: block;
 }

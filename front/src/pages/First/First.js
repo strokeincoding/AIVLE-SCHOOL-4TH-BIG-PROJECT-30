@@ -7,7 +7,7 @@ const Mylist = () => {
     const [recommendations, setRecommendations] = useState([]);
     const { isLoggedIn } = useAuth(); 
     const [currentPage, setCurrentPage] = useState(1); 
-    const postsPerPage = 9;
+    const postsPerPage = 8; // 오현진 변경
     const pageCount = Math.ceil(recommendations.length / postsPerPage);
 
     // useCallback으로 fetchRecommendations 함수 감싸기
