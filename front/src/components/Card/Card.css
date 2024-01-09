@@ -7,7 +7,6 @@
   padding: 20px; 
   max-width: 1200px; 
 }
- 
 .card {
   flex: 1 1 300px; 
   display: flex;
@@ -20,24 +19,19 @@
   margin-bottom: 20px; 
   color: #333; 
 }
+
  
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
-}
- 
+
 .card-image-wrapper {
   width: 100%;
   height: 100%; 
   background-color: #f0f0f0; 
 }
- 
 .card-image {
   width: 100%;
   height: 100%;
   object-fit: cover; 
 }
- 
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -56,40 +50,39 @@
   padding: 20px;
   border-radius: 5px;
   z-index: 1001;
+  /* 모달의 위치가 변경되지 않도록 추가 */
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
- 
 .card-content {
   padding: 15px;
   flex-grow: 1; 
   overflow: hidden; 
   height: 200px; 
 }
- 
 .card-title {
   font-size: 1.25em; 
   font-weight: bold;
   margin: 10px 0;
 }
- 
 .card-details {
   font-size: 0.9em; 
   color: #666; 
   margin-bottom: 10px; 
 }
- 
 .card-rating,
 .card-distance,
 .card-price {
   display: block;
   margin-bottom: 5px;
 }
- 
 .card-price {
   color: #4CAF50; 
   font-weight: bold;
   font-size: 1.1em; 
 }
- 
 @media (max-width: 1200px) {
   .card-container {
     max-width: none; 
@@ -98,13 +91,11 @@
     flex: 1 1 45%; 
   }
 }
- 
 @media (max-width: 768px) {
   .card {
     flex: 1 1 100%; 
     max-width: 100%; 
   }
- 
   .card-image-wrapper {
     height: 250px; 
   }
