@@ -40,6 +40,7 @@
   
   .post-details-body {
     padding: 20px 0;
+    white-space: pre-wrap; /* 공백과 줄바꿈을 유지합니다 */
   }
   .button-group {
     display: flex;
