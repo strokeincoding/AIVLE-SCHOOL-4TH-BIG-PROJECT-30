@@ -206,7 +206,7 @@ const RecommendView = ({ history, match }) => {
                 <div>{data && data.technology_stacks.map(id => technologyStacks[id]).join(', ')}</div>
               </div>
               <div className="post-view-row">
-                <label>선호환경</label>
+                <label>근무환경</label>
                 <div>{data.env && envs[data.env]}</div>
               </div>
               

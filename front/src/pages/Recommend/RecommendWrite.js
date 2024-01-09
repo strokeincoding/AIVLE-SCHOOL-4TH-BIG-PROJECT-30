@@ -94,7 +94,7 @@ const TechnologyStackSelect = ({ occupationName, selectedStacks, handleStackChan
 const EnvSelect = ({ envs, selectedEnv, handleEnvChange }) => (
   <Grid item xs={12}>
     <FormControl fullWidth variant="outlined">
-      <InputLabel id="env-label">선호 환경</InputLabel>
+      <InputLabel id="env-label">근무 환경</InputLabel>
       <Select
         labelId="env-label"
         id="env"
