@@ -10,25 +10,26 @@ import pandas as pd
 from surprise import Dataset, Reader, SVD
 from collections import defaultdict
 import numpy as np 
+from django.db.models import Prefetch
+
 def hybrid(user_id):
-    users = User.objects.all()
+    users = User.objects.all().prefetch_related('occupation')  # 사용자의 직업 정보를 사전 로드
     crawlings = Crawling.objects.all()
     
-    ratings = []
+    # 좋아요 정보를 한 번에 가져오기
+    likes = UserCrawlingLike.objects.select_related('user', 'crawling')
+
     items = {}
+    ratings = []
 
     for crawling in crawlings:
-        # 해당 크롤링에 좋아요를 누른 유저들의 목록
-        liked_users = UserCrawlingLike.objects.filter(crawling=crawling).values_list('user', flat=True)
-        
-        # 좋아요를 누른 유저들의 직업 정보 수집
-        occupations = set()
-        for liked_user_id in liked_users:
-            user_occupations = User.objects.get(id=liked_user_id).occupation.all()
-            for occupation in user_occupations:
-                occupations.add(occupation.occupation_name)
+        liked_users = likes.filter(crawling=crawling).values_list('user', flat=True)
 
-        # items 딕셔너리에 저장
+        # 직업 정보를 효율적으로 처리
+        occupations = set()
+        for liked_user in users.filter(id__in=liked_users):
+            occupations.update([occupation.occupation_name for occupation in liked_user.occupation.all()])
+
         items[str(crawling.id)] = list(occupations)
 
         for user in users:

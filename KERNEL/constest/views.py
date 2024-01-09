@@ -22,13 +22,12 @@ def make_df(user_id):
             'env' : rec.env,
             'required_skills' : tech_stacks,
         })
-    print(job)
+  
     member = {
         'occupation' : [occ.occupation_name for occ in user_id.occupation.all()],
         'env' : [env.env_name for env in user_id.env.all()],
         'skills': ' '.join([tech.stack_name.lower() for tech in user_id.technology_stacks.all()]),
     }
-    #print(member)
     
     job_post_df = pd.DataFrame(job)
     
