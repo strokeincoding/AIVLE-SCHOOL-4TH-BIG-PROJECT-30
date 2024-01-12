@@ -23,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
         queryset=Env.objects.all(), # 작업 환경을 가져오기 위한 쿼리셋
         required=False
     )
-
+    
     def create(self, validated_data):
         technology_stacks_data = validated_data.pop('technology_stacks', [])
         occupation_data = validated_data.pop('occupation', None)

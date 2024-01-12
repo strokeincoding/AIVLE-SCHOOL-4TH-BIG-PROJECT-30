@@ -44,15 +44,15 @@ INSTALLED_APPS = [
     'mandalart',
     'constest',
     'Crawling',
-    'corsheaders',  # CORS 추가
+    'corsheaders',  
     'rest_framework_simplejwt.token_blacklist',
     'rest_framework_simplejwt',
     'Recommend',
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # CORS 추가
-    'django.middleware.common.CommonMiddleware',  # CORS 추가
+    'corsheaders.middleware.CorsMiddleware',  
+    'django.middleware.common.CommonMiddleware',  
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -112,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 # Custom user model
-AUTH_USER_MODEL = 'user.User'  # 여기에 사용자 정의 사용자 모델을 설정했습니다.
+AUTH_USER_MODEL = 'user.User'  # 사용자 정의 사용자 모델 설정
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -120,13 +120,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    # ],
-    # 'DEFAULT_RENDERER_CLASSES': (
-    #     'rest_framework.renderers.JSONRenderer',
-    #     'rest_framework.renderers.BrowsableAPIRenderer',
-    # )
 }
 
 # Internationalization
@@ -147,6 +140,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

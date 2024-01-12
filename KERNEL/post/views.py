@@ -6,7 +6,7 @@ from rest_framework.authentication import *
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .permissions import IsOwnerOrReadOnly
 
-# Post의 목록, detail 보여주기, 수정하기, 삭제하기 모두 가능
+# (게시글) Post의 목록, detail 보여주기, 수정하기, 삭제하기 모두 가능
 class PostViewSet(viewsets.ModelViewSet):
     authentication_classes = [BasicAuthentication, SessionAuthentication, JWTAuthentication]
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]

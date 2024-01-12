@@ -1,6 +1,5 @@
 from django.urls import path, include
 from . import views
-from rest_framework import urls
 from .views import TechnologyStackViewSet,OccupationViewSet,UserViewSet,EnvViewSet
 from rest_framework.routers import DefaultRouter
 

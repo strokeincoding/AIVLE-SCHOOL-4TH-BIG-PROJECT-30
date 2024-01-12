@@ -11,13 +11,13 @@ class Recommend(models.Model):
     # 4. 카테고리
     cate = models.TextField()
     # 5. 기술 스택
-    technology_stacks = models.ManyToManyField(TechnologyStack, blank=True)  # 기술 스택 추가(다대다 필드)
+    technology_stacks = models.ManyToManyField(TechnologyStack, blank=True)  
     # 6. 작업 환경
     env = models.ManyToManyField(Env, blank=True)
     # 7. 요구사항
     Exp_require = models.TextField()
     # 8. 선호 직종
-    occupation = models.ManyToManyField(Occupation, blank=True)  # 선호 직종 추가(다대다 필드)
+    occupation = models.ManyToManyField(Occupation, blank=True)
     # 9. 프로젝트 설명 
     Project_Description=models.TextField()
     # 10. 이미지

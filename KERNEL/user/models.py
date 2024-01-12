@@ -56,13 +56,20 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser):
+    # 1. 아이디
     id = models.AutoField(primary_key=True)
+    # 2. 이메일
     email = models.EmailField(default='', max_length=100, null=False, blank=False, unique=True)
+    # 3. 닉네임
     nickname = models.CharField(default='', max_length=100, null=False, blank=False, unique=True)
+    # 4. 이름
     name = models.CharField(default='', max_length=100, null=False, blank=False)
-    occupation = models.ManyToManyField('Occupation', blank=True)  # 희망직종(다대다 필드)
-    technology_stacks = models.ManyToManyField('TechnologyStack', blank=True) # 기술스택(다대다 필드)
-    env = models.ManyToManyField('Env', blank=True) # 선호환경(다대다 필드)
+    # 5. 희망직종
+    occupation = models.ManyToManyField('Occupation', blank=True) 
+    # 6. 기술스택
+    technology_stacks = models.ManyToManyField('TechnologyStack', blank=True) 
+    # 7. 선호환경
+    env = models.ManyToManyField('Env', blank=True) 
     # User 모델의 필수 field
     is_active = models.BooleanField(default=True)    
     is_staff = models.BooleanField(default=False)
@@ -72,6 +79,7 @@ class User(AbstractBaseUser):
 
     # 사용자의 username field는 nickname으로 설정
     USERNAME_FIELD = 'nickname'
+    
     # 필수로 작성해야하는 field
     REQUIRED_FIELDS = ['email', 'name']
 

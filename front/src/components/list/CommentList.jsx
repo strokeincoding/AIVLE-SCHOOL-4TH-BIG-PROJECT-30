@@ -60,7 +60,6 @@ function CommentList(props) {
       {safeComments.map((comment) => (
         <CommentItem key={comment.id}>
           <CommentContent>
-          
             <CommentUser>{comment.user}</CommentUser> 
             <CommentText>{comment.comment} </CommentText>
             </CommentContent>

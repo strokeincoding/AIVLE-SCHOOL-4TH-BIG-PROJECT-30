@@ -19,9 +19,6 @@
   margin-bottom: 20px; 
   color: #333; 
 }
-
- 
-
 .card-image-wrapper {
   width: 100%;
   height: 100%; 
@@ -44,7 +41,6 @@
   align-items: center;
   z-index: 1000;
 }
- 
 .modal {
   background-color: white;
   padding: 20px;
