@@ -9,6 +9,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 import pandas as pd
 # Create your views here.
+def jaccard_similarity(set1, set2):
+    intersection = len(set(set1).intersection(set(set2)))
+    union = len(set(set1).union(set(set2)))
+    return intersection / union if union != 0 else 0
 
 def make_df(user_id):
     recommends = Recommend.objects.prefetch_related('occupation', 'technology_stacks').all()
@@ -30,35 +34,23 @@ def make_df(user_id):
     }
     
     job_post_df = pd.DataFrame(job)
-    
-    #member['skills'] = member['skills'].apply(lambda x: ' '.join(x).lower())
     job_post_df['required_skills'] = job_post_df['required_skills'].apply(lambda x: ' '.join(x).lower())
-    
     
     vectorizer = CountVectorizer()
     job_post_skill_vector = vectorizer.fit_transform(job_post_df['required_skills'])
     member_skill_vector = vectorizer.transform([member['skills']])
     
     cosine_sim_skills = cosine_similarity(member_skill_vector, job_post_skill_vector)
-    
-    def role_similarity(member_role, job_roles):
-        if member_role in job_roles:
-            return 1
-        else : 
-            return 0
-    
-    def work_env_similarity(member_env, job_env):
-        return 1 if member_env == job_env else 0 
-    
+
     def calculate_final(role_weight = 0.5, skill_weight = 0.2, env_weight= 0.2):
-        member_role = member['occupation'][0]
+        member_role = member['occupation']
         member_env = member['env'][0]
 
         final_scores = []
 
         for job_idx, job_row in job_post_df.iterrows():
-            role_score = role_similarity(member_role, job_row['occupation'])
-            env_score = work_env_similarity(member_env, job_row['env'])
+            role_score = jaccard_similarity(member_role, job_row['occupation'])
+            env_score = jaccard_similarity([member_env], [job_row['env']])
             skill_score = cosine_sim_skills[0, job_idx]
 
             total_score = (role_score * role_weight) + (skill_score * skill_weight) + (env_score * env_weight)
@@ -69,7 +61,9 @@ def make_df(user_id):
         job_indices = [i[0] for i in final_scores]
         
         return job_post_df.iloc[job_indices]
+
     return calculate_final()
+
 
 
 class Contest(APIView):

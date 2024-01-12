@@ -55,19 +55,25 @@ const Home = () => {
         <Card
           title="만다라트"
           text="만다라트에 대한 전체 내용입니다."
-          fullText="만다라트에 대한 전체 내용입니다.만다라트에 대한 전체 내용입니다.만다라트에 대한 전체 내용입니다.만다라트에 대한 전체 내용입니다."
+          fullText="회원가입시 입력한 희망직종에 따라 희망직종으로 취업하기 위해 준비해야 할 가이드를 만다라트로 나타내줍니다."
           imagePath={mandaratImage}
         />
         <Card
           title="추천시스템"
           text="추천시스템에 대한 전체 내용입니다."
-          fullText="만다라트에 대한 전체 내용입니다."
+          fullText="개인화된 IT 컨텐츠와 공모전 게시글을 추천해줍니다."
           imagePath={RecommendImage}
         />
         <Card
           title="챗봇"
           text="챗봇에 대한 전체 내용입니다."
-          fullText="만다라트에 대한 전체 내용입니다."
+          fullText={
+            <>
+              IT 직종 취직 정보를 제공해줍니다.<br />
+              AI 엔지니어 채용 중인 회사 알려줘<br />
+              그 회사에 대한 자격요건, 복지, 우대사항 알려줘
+            </>
+          }
           imagePath={ChatbotImage}
         />
       </div>
