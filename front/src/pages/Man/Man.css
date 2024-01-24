@@ -1,0 +1,71 @@
+.container {
+  text-align: center; 
+}
+ 
+.button-container {
+  margin: 2% 0; 
+}
+ 
+.loader-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin-top: 20px; 
+}
+ 
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1%;
+  margin-top: 2%; 
+}
+ 
+.mandalart-guide-title {
+  text-align: center;
+}
+ 
+.square-table {
+  border: none; 
+}
+ 
+.square-table td {
+  text-align: center; 
+  vertical-align: middle; 
+  width: 4vw;
+  height: 4vw;
+  background-color: white;
+  border-radius: 8px;
+}
+ 
+.cell-with-content {
+  border: 1px solid black; 
+}
+ 
+.cell-without-content {
+  border: none; 
+}
+ 
+.p {
+  margin: 0 auto; 
+  width: 100%; 
+  border: none; 
+  text-align: center; 
+  box-sizing: border-box; 
+}
+ 
+ 
+ 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+ 
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}

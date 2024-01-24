@@ -1,0 +1,69 @@
+.post-view-wrapper {
+  background-color: white;
+  border: 1px solid #000;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px auto;
+  max-width: 600px;
+}
+
+.post-view-go-list-btn {
+  border: 0;
+  padding: 10px;
+  background-color: #ffd9d9;
+}
+
+.post-view-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.post-view-row label:first-child {
+  font-weight: bold;
+}
+
+
+
+.post-view-row > *:nth-child(2) {
+  margin: 10px 0;
+  width: 70%;
+}
+
+.board-title {
+  display: flex;        
+  justify-content: center;
+  align-items: center;     
+  height: 100px;          
+  padding: 25px;           
+  font-family: 'SBAggroB', sans-serif;
+  font-size: 25px;        
+  box-sizing: border-box;
+}
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.create-post-container {
+  align-self: flex-end; 
+  margin-top: auto; 
+  margin-right: 9%; 
+}
+
+.post-container .common-table a {
+  text-decoration: none; 
+  color: inherit; 
+}
+
+.post-container .common-table a:visited {
+  color: inherit;
+}
+
+.post-container .common-table a:hover {
+  text-decoration: underline; 
+}

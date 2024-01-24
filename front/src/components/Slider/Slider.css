@@ -1,0 +1,88 @@
+.slider-container {
+  overflow: hidden;
+  position: relative;
+  background: #ffffff;
+  max-width: 50%;
+  margin: 20px auto; 
+  padding: 15px; 
+  border-radius: 20px;
+}
+ 
+.slider {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+ 
+.slide {
+  box-sizing: border-box;
+  transform: skewX(10deg);
+  position: relative;
+  background: #fff;
+  border-radius: 20px; 
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+  padding: 25px; 
+  min-width: calc((100% / 3) - 20px);
+  margin: 0 10px; 
+  width: calc(100% / 3 - 20px); 
+}
+ 
+  .leftBtn, .rightBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 0; 
+    cursor: pointer;
+    font-size: 2rem; 
+    border-radius: 50%;
+    width: 40px; 
+    height: 40px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: background-color 0.3s, transform 0.3s;
+    font-size: 1.5rem; 
+  }
+ 
+  .leftBtn:hover, .rightBtn:hover {
+    background-color: #dddddd;
+    transform: scale(1.2) translateY(-50%); 
+  }
+ 
+  .leftBtn {
+    left: 10px; 
+  }
+ 
+  .rightBtn {
+    right: 10px; 
+  }
+ 
+  .dots {
+    bottom: 30px; 
+  }
+ 
+  .dot {
+    height: 15px; 
+    width: 15px; 
+    margin: 0 6px; 
+  }
+ 
+  .text-wrap h5, .text-wrap h1, .text-wrap h4 {
+    font-size: larger; 
+  }
+ 
+  @media (max-width: 768px) {
+    .slider-container {
+      max-width: 100%; 
+      padding: 10px;
+    }
+ 
+    .slide {
+      min-width: 100%; 
+      margin: 0 auto; 
+    }
+  }

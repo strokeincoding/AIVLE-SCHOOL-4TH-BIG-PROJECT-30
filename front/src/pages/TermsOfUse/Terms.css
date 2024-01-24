@@ -1,0 +1,130 @@
+@font-face {
+    font-family: 'JalnanGothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
+.flex.flex-wrap {
+  margin-bottom: 40px; /* Increase the bottom margin as needed */
+}
+
+.terms-check label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px; /* Adjust the bottom margin as needed */
+}
+
+/* 체크박스 기본 스타일 */
+.terms-check input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 15px; /* 체크박스 크기 */
+  height: 15px;
+  border: 2px solid #007BFF; /* 테두리 색상 */
+  border-radius: 4px; /* 테두리 둥글기 */
+  margin-right: 10px; /* 라벨과의 간격 */
+  vertical-align: middle; /* 수직 정렬 */
+  cursor: pointer;
+  position: relative; /* ::after 가상 요소 위치를 위함 */
+  background-color: white; /* 체크박스 배경색 */
+}
+
+/* 체크박스 선택 시 */
+.terms-check input[type="checkbox"]:checked {
+  background-color: #007BFF; /* 선택된 배경색 */
+  border-color: #007BFF; /* 선택된 테두리 색상 */
+}
+
+
+/* 체크박스 선택 시 체크 표시 스타일 */
+.terms-check input[type="checkbox"]::after {
+  content: "\2713"; /* 체크 기호 */
+  font-size: 10px; /* 기호 크기 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 중앙 정렬 */
+  color: white; /* 체크 기호 색상 */
+}
+
+/* 체크박스 선택 시 체크 표시 */
+.terms-check input[type="checkbox"]:checked::after {
+  display: block; /* 체크박스가 선택되었을 때만 표시 */
+}
+
+
+.terms-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+.terms-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.terms-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.terms-details {
+  margin-bottom: 20px;
+}
+
+/* 약관 텍스트와 체크박스 사이의 공간 추가 */
+.agreement-check {
+  margin-top: 60px; /* 위쪽 마진 */
+  margin-bottom: 60px; /* 아래쪽 마진 */
+}
+
+.agreement-check label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.agreement-check input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* 버튼 스타일 */
+.agreement-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  outline: none;
+}
+
+.agreement-button:focus, .agreement-button:hover {
+  background-color: #0056b3;
+}
+.terms-content {
+  margin-bottom: 30px; /* 이 값을 조정하여 termsOfUseData와 버튼 사이의 간격을 조정합니다. */
+}
+
+.center-container {
+  margin-top: 20px; /* 이 값을 조정하여 버튼들 사이의 간격을 조정합니다. */
+  margin-bottom: 20px; /* 이 값을 조정하여 버튼들 사이의 간격을 조정합니다. */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.not-all-agreed {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
