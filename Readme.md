@@ -130,7 +130,7 @@ IT 기술의  빠른 발전과 기술의 성장과 함께 급속도로 성장하
   - Server
     - <img src="https://img.shields.io/badge/Django-092E20?style=flat-square&logo=Django&logoColor=white"/>
   - Data
-    - <img src="https://img.shields.io/badge/Mysql-E6B91E?style=flat-square&logo=MySql&logoColor=white"/>
+    - <img src="https://img.shields.io/badge/Mysql-4479A1?style=flat-square&logo=MySql&logoColor=white"/>
   - open API
     - <img src="https://img.shields.io/badge/openai-412991?style=flat-square&logo=openai&logoColor=white">
 
